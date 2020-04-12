@@ -9,7 +9,7 @@
         {
         }
 
-        public override string Title { get { return "Welcome to EspenCollectSet"; } }
+        public override string Title { get { return "Welcome to Espen Collect Set"; } }
 
         // TODO: Register models with the vmpropmodel codesnippet
         // TODO: Register view model properties with the vmprop or vmpropviewmodeltomodel codesnippets

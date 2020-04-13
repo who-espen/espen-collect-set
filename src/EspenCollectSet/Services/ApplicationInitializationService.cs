@@ -10,7 +10,6 @@
     using Catel.MVVM;
     using Orchestra.Models;
     using Orchestra.Services;
-    using InputGesture = Catel.Windows.Input.InputGesture;
 
     public class ApplicationInitializationService : ApplicationInitializationServiceBase
     {

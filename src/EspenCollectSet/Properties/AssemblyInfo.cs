@@ -1,10 +1,9 @@
 ﻿using System.Reflection;
 using System.Resources;
-using System.Runtime.CompilerServices;
 
-[assembly: AssemblyTitle("EspenCollectSet")]
+[assembly: AssemblyTitle("Espen Collect Set")]
 [assembly: AssemblyProduct("Espen Collect Set")]
-[assembly: AssemblyDescription("EspenCollectSet")]
+[assembly: AssemblyDescription("Espen Collect Set")]
 [assembly: NeutralResourcesLanguage("fr")]
 
 // Recommended: move all attributes below to a shared solution-wide assembly info named SolutionAssemblyInfo.cs

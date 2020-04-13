@@ -1,5 +1,6 @@
 ﻿using Catel.IoC;
 using EspenCollectSet.Services;
+using EspenCollectSet.Windows.Tabs;
 using Orchestra.Services;
 
 /// <summary>
@@ -15,6 +16,7 @@ public static class ModuleInitializer
         var serviceLocator = ServiceLocator.Default;
 
         serviceLocator.RegisterType<IRibbonService, RibbonService>();
+        serviceLocator.RegisterType<ITabService, TabService>();
         serviceLocator.RegisterType<IApplicationInitializationService, ApplicationInitializationService>();
     }
 }

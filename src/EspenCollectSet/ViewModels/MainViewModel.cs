@@ -1,7 +1,8 @@
 ﻿namespace EspenCollectSet.ViewModels
 {
-    using Catel.MVVM;
     using System.Threading.Tasks;
+    using Catel.MVVM;
+    using Orchestra.Windows;
 
     public class MainViewModel : ViewModelBase
     {

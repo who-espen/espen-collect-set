@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29521.150
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EspenCollectSet", "EspenCollectSet\EspenCollectSet.csproj", "{0A8795D8-7CFE-451F-B3A9-E36740E3C729}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EspenCollectSet", "EspenCollectSet\EspenCollectSet.csproj", "{0A8795D8-7CFE-451F-B3A9-E36740E3C729}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

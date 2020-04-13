@@ -6,10 +6,8 @@
     using Catel.ApiCop.Listeners;
     using Catel.IoC;
     using Catel.Logging;
-    using Catel.Reflection;
-    using Catel.Windows;
+    using EspenCollectSet.Views;
     using Orchestra.Services;
-    using Orchestra.Views;
 
     /// <summary>
     /// Interaction logic for App.xaml
@@ -31,9 +29,9 @@
             //
             // For more information, see http://docs.catelproject.com/vnext/faq/performance-considerations/
 
-            // Log.Info("Improving performance");
-            // Catel.Windows.Controls.UserControl.DefaultCreateWarningAndErrorValidatorForViewModelValue = false;
-            // Catel.Windows.Controls.UserControl.DefaultSkipSearchingForInfoBarMessageControlValue = true;
+            Log.Info("Improving performance");
+            Catel.Windows.Controls.UserControl.DefaultCreateWarningAndErrorValidatorForViewModelValue = false;
+            Catel.Windows.Controls.UserControl.DefaultSkipSearchingForInfoBarMessageControlValue = true;
 
             // TODO: Register custom types in the ServiceLocator
             //Log.Info("Registering custom types");
@@ -45,7 +43,7 @@
 
             var serviceLocator = ServiceLocator.Default;
             var shellService = serviceLocator.ResolveType<IShellService>();
-            shellService.CreateAsync<ShellWindow>();
+            shellService.CreateAsync<ShellView>();
 
             Log.Info("Calling base.OnStartup");
 

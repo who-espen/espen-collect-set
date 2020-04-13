@@ -1,9 +1,7 @@
 ﻿namespace EspenCollectSet
 {
-    using System.Threading.Tasks;
     using Catel;
     using Catel.MVVM;
-    using Orchestra;
     using Orchestra.Services;
 
     public class ApplicationAboutCommandContainer : Catel.MVVM.CommandContainerBase

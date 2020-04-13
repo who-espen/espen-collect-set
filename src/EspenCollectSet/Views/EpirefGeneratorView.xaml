@@ -1,0 +1,13 @@
+﻿<catel:UserControl x:Class="EspenCollectSet.Views.EpirefGeneratorView"
+                   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"                   
+                   xmlns:catel="http://schemas.catelproject.com"
+                   >
+    <DockPanel>
+        <Grid Height="40" DockPanel.Dock="Top">
+            <Label >
+                Test
+            </Label>
+        </Grid>
+    </DockPanel>
+</catel:UserControl>

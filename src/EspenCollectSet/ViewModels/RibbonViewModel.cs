@@ -25,7 +25,7 @@
             _uiVisualizerService = uiVisualizerService;
             _tabService = dependencyResolver.Resolve<ITabService>();
 
-            ShowKeyboardMappings = new TaskCommand(OnShowKeyboardMappingsExecuteAsync);
+            ShowEpirfModule = new TaskCommand(OnShowEpirfModuleExecuteAsync);
 
             var assembly = AssemblyHelper.GetEntryAssembly();
             Title = assembly.Title();
@@ -33,14 +33,14 @@
 
         #region Commands
         /// <summary>
-        /// Gets the ShowKeyboardMappings command.
+        /// Gets the ShowEpirfModule command.
         /// </summary>
-        public TaskCommand ShowKeyboardMappings { get; private set; }
+        public TaskCommand ShowEpirfModule { get; private set; }
 
         /// <summary>
-        /// Method to invoke when the ShowKeyboardMappings command is executed.
+        /// Method to invoke when the ShowEpirfModule command is executed.
         /// </summary>
-        private async Task OnShowKeyboardMappingsExecuteAsync()
+        private async Task OnShowEpirfModuleExecuteAsync()
         {
             //PleaseWaitService.Show(
             //               () => _tabService.ShowDocument<EpirefGeneratorViewModel>(),

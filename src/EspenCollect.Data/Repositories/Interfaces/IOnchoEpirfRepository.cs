@@ -4,7 +4,7 @@
     using System.Threading.Tasks;
     using EspenCollect.Data.Models;
 
-    public interface IOnchoEpirfRepository
+    public interface IOnchoEpirfRepository : IRepository
     {
         Task<IEnumerable<OnchoEpirf>> GetAllEpirfOnchoAsync();
     }

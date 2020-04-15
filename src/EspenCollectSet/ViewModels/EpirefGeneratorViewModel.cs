@@ -32,7 +32,7 @@
 
         #region Methods
 
-        protected bool CanExecuteDownload() => SelectedEpirfFile != null || SelectedEpirfFile != "";
+        protected bool CanExecuteDownload() => string.IsNullOrWhiteSpace(SelectedEpirfFile);
 
         protected async Task OnExecuteDownload()
         {

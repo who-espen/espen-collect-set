@@ -11,7 +11,7 @@
     {
         private static readonly ILog Log = LogManager.GetCurrentClassLogger();
 
-        public async Task<IEnumerable<OnchoEpirf>> GetAllEpirfOnchoAsync()
+        public async Task<IList<OnchoEpirf>> GetAllEpirfOnchoAsync()
         {
             try
             {

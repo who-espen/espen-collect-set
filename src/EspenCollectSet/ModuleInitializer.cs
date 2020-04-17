@@ -1,5 +1,6 @@
 ﻿using Catel.IoC;
 using EspenCollect.Data.Repositories;
+using EspenCollect.Data.Services;
 using EspenCollectSet.Services;
 using EspenCollectSet.Windows.Tabs;
 using Orchestra.Services;
@@ -22,5 +23,7 @@ public static class ModuleInitializer
 
         serviceLocator.RegisterType<IRepository, RepositoryBase>();
         serviceLocator.RegisterType<IOnchoEpirfRepository, OnchoEpirfRepository>();
+
+        serviceLocator.RegisterType<IEpirfGenerator, EpirfGenerator>();
     }
 }

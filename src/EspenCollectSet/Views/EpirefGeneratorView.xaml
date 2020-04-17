@@ -12,7 +12,7 @@
                     LabelText="Browse for EPIRF"
                     LabelWidth="120"
                     SelectedFile="{Binding SelectedEpirfFile}"
-                    Filter="Excel files (*.xls, *.xlsx)|*.xls;*.xlsx" />
+                    Filter="Excel files (*.xls, *.xlsx, *.xlsm)|*.xls;*.xlsx; *.xlsm" />
                 <!--<Button HorizontalAlignment="Center"
                     Command="{Binding Add}"
                     Content="Browse ..." />-->

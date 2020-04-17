@@ -6,6 +6,6 @@
 
     public interface IOnchoEpirfRepository : IRepository
     {
-        Task<IEnumerable<OnchoEpirf>> GetAllEpirfOnchoAsync();
+        Task<IList<OnchoEpirf>> GetAllEpirfOnchoAsync();
     }
 }

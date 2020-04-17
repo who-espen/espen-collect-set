@@ -32,57 +32,53 @@
 
             var onchoSheet = epirfWorkBook.Worksheets.get_Item("ONCHO") as Excel.Worksheet;
 
-            onchoSheet.Unprotect();
+            prepareEirfFRow(onchoSheet, onchoData.Count);
 
-            onchoSheet.Range["A8:AE8"].Copy(onchoSheet.Range[$"A8:AE{8 + onchoData.Count}"]);
+            for (var i = 0; i < onchoData.Count; i++)
+            {
+                onchoSheet.Cells[i + 8, "A"] = onchoData[i].TypeOfsurvey;
+                onchoSheet.Cells[i + 8, "B"] = onchoData[i].State;
+                onchoSheet.Cells[i + 8, "C"] = onchoData[i].NameOfadministrativeLevel2;
+                onchoSheet.Cells[i + 8, "D"] = onchoData[i].NameOfCommunitySurveyed;
+                onchoSheet.Cells[i + 8, "E"] = onchoData[i].Month;
+                onchoSheet.Cells[i + 8, "F"] = onchoData[i].Year;
+                onchoSheet.Cells[i + 8, "G"] = onchoData[i].Latitude;
+                onchoSheet.Cells[i + 8, "H"] = onchoData[i].Longitude;
+                onchoSheet.Cells[i + 8, "I"] = onchoData[i].Date1stPcRound;
+                onchoSheet.Cells[i + 8, "J"] = onchoData[i].TreatmentStrategy;
+                onchoSheet.Cells[i + 8, "K"] = onchoData[i].PrecontrolPrevalence;
+                onchoSheet.Cells[i + 8, "L"] = onchoData[i].RoundOfPcDelivered;
+                onchoSheet.Cells[i + 8, "M"] = onchoData[i].SkinnipDiagMethod;
+                onchoSheet.Cells[i + 8, "N"] = onchoData[i].SkinnipExamined;
+                onchoSheet.Cells[i + 8, "O"] = onchoData[i].SkinnipAge;
+                onchoSheet.Cells[i + 8, "P"] = onchoData[i].SkinnipPositive;
+                onchoSheet.Cells[i + 8, "R"] = onchoData[i].Cmfl;
+                onchoSheet.Cells[i + 8, "S"] = onchoData[i].SerologyDiagnostic;
+                onchoSheet.Cells[i + 8, "T"] = onchoData[i].SerSamplingMethods;
+                onchoSheet.Cells[i + 8, "U"] = onchoData[i].SerNumberOfPeopleExamined;
+                onchoSheet.Cells[i + 8, "V"] = onchoData[i].SerAgeGoup;
+                onchoSheet.Cells[i + 8, "W"] = onchoData[i].SerPositive;
+                onchoSheet.Cells[i + 8, "Y"] = onchoData[i].BlackFliesExamined;
+                onchoSheet.Cells[i + 8, "Z"] = onchoData[i].SpeciesPcr;
+                onchoSheet.Cells[i + 8, "AA"] = onchoData[i].PercentagePoolScreenPositice;
+                onchoSheet.Cells[i + 8, "AB"] = onchoData[i].SpeciesCrab;
+                onchoSheet.Cells[i + 8, "AC"] = onchoData[i].CrabExamined;
+                onchoSheet.Cells[i + 8, "AD"] = onchoData[i].PercentagEmfPositive;
 
-            //Excel.Range source = onchoSheet.Range["A8:AE8"].Insert(Excel.XlInsertShiftDirection.xlShiftDown);
-            //var dest = onchoSheet.Range["A9"];
-            //source.Copy(dest);
+            }
 
-            onchoSheet.Protect();
-
-            //var excelapp = new Excel.Application();
-            //excelapp.Workbooks.Add();
-            //string path = "Your Excel Path";
-            //Excel.Workbook workbook = excelapp.Workbooks.Open(path);
-            //Excel.Worksheet workSheet = workbook.Worksheets.get_Item(1);
-            //Excel.Range source = workSheet.Range["A9:L9"].Insert(Excel.XlInsertShiftDirection.xlShiftDown);
-            //Excel.Range dest = workSheet.Range["F10"];
-            //source.Copy(dest);
-
-            //onchoSheet.Cells[8, "A"] = "ID Number";
-
-
-            //var onchoSheet = new SLDocument(filePath, "ONCHO");
-
-            //for (var i = 0; i <= onchoData.Count; i++){
-            //    onchoSheet.SetCellValue($"A{i+8}", onchoData[0].TypeOfsurvey);
-            //}
-
-
-            //SLWorksheetStatistics stats1 = onchoSheet.GetWorksheetStatistics();
-
-
-            //for (int j = 1; j < stats1.EndRowIndex; j++)
-            //{
-            //    var value = onchoSheet.GetCellValueAsString(0, j);
-
-            //}
-
-            //onchoSheet.SetCellValue("E6", "Let's party!!!!111!!!1");
-
-            //onchoSheet.SelectWorksheet("Sheet3");
-            //onchoSheet.SetCellValue("E6", "Before anyone calls the popo!");
-
-            //onchoSheet.AddWorksheet("DanceFloor");
-            //onchoSheet.SetCellValue("B4", "Who let the dogs out?");
-            //onchoSheet.SetCellValue("B5", "Woof!");
-
-            //onchoSheet.SaveAs(filePath);
             epirfWorkBook.Save();
             epirfWorkBook.Close(true);
             excelApp.Quit();
+        }
+
+        private void prepareEirfFRow(Excel.Worksheet onchoSheet, int lenghth)
+        {
+            onchoSheet.Unprotect();
+
+            onchoSheet.Range["A8:AE8"].Copy(onchoSheet.Range[$"A8:AE{7 + lenghth}"]);
+
+            onchoSheet.Protect();
         }
     }
 }

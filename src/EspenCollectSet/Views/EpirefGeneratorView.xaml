@@ -1,0 +1,28 @@
+﻿<catel:UserControl x:Class="EspenCollectSet.Views.EpirefGeneratorView"
+                   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"                   
+                   xmlns:catel="http://schemas.catelproject.com" xmlns:orc="http://schemas.wildgums.com/orc/controls">
+    <DockPanel>
+        <DockPanel.Background>
+            <ImageBrush ImageSource="/Resources/Images/logo.png" Opacity="0.3" Stretch="None" />
+        </DockPanel.Background>
+        <Grid Width="300" DockPanel.Dock="Left">
+            <StackPanel>
+                <orc:OpenFilePicker 
+                    LabelText="Browse for EPIRF"
+                    LabelWidth="120"
+                    SelectedFile="{Binding SelectedEpirfFile}"
+                    Filter="Excel files (*.xls, *.xlsx, *.xlsm)|*.xls;*.xlsx; *.xlsm" />
+                <!--<Button HorizontalAlignment="Center"
+                    Command="{Binding Add}"
+                    Content="Browse ..." />-->
+                <Button HorizontalAlignment="Center"
+                    Command="{Binding Download}"
+                    Content="Download the EPIRF" />
+            </StackPanel>
+        </Grid>
+        <Grid Width="auto" DockPanel.Dock="Right">
+            
+        </Grid>
+    </DockPanel>
+</catel:UserControl>

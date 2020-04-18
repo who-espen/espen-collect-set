@@ -1,10 +1,8 @@
 ﻿namespace EspenCollectSet
 {
-    using System.Threading.Tasks;
     using Catel;
     using Catel.MVVM;
     using Catel.Services;
-    using Orchestra;
 
     public class ApplicationExitCommandContainer : Catel.MVVM.CommandContainerBase
     {

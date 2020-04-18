@@ -22,14 +22,11 @@
             </fluent:Ribbon.Menu>
 
             <fluent:Ribbon.Tabs>
-                <fluent:RibbonTabItem Header="View">
-                    <fluent:RibbonGroupBox Header="Keyboard">
-                        <fluent:SplitButton Header="Shortcuts" 
-                                            LargeIcon="pack://application:,,,/EspenCollectSet;component/Resources/Images/keyboard.png"
-                                            Command="{Binding ShowKeyboardMappings}" 
-                                            IsCheckable="False">
-                            <orchestra:KeyboardMappingsOverviewView />
-                        </fluent:SplitButton>
+                <fluent:RibbonTabItem Header="View" >
+                    <fluent:RibbonGroupBox Header="EPIRF">
+                        <fluent:Button Header="Generate EPIRF"
+                           LargeIcon="pack://application:,,,/EspenCollectSet;component/Resources/Images/keyboard.png"
+                                       Command="{Binding ShowEpirfModule}" />
                     </fluent:RibbonGroupBox>
                 </fluent:RibbonTabItem>
             </fluent:Ribbon.Tabs>

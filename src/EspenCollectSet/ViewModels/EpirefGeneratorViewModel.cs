@@ -2,16 +2,13 @@
 {
     using System.Threading.Tasks;
     using Catel.MVVM;
-    using EspenCollect.Data.Services;
 
     public class EpirefGeneratorViewModel: ViewModelBase
     {
-        private readonly IEpirfGenerator _epirfGenerator;
 
         #region Constructors
-        public EpirefGeneratorViewModel(IEpirfGenerator epirfGenerator)
+        public EpirefGeneratorViewModel()
         {
-            _epirfGenerator = epirfGenerator;
             Download = new TaskCommand(OnExecuteDownload, CanExecuteDownload);
         }
 
@@ -36,7 +33,7 @@
 
         protected async Task OnExecuteDownload()
         {
-            await _epirfGenerator.GenerateEpirfAsync(SelectedEpirfFile);
+            //await _epirfGenerator.GenerateEpirfAsync(SelectedEpirfFile);
         }
 
         #endregion

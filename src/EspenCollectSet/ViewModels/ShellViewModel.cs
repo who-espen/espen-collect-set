@@ -19,7 +19,7 @@
             exceptionService.Register<Exception>(async exception =>
             {
                 Log.Error(exception);
-                await dependencyResolver.Resolve<IMessageService>().ShowErrorAsync("An unknown exception occurred, please contact the developers",);
+                await dependencyResolver.Resolve<IMessageService>().ShowErrorAsync("An unknown exception occurred, please contact the developers") ;
             });
         }
     }

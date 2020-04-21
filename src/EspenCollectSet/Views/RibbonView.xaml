@@ -15,17 +15,17 @@
 
                     <fluent:BackstageTabControl x:Name="backstageTabControl">
                         <fluent:Button Header="Exit" 
-                                       Icon="pack://application:,,,/EspenCollectSet;component/Resources/Images/exit.png" 
+                                       Icon="pack://application:,,,/EspenCollectSet;component/Resources/Images/logout-2.png" 
                                        Command="{catel:CommandManagerBinding Application.Exit}" />
                     </fluent:BackstageTabControl>
                 </fluent:Backstage>
             </fluent:Ribbon.Menu>
 
             <fluent:Ribbon.Tabs>
-                <fluent:RibbonTabItem Header="View" >
+                <fluent:RibbonTabItem Header="EPIRF" >
                     <fluent:RibbonGroupBox Header="EPIRF">
                         <fluent:Button Header="Generate EPIRF"
-                           LargeIcon="pack://application:,,,/EspenCollectSet;component/Resources/Images/keyboard.png"
+                           LargeIcon="pack://application:,,,/EspenCollectSet;component/Resources/Images/pie-line-graph.png"
                                        Command="{Binding ShowEpirfModule}" />
                     </fluent:RibbonGroupBox>
                 </fluent:RibbonTabItem>

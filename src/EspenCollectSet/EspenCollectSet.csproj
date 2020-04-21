@@ -205,6 +205,8 @@
   </Choose>
   <ItemGroup>
     <None Remove="Resources\Images\logo.png" />
+    <None Remove="Resources\Images\logout-2.png" />
+    <None Remove="Resources\Images\pie-line-graph.png" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\EspenCollect.Core\EspenCollect.Core.csproj" />

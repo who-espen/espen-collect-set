@@ -212,4 +212,7 @@
     <ProjectReference Include="..\EspenCollect.Core\EspenCollect.Core.csproj" />
     <ProjectReference Include="..\EspenCollect.Infrastructure\EspenCollect.Infrastructure.csproj" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Resources\Styles\" />
+  </ItemGroup>
 </Project>

@@ -32,57 +32,86 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
-            <Grid Grid.Row="1" >
-                <!--<TreeView ScrollViewer.VerticalScrollBarVisibility="Auto"                          
-                          BorderThickness="1"
-                          HorizontalAlignment="Stretch"
-                          VerticalAlignment="Stretch"
-                          ItemsSource="{Binding MetabaseCollections}"
-                          />-->
+            <DockPanel  Grid.Column="0">
+                <Label DockPanel.Dock="Top" FontSize="14" HorizontalAlignment="Center" FontWeight="Bold" >Collections</Label>
+                <Grid  DockPanel.Dock="Bottom">                    
+                    <TreeView  ItemsSource="{Binding MetabaseCollections}" >
+                        <TreeView.ItemTemplate>
+                            <HierarchicalDataTemplate ItemsSource="{Binding MetabaseInnerCollections}">
+                                <DockPanel>
+                                    <TextBlock Text="{Binding Name}" Width="150" Foreground="DarkBlue" HorizontalAlignment="Center"/>
+                                </DockPanel>
+                                <HierarchicalDataTemplate.ItemTemplate>
+                                    <DataTemplate >
+                                        <DockPanel>
+                                            <TextBlock Text="{Binding Name}" Width="150" Foreground="DarkBlue" HorizontalAlignment="Center"/>
+                                        </DockPanel>
+                                    </DataTemplate>
+                                </HierarchicalDataTemplate.ItemTemplate>
+                            </HierarchicalDataTemplate>
+                        </TreeView.ItemTemplate>
+                    </TreeView>
 
-                <TreeView ItemsSource="{Binding MetabaseCollections}" >
-                    <TreeView.ItemTemplate>
-                        <HierarchicalDataTemplate ItemsSource="{Binding MetabaseInnerCollections}">
-                            <TextBlock Text="{Binding Name}" />
-                            <HierarchicalDataTemplate.ItemTemplate>
-                                <DataTemplate >
-                                    <TextBlock Text="{Binding Name}" />
-                                </DataTemplate>
-                            </HierarchicalDataTemplate.ItemTemplate>
-                        </HierarchicalDataTemplate>
-                    </TreeView.ItemTemplate>
-                </TreeView>
-
-                <!--<TreeView ItemsSource="{Binding MetabaseCollections}">
-                    <TreeView.ItemTemplate>
-                        <DataTemplate>
-                            <StackPanel Orientation="Horizontal">                                
-                                <TextBlock Text="{Binding Name}"
-                                     VerticalAlignment="Center" Margin="5" />
-                            </StackPanel>
-                        </DataTemplate>
-                    </TreeView.ItemTemplate>
-                </TreeView>-->
-
-            </Grid>
-
-            <!--<TreeView Grid.Column="1" ScrollViewer.VerticalScrollBarVisibility="Auto"
-                      BorderThickness="5"
-                      Background="Red"
-                      ItemsSource="{Binding MetabaseCollections}"
-                      MinHeight="100"
-                      HorizontalAlignment="Stretch"
-                      VerticalAlignment="Stretch"
-                      BorderBrush="Red"
-                      />-->
+                </Grid>
+            </DockPanel>
 
             <GridSplitter Grid.Column="1" Width="3" HorizontalAlignment="Stretch" />
 
+            <DockPanel Grid.Column="2">
+
+                <Label DockPanel.Dock="Top" FontSize="14" HorizontalAlignment="Center" FontWeight="Bold" >EPIRF</Label>
+                <ListView DockPanel.Dock="Bottom"
+                    ItemsSource="{Binding EpirfLists}"
+                    SelectedItem="{Binding SelectedCarrier,
+                                             Mode=TwoWay}">
+                    <!--<ListView.Background>
+                    <ImageBrush ImageSource="/Resources/Images/logo.png"
+                                Opacity="0.3"
+                                Stretch="None" />
+                </ListView.Background>-->
+
+
+                    <ListView.ItemTemplate>
+                        <DataTemplate >
+                            <DockPanel>
+                                <!--<TextBlock Text="{Binding Name}" Width="150" Foreground="DarkBlue" HorizontalAlignment="Center"/>-->
+                                <CheckBox>
+                                    <TextBlock Text="{Binding Name}" Width="150" Foreground="DarkBlue" HorizontalAlignment="Center"/>
+                                </CheckBox>
+                            </DockPanel>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </DockPanel>
+
             <GridSplitter Grid.Column="3" Width="3" HorizontalAlignment="Stretch" />
+
+            <DockPanel Grid.Column="4">
+                <Label DockPanel.Dock="Top" FontSize="14" HorizontalAlignment="Center" FontWeight="Bold" >EPIR To Generate</Label>
+
+                <ListView DockPanel.Dock="Bottom"
+                      ItemsSource="{Binding Carriers}"
+                      SelectedItem="{Binding SelectedCarrier, Mode=TwoWay}">
+
+
+                    <ListView.View>
+                        <GridView>
+                            <GridViewColumn Width="150"
+                                        DisplayMemberBinding="{Binding Name}"
+                                        Header="Country" />
+                            <GridViewColumn Width="250"
+                                        DisplayMemberBinding="{Binding Type}"
+                                        Header="EPIRF" />
+                        </GridView>
+                    </ListView.View>
+                </ListView>
+            </DockPanel>
+
         </Grid>
 
-        <Button Grid.Row="1" Padding="5" HorizontalAlignment="Left" VerticalAlignment="Center"
-                    Command="{Binding EditCommand}" Content="Generate the EPIRF" />
+        <Button Grid.Row="1" Padding="5" HorizontalAlignment="Right" VerticalAlignment="Center" 
+                    Command="{Binding EditCommand}" Content="Generate the EPIRF" >
+        </Button>
     </Grid>
     
     <!--<DockPanel>

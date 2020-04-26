@@ -25,6 +25,12 @@
                 new MetabaseCollection { Name = "Ghana", MetabaseInnerCollections = subCollection },
                 new MetabaseCollection { Name = "Nigeria" }
             };
+
+            EpirfLists = new ObservableCollection<EpirfList>
+            {
+                new EpirfList { Name = "OEM - 2019" },
+                new EpirfList { Name = "OEM 2 - 201" }
+            };
         }
 
         #endregion
@@ -39,6 +45,8 @@
         public string SelectedEpirfFile { get; set; }
 
         public ObservableCollection<MetabaseCollection> MetabaseCollections { get; set; }
+
+        public ObservableCollection<EpirfList> EpirfLists { get; set; }
 
         public TaskCommand Download { get; private set; }
 

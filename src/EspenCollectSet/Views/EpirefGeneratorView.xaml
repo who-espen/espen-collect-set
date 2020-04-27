@@ -35,19 +35,36 @@
             <DockPanel  Grid.Column="0">
                 <Label DockPanel.Dock="Top" FontSize="14" HorizontalAlignment="Center" FontWeight="Bold" >Collections</Label>
                 <Grid  DockPanel.Dock="Bottom">                    
-                    <TreeView  ItemsSource="{Binding MetabaseCollections}" >
+                    <!--<TreeView  ItemsSource="{Binding MetabaseCollections}" >
                         <TreeView.ItemTemplate>
                             <HierarchicalDataTemplate ItemsSource="{Binding MetabaseInnerCollections}">
                                 <DockPanel>
-                                    <TextBlock Text="{Binding Name}" Width="150" Foreground="DarkBlue" HorizontalAlignment="Center"/>
+                                    <TextBlock Text="{Binding Name}" MinWidth="150" Foreground="DarkBlue" HorizontalAlignment="Center"/>
                                 </DockPanel>
                                 <HierarchicalDataTemplate.ItemTemplate>
                                     <DataTemplate >
                                         <DockPanel>
-                                            <TextBlock Text="{Binding Name}" Width="150" Foreground="DarkBlue" HorizontalAlignment="Center"/>
+                                            <TextBlock Text="{Binding Name}" MinWidth="150" Foreground="DarkBlue" HorizontalAlignment="Center"/>
                                         </DockPanel>
                                     </DataTemplate>
                                 </HierarchicalDataTemplate.ItemTemplate>
+                            </HierarchicalDataTemplate>
+                        </TreeView.ItemTemplate>
+                    </TreeView>-->
+
+                    <TreeView  ItemsSource="{Binding MetabaseCollections}" >
+                        <TreeView.ItemTemplate>
+                            <HierarchicalDataTemplate ItemsSource="{Binding MetabaseInnerCollections}">
+                                <DockPanel>
+                                    <TextBlock Text="{Binding Name}" MinWidth="150" Foreground="DarkBlue" HorizontalAlignment="Center"/>
+                                </DockPanel>
+                                <!--<HierarchicalDataTemplate.ItemTemplate>
+                                    <DataTemplate >
+                                        <DockPanel>
+                                            <TextBlock Text="{Binding Name}" MinWidth="150" Foreground="DarkBlue" HorizontalAlignment="Center"/>
+                                        </DockPanel>
+                                    </DataTemplate>
+                                </HierarchicalDataTemplate.ItemTemplate>-->
                             </HierarchicalDataTemplate>
                         </TreeView.ItemTemplate>
                     </TreeView>

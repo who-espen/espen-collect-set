@@ -2,6 +2,7 @@
 {
     using Catel;
     using Catel.IoC;
+    using EspenCollect.Services;
 
     /// <summary>
     /// The class for registering all type and instances into the catel service locator.
@@ -15,9 +16,9 @@
         /// <exception cref="System.ArgumentNullException">The <paramref name="serviceLocator"/> is <c>null</c>.</exception>
         public void Initialize(IServiceLocator serviceLocator)
         {
-            Argument.IsNotNull("serviceLocator", serviceLocator);
+            Argument.IsNotNull(nameof(serviceLocator), serviceLocator);
 
-            
+            serviceLocator.RegisterType<IRestApi, RestApi>();
         }
     }
 }

@@ -83,6 +83,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Services\IRestApi.cs" />
     <Compile Include="Models\EpirfList.cs" />
     <Compile Include="Models\MetabaseCollection.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

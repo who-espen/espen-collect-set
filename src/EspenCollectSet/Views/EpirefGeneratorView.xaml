@@ -1,16 +1,8 @@
 ﻿<catel:UserControl x:Class="EspenCollectSet.Views.EpirefGeneratorView"
                    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"                   
-                   xmlns:catel="http://schemas.catelproject.com" xmlns:orc="http://schemas.wildgums.com/orc/controls">
-
-    <!--<catel:UserControl.Resources>
-
-        <Style x:Key="Header1" TargetType="TextBlock">
-            <Setter Property="FontSize" Value="15" />
-            <Setter Property="FontWeight" Value="ExtraBold" />
-        </Style>
-
-    </catel:UserControl.Resources>-->
+                   xmlns:catel="http://schemas.catelproject.com"                   
+                   xmlns:local="clr-namespace:EspenCollectSet">
 
     <Grid>
 
@@ -34,37 +26,14 @@
 
             <DockPanel  Grid.Column="0">
                 <Label DockPanel.Dock="Top" FontSize="14" HorizontalAlignment="Center" FontWeight="Bold" >Collections</Label>
-                <Grid  DockPanel.Dock="Bottom">                    
-                    <!--<TreeView  ItemsSource="{Binding MetabaseCollections}" >
-                        <TreeView.ItemTemplate>
-                            <HierarchicalDataTemplate ItemsSource="{Binding MetabaseInnerCollections}">
-                                <DockPanel>
-                                    <TextBlock Text="{Binding Name}" MinWidth="150" Foreground="DarkBlue" HorizontalAlignment="Center"/>
-                                </DockPanel>
-                                <HierarchicalDataTemplate.ItemTemplate>
-                                    <DataTemplate >
-                                        <DockPanel>
-                                            <TextBlock Text="{Binding Name}" MinWidth="150" Foreground="DarkBlue" HorizontalAlignment="Center"/>
-                                        </DockPanel>
-                                    </DataTemplate>
-                                </HierarchicalDataTemplate.ItemTemplate>
-                            </HierarchicalDataTemplate>
-                        </TreeView.ItemTemplate>
-                    </TreeView>-->
+                <Grid  DockPanel.Dock="Bottom">
 
-                    <TreeView  ItemsSource="{Binding MetabaseCollections}" >
+                    <TreeView  ItemsSource="{Binding MetabaseCollections}" local:TreeViewHelper.SelectedItem="{Binding SelectedItem, Mode=TwoWay}">
                         <TreeView.ItemTemplate>
                             <HierarchicalDataTemplate ItemsSource="{Binding MetabaseInnerCollections}">
                                 <DockPanel>
                                     <TextBlock Text="{Binding Name}" MinWidth="150" Foreground="DarkBlue" HorizontalAlignment="Center"/>
-                                </DockPanel>
-                                <!--<HierarchicalDataTemplate.ItemTemplate>
-                                    <DataTemplate >
-                                        <DockPanel>
-                                            <TextBlock Text="{Binding Name}" MinWidth="150" Foreground="DarkBlue" HorizontalAlignment="Center"/>
-                                        </DockPanel>
-                                    </DataTemplate>
-                                </HierarchicalDataTemplate.ItemTemplate>-->
+                                </DockPanel>                                
                             </HierarchicalDataTemplate>
                         </TreeView.ItemTemplate>
                     </TreeView>

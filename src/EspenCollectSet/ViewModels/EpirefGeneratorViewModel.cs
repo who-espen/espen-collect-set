@@ -2,9 +2,7 @@
 {
     using System.Collections.Generic;
     using System.Linq;
-    using System.Threading;
     using System.Threading.Tasks;
-    using System.Windows.Forms;
     using Catel;
     using Catel.Collections;
     using Catel.MVVM;
@@ -83,15 +81,13 @@
             {
                 await base.InitializeAsync();
 
-                //_pleaseWaitService.Show(() => Thread.Sleep(5000));
+                _pleaseWaitService.Show(async () => {
 
-                /*var collections =*/ await _restApi.GetAllCollection();
+                    var collections = await PopulateAsync().ConfigureAwait(false);
 
-                //MetabaseCollections = new ObservableCollection<MetabaseCollection>(collections);
-                //MetabaseCollections.AddItems(collections);
-                var collections = await PopulateAsync();
+                    MetabaseCollections.AddItems(collections);
 
-                MetabaseCollections.AddItems(collections);
+                }, "Loading Metabase collections");
             }
             catch (System.Exception e)
             {

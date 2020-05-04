@@ -26,25 +26,10 @@
 
             Download = new TaskCommand(OnExecuteDownload, CanExecuteDownload);
 
+            LoadEpirfTitle = new TaskCommand(OnExecuteLoadEpirfTitle, CanExecuteLoadEpirfTitle);
+
             MetabaseCollections = new FastObservableCollection<MetabaseCollection>();
 
-            //var subCollection = new List<MetabaseCollection>
-            //{
-            //    new MetabaseCollection { Name = "2019" },
-            //    new MetabaseCollection { Name = "2020" }
-            //};
-
-            //MetabaseCollections = new ObservableCollection<MetabaseCollection>
-            //{
-            //    new MetabaseCollection { Name = "Ghana", MetabaseInnerCollections = subCollection },
-            //    new MetabaseCollection { Name = "Nigeria" }
-            //};
-
-            //EpirfLists = new ObservableCollection<EpirfList>
-            //{
-            //    new EpirfList { Name = "OEM - 2019" },
-            //    new EpirfList { Name = "OEM 2 - 201" }
-            //};
         }
 
         #endregion
@@ -57,6 +42,7 @@
         public override string Title => "EPIRF Generator";
 
         public string SelectedEpirfFile { get; set; }
+        public MetabaseCollection SelectedItem { get; set; }
 
         public FastObservableCollection<MetabaseCollection> MetabaseCollections { get; set; }
 
@@ -64,14 +50,24 @@
 
         public TaskCommand Download { get; private set; }
 
+        public TaskCommand LoadEpirfTitle { get; private set; }
+
         #endregion
 
         #region Methods
 
         protected bool CanExecuteDownload() => !string.IsNullOrWhiteSpace(SelectedEpirfFile);
+        protected bool CanExecuteLoadEpirfTitle() => SelectedItem != null;
 
         protected async Task OnExecuteDownload()
         {
+           
+            //await _epirfGenerator.GenerateEpirfAsync(SelectedEpirfFile);
+        }
+        
+        protected async Task OnExecuteLoadEpirfTitle()
+        {
+            var selectedCollection = SelectedItem;
             //await _epirfGenerator.GenerateEpirfAsync(SelectedEpirfFile);
         }
 
@@ -148,6 +144,8 @@
 
             return metabaseCollections.Where(c => c.Location == "/");
         }
+
+
 
         #endregion
     }

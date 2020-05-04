@@ -1,53 +1,53 @@
 ﻿namespace EspenCollectSet
 {
-    using System.Collections.Generic;
     using System.Windows;
     using System.Windows.Controls;
+    using System.Windows.Interactivity;
 
-    public class TreeViewHelper
+    public class BindableSelectedItemBehavior : Behavior<TreeView>
     {
-        private static readonly Dictionary<DependencyObject, TreeViewSelectedItemBehavior> Behaviors = new Dictionary<DependencyObject, TreeViewSelectedItemBehavior>();
+        #region SelectedItem Property
 
-        public static object GetSelectedItem(DependencyObject obj)
+        public object SelectedItem
         {
-            return (object)obj.GetValue(SelectedItemProperty);
+            get { return (object)GetValue(SelectedItemProperty); }
+            set { SetValue(SelectedItemProperty, value); }
         }
 
-        public static void SetSelectedItem(DependencyObject obj, object value)
-        {
-            obj.SetValue(SelectedItemProperty, value);
-        }
-
-        // Using a DependencyProperty as the backing store for SelectedItem.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty SelectedItemProperty =
-            DependencyProperty.RegisterAttached("SelectedItem", typeof(object), typeof(TreeViewHelper), new UIPropertyMetadata(null, OnSelectedItemChanged));
+            DependencyProperty.Register(nameof(SelectedItem), typeof(object), typeof(BindableSelectedItemBehavior), new UIPropertyMetadata(null, OnSelectedItemChanged));
 
-        private static void OnSelectedItemChanged(DependencyObject obj, DependencyPropertyChangedEventArgs e)
+        private static void OnSelectedItemChanged(DependencyObject sender, DependencyPropertyChangedEventArgs e)
         {
-            if (!(obj is TreeView))
-                return;
-
-            if (!Behaviors.ContainsKey(obj))
-                Behaviors.Add(obj, new TreeViewSelectedItemBehavior(obj as TreeView));
-
-            TreeViewSelectedItemBehavior view = Behaviors[obj];
-            view.ChangeSelectedItem(e.NewValue);
+            var item = e.NewValue as TreeViewItem;
+            if (item != null)
+            {
+                item.SetValue(TreeViewItem.IsSelectedProperty, true);
+            }
         }
 
-        private class TreeViewSelectedItemBehavior
-        {
-            private readonly TreeView _view;
-            public TreeViewSelectedItemBehavior(TreeView view)
-            {
-                _view = view;
-                view.SelectedItemChanged += (sender, e) => SetSelectedItem(view, e.NewValue);
-            }
+        #endregion
 
-            internal void ChangeSelectedItem(object p)
+        protected override void OnAttached()
+        {
+            base.OnAttached();
+
+            AssociatedObject.SelectedItemChanged += OnTreeViewSelectedItemChanged;
+        }
+
+        protected override void OnDetaching()
+        {
+            base.OnDetaching();
+
+            if (AssociatedObject != null)
             {
-                TreeViewItem item = (TreeViewItem)_view.ItemContainerGenerator.ContainerFromItem(p);
-                item.IsSelected = true;
+                AssociatedObject.SelectedItemChanged -= OnTreeViewSelectedItemChanged;
             }
+        }
+
+        private void OnTreeViewSelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
+        {
+            SetCurrentValue(SelectedItemProperty, e.NewValue);
         }
     }
 }

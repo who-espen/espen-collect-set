@@ -30,9 +30,9 @@
         <!--<ContentControl Grid.Row="1" x:Name="contentControl" />-->
 
         <xcad:DockingManager Grid.Row="1" x:Name="DockingManager">
-            <!--<xcad:DockingManager.Theme>
-                <xcad:Office2007BlueTheme />
-            </xcad:DockingManager.Theme>-->
+            <xcad:DockingManager.Theme>
+                <xcad:AeroTheme />
+            </xcad:DockingManager.Theme>
             <xcad:DockingManager.Background>
                 <ImageBrush ImageSource="/Resources/Images/logo.png" Opacity="1" Stretch="None" />
             </xcad:DockingManager.Background>

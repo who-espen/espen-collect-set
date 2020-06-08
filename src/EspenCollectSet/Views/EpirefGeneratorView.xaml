@@ -51,8 +51,6 @@
                         </TreeView.ItemTemplate>
                     </TreeView>
 
-                
-
                 </Grid>
             </DockPanel>
 
@@ -62,9 +60,8 @@
 
                 <Label DockPanel.Dock="Top" FontSize="14" HorizontalAlignment="Center" FontWeight="Bold" >EPIRF</Label>
                 <ListView DockPanel.Dock="Bottom"
-                    ItemsSource="{Binding EpirfLists}"
-                    SelectedItem="{Binding SelectedCarrier,
-                                             Mode=TwoWay}">
+                          ItemsSource="{Binding EpirfLists}"
+                          SelectedItem="{Binding SelectedCarrier, Mode=TwoWay}">
                     <!--<ListView.Background>
                     <ImageBrush ImageSource="/Resources/Images/logo.png"
                                 Opacity="0.3"
@@ -74,12 +71,12 @@
 
                     <ListView.ItemTemplate>
                         <DataTemplate >
-                            <DockPanel>
+                            <StackPanel>
                                 <!--<TextBlock Text="{Binding Name}" Width="150" Foreground="DarkBlue" HorizontalAlignment="Center"/>-->
-                                <CheckBox>
-                                    <TextBlock Text="{Binding Name}" Width="150" Foreground="DarkBlue" HorizontalAlignment="Center"/>
-                                </CheckBox>
-                            </DockPanel>
+                                <!--<CheckBox Margin="0" IsChecked="{Binding IsChecked}">-->
+                                    <TextBlock Text="{Binding Name}" Margin="5 0 5 0" Foreground="DarkBlue" HorizontalAlignment="Center"/>
+                                <!--</CheckBox>-->
+                            </StackPanel>
                         </DataTemplate>
                     </ListView.ItemTemplate>
                 </ListView>
@@ -91,20 +88,24 @@
                 <Label DockPanel.Dock="Top" FontSize="14" HorizontalAlignment="Center" FontWeight="Bold" >EPIR To Generate</Label>
 
                 <ListView DockPanel.Dock="Bottom"
-                      ItemsSource="{Binding Carriers}"
-                      SelectedItem="{Binding SelectedCarrier, Mode=TwoWay}">
+                          ItemsSource="{Binding EpirfsToGenerate}"
+                          SelectedItem="{Binding SelectedCarrier, Mode=TwoWay}">
 
 
-                    <ListView.View>
+                    <!--<ListView.View>
                         <GridView>
-                            <GridViewColumn Width="150"
+                            <GridViewColumn Width="250"
                                         DisplayMemberBinding="{Binding Name}"
                                         Header="Country" />
-                            <GridViewColumn Width="250"
-                                        DisplayMemberBinding="{Binding Type}"
-                                        Header="EPIRF" />
                         </GridView>
-                    </ListView.View>
+                    </ListView.View>-->
+                    <ListView.ItemTemplate>
+                        <DataTemplate >
+                            <StackPanel>
+                                <TextBlock Text="{Binding Name}" Margin="5 0 5 0" Foreground="DarkBlue" HorizontalAlignment="Center"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
                 </ListView>
             </DockPanel>
 

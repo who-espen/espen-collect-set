@@ -83,6 +83,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Models\CollectionItem.cs" />
     <Compile Include="Services\IRestApi.cs" />
     <Compile Include="Models\EpirfList.cs" />
     <Compile Include="Models\MetabaseCollection.cs" />

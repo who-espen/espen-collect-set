@@ -5,6 +5,7 @@
     using System.Threading.Tasks;
     using Catel;
     using Catel.Collections;
+    using Catel.Logging;
     using Catel.MVVM;
     using Catel.Services;
     using EspenCollect.Core;
@@ -14,6 +15,7 @@
     {
         private readonly IPleaseWaitService _pleaseWaitService;
         private readonly IRestApi _restApi;
+        private static readonly ILog Log = LogManager.GetCurrentClassLogger();
 
         #region Constructors
         public EpirefGeneratorViewModel(IPleaseWaitService pleaseWaitService, IRestApi restApi)
@@ -26,7 +28,7 @@
 
             Download = new TaskCommand(OnExecuteDownload, CanExecuteDownload);
 
-            LoadEpirfTitle = new TaskCommand(OnExecuteLoadEpirfTitle, CanExecuteLoadEpirfTitle);
+            LoadEpirfTitle = new TaskCommand(OnExecuteLoadEpirfTitle);
 
             MetabaseCollections = new FastObservableCollection<MetabaseCollection>();
 
@@ -47,6 +49,7 @@
         public FastObservableCollection<MetabaseCollection> MetabaseCollections { get; set; }
 
         public FastObservableCollection<EpirfList> EpirfLists { get; set; }
+        //public FastObservableCollection<EpirfList> EpirfsToGenerate { get; set; }
 
         public TaskCommand Download { get; private set; }
 
@@ -57,7 +60,6 @@
         #region Methods
 
         protected bool CanExecuteDownload() => !string.IsNullOrWhiteSpace(SelectedEpirfFile);
-        protected bool CanExecuteLoadEpirfTitle() => SelectedItem != null;
 
         protected async Task OnExecuteDownload()
         {
@@ -67,8 +69,14 @@
         
         protected async Task OnExecuteLoadEpirfTitle()
         {
-            var selectedCollection = SelectedItem;
-            //await _epirfGenerator.GenerateEpirfAsync(SelectedEpirfFile);
+            Log.Info("Started loading EPIRF list");
+            if (SelectedItem != null)
+            {
+                var results = await LoadCollectionItem(SelectedItem).ConfigureAwait(true);
+
+                EpirfLists = new FastObservableCollection<EpirfList>(results.Select(i => new EpirfList { Name = i.Name }));
+            }
+
         }
 
         protected override async Task InitializeAsync()
@@ -145,7 +153,14 @@
             return metabaseCollections.Where(c => c.Location == "/");
         }
 
+        private Task<IEnumerable<CollectionItem>> LoadCollectionItem(MetabaseCollection selectedCollection)
+        {
+            //Argument.IsNotNull(() => selectedCollection);
 
+            var results = _restApi.GetAllCollectionItem(selectedCollection.Id);
+
+            return results;
+        }
 
         #endregion
     }

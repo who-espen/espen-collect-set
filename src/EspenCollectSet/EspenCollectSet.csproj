@@ -31,7 +31,9 @@
     <PackageReference Include="Catel.Core" Version="5.12.5" />
     <PackageReference Include="Catel.Fody" Version="4.3.0" PrivateAssets="all" />
     <PackageReference Include="Catel.MVVM" Version="5.12.5" />
+    <PackageReference Include="Extended.Wpf.Toolkit" Version="3.8.1" />
     <PackageReference Include="Fody" Version="6.1.1" PrivateAssets="all" />
+    <PackageReference Include="gong-wpf-dragdrop" Version="2.2.0" />
     <PackageReference Include="ModuleInit.Fody" Version="2.1.0" PrivateAssets="all" />
     <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
     <PackageReference Include="Obsolete.Fody" Version="5.2.1" PrivateAssets="all" />
@@ -40,8 +42,6 @@
     <PackageReference Include="WpfAnalyzers" Version="2.4.5" PrivateAssets="all">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Xceed.Products.Wpf.Toolkit.AvalonDock" Version="4.0.20076.12200" />
-    <PackageReference Include="Xceed.Products.Wpf.Toolkit.AvalonDock.Themes" Version="4.0.20076.12200" />
   </ItemGroup>
 
   <ItemGroup>

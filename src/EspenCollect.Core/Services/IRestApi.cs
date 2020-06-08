@@ -7,5 +7,7 @@
     public interface IRestApi
     {
         Task<IEnumerable<MetabaseCollection>> GetAllCollection();
+
+        Task<IEnumerable<CollectionItem>> GetAllCollectionItem(string collectionId);
     }
 }

@@ -2,6 +2,7 @@
 {
     using System.Collections.Generic;
     using System.Linq;
+    using System.Net;
     using System.Threading.Tasks;
     using EspenCollect.Core;
     using Newtonsoft.Json;
@@ -66,11 +67,18 @@
 
                 var response = _restClient.Get(request);
 
-                var items = await _restClient.GetAsync<List<CollectionItem>>(request).ConfigureAwait(false);
+                if(response.StatusCode == HttpStatusCode.OK || response.StatusCode == HttpStatusCode.Accepted
+                     || response.StatusCode == HttpStatusCode.Created)
+                {
+                    var items = JsonConvert.DeserializeObject<List<CollectionItem>>(response.Content);
 
-                var results = items.Where(i => i.Model == "card" && i.Name.ToUpper().Contains("EPIRF"));
+                    var results = items.Where(i => i.Model == "card" && i.Name.ToUpper().Contains("EPIRF"));
 
-                return results;
+                    return await Task.FromResult(results);
+                }
+
+                //return results;
+                return await Task.FromResult(new List<CollectionItem>().AsEnumerable());
             }
             catch (System.Exception e)
             {

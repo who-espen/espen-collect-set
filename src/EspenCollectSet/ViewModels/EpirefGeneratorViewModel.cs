@@ -72,7 +72,7 @@
             Log.Info("Started loading EPIRF list");
             if (SelectedItem != null)
             {
-                var results = await LoadCollectionItem(SelectedItem).ConfigureAwait(true);
+                var results = await LoadCollectionItem(SelectedItem).ConfigureAwait(false);
 
                 EpirfLists = new FastObservableCollection<EpirfList>(results.Select(i => new EpirfList { Name = i.Name }));
             }
@@ -153,11 +153,11 @@
             return metabaseCollections.Where(c => c.Location == "/");
         }
 
-        private Task<IEnumerable<CollectionItem>> LoadCollectionItem(MetabaseCollection selectedCollection)
+        private async Task<IEnumerable<CollectionItem>> LoadCollectionItem(MetabaseCollection selectedCollection)
         {
             //Argument.IsNotNull(() => selectedCollection);
 
-            var results = _restApi.GetAllCollectionItem(selectedCollection.Id);
+            var results = await _restApi.GetAllCollectionItem(selectedCollection.Id).ConfigureAwait(false);
 
             return results;
         }

@@ -30,8 +30,11 @@
 
             LoadEpirfTitle = new TaskCommand(OnExecuteLoadEpirfTitle);
 
+            CheckUncheckEpirf = new Command(OnCheckUncheckEpirf);
+
             MetabaseCollections = new FastObservableCollection<MetabaseCollection>();
 
+            EpirfsToGenerate = new FastObservableCollection<EpirfSpec>();
         }
 
         #endregion
@@ -48,12 +51,15 @@
 
         public FastObservableCollection<MetabaseCollection> MetabaseCollections { get; set; }
 
-        public FastObservableCollection<EpirfList> EpirfLists { get; set; }
-        //public FastObservableCollection<EpirfList> EpirfsToGenerate { get; set; }
+        public FastObservableCollection<EpirfSpec> EpirfLists { get; set; }
+        public FastObservableCollection<EpirfSpec> EpirfsToGenerate { get; set; }
+        public EpirfSpec SelectedEpirf { get; set; }
 
         public TaskCommand Download { get; private set; }
 
         public TaskCommand LoadEpirfTitle { get; private set; }
+
+        public Command CheckUncheckEpirf { get; private set; }
 
         #endregion
 
@@ -74,7 +80,7 @@
             {
                 var results = await LoadCollectionItem(SelectedItem).ConfigureAwait(false);
 
-                EpirfLists = new FastObservableCollection<EpirfList>(results.Select(i => new EpirfList { Name = i.Name }));
+                EpirfLists = new FastObservableCollection<EpirfSpec>(results.Select(i => new EpirfSpec { Name = i.Name, Id = i.Id }));
             }
 
         }
@@ -160,6 +166,26 @@
             var results = await _restApi.GetAllCollectionItem(selectedCollection.Id).ConfigureAwait(false);
 
             return results;
+        }
+
+        private void OnCheckUncheckEpirf() {
+            if (EpirfsToGenerate.Any())
+            {
+                var item = EpirfsToGenerate.FirstOrDefault(i => i.Id == SelectedEpirf.Id);
+
+                if (item != null)
+                {
+                    EpirfsToGenerate[EpirfsToGenerate.IndexOf(item)] = SelectedEpirf;
+                }
+                else
+                {
+                    EpirfsToGenerate.Add(SelectedEpirf);
+                }
+            }
+            else
+            {
+                EpirfsToGenerate.Add(SelectedEpirf);
+            }
         }
 
         #endregion

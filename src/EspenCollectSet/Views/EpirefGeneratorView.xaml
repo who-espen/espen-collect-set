@@ -60,19 +60,27 @@
                 <Label DockPanel.Dock="Top" FontSize="14" HorizontalAlignment="Center" FontWeight="Bold" >EPIRF</Label>
                 <ListView DockPanel.Dock="Bottom"
                           ItemsSource="{Binding EpirfLists}"
-                          SelectedItem="{Binding SelectedCarrier, Mode=TwoWay}">
+                          SelectedItem="{Binding SelectedEpirf, Mode=TwoWay}">
+
                     <!--<ListView.Background>
                     <ImageBrush ImageSource="/Resources/Images/logo.png"
                                 Opacity="0.3"
                                 Stretch="None" />
                 </ListView.Background>-->
 
+                    <i:Interaction.Triggers>
+
+                        <i:EventTrigger EventName="SelectionChanged">
+                            <catel:EventToCommand Command="{Binding CheckUncheckEpirf}"
+                                              DisableAssociatedObjectOnCannotExecute="False" />
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
 
                     <ListView.ItemTemplate>
                         <DataTemplate >
                             <StackPanel>
                                 <!--<TextBlock Text="{Binding Name}" Width="150" Foreground="DarkBlue" HorizontalAlignment="Center"/>-->
-                                <!--<CheckBox Margin="0" IsChecked="{Binding IsChecked}">-->
+                                <!--<CheckBox Margin="0" IsChecked="{Binding IsChecked, Mode=TwoWay}">-->
                                     <TextBlock Text="{Binding Name}" Margin="5 0 5 0" Foreground="DarkBlue" HorizontalAlignment="Center"/>
                                 <!--</CheckBox>-->
                             </StackPanel>

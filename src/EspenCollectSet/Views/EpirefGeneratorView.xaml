@@ -21,6 +21,8 @@
                 <ColumnDefinition Width="3" />
                 <ColumnDefinition Width="300" />
                 <ColumnDefinition Width="3" />
+                <ColumnDefinition Width="100" />
+                <ColumnDefinition Width="3" />
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
@@ -68,13 +70,13 @@
                                 Stretch="None" />
                 </ListView.Background>-->
 
-                    <i:Interaction.Triggers>
+                    <!--<i:Interaction.Triggers>
 
                         <i:EventTrigger EventName="SelectionChanged">
                             <catel:EventToCommand Command="{Binding CheckUncheckEpirf}"
                                               DisableAssociatedObjectOnCannotExecute="False" />
                         </i:EventTrigger>
-                    </i:Interaction.Triggers>
+                    </i:Interaction.Triggers>-->
 
                     <ListView.ItemTemplate>
                         <DataTemplate >
@@ -91,12 +93,19 @@
 
             <GridSplitter Grid.Column="3" Width="3" HorizontalAlignment="Stretch" />
 
-            <DockPanel Grid.Column="4">
-                <Label DockPanel.Dock="Top" FontSize="14" HorizontalAlignment="Center" FontWeight="Bold" >EPIR To Generate</Label>
+            <StackPanel Grid.Column="4"  HorizontalAlignment="Center" VerticalAlignment="center">
+                <Button Content="Add >>"  Margin="0 1.5 0 1.5" Command="{Binding CheckEpirf}"></Button>
+                <Button Content="&lt;&lt; Remove"  Margin="0 1.5 0 1.5" Width="85" Command="{Binding UncheckEpirf}" ></Button>
+            </StackPanel>
+
+            <GridSplitter Grid.Column="5" Width="3" HorizontalAlignment="Stretch" />
+
+            <DockPanel Grid.Column="6">
+                <Label DockPanel.Dock="Top" FontSize="14" HorizontalAlignment="Center"  FontWeight="Bold" >EPIR To Generate</Label>
 
                 <ListView DockPanel.Dock="Bottom"
                           ItemsSource="{Binding EpirfsToGenerate}"
-                          SelectedItem="{Binding SelectedCarrier, Mode=TwoWay}">
+                          SelectedItem="{Binding SelectedEpirfToGenerate, Mode=TwoWay}">
 
 
                     <!--<ListView.View>

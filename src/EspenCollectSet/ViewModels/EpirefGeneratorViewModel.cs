@@ -30,7 +30,9 @@
 
             LoadEpirfTitle = new TaskCommand(OnExecuteLoadEpirfTitle);
 
-            CheckUncheckEpirf = new Command(OnCheckUncheckEpirf);
+            CheckEpirf = new Command(OnCheckEpirf, CanOnCheckEpirf);
+
+            UncheckEpirf = new Command(OnUncheckEpirf, CanOnUncheckEpirf);
 
             MetabaseCollections = new FastObservableCollection<MetabaseCollection>();
 
@@ -53,13 +55,15 @@
 
         public FastObservableCollection<EpirfSpec> EpirfLists { get; set; }
         public FastObservableCollection<EpirfSpec> EpirfsToGenerate { get; set; }
+        public EpirfSpec SelectedEpirfToGenerate { get; set; }
         public EpirfSpec SelectedEpirf { get; set; }
 
         public TaskCommand Download { get; private set; }
 
         public TaskCommand LoadEpirfTitle { get; private set; }
 
-        public Command CheckUncheckEpirf { get; private set; }
+        public Command CheckEpirf { get; private set; }
+        public Command UncheckEpirf { get; private set; }
 
         #endregion
 
@@ -168,7 +172,10 @@
             return results;
         }
 
-        private void OnCheckUncheckEpirf() {
+        private bool CanOnCheckEpirf() => SelectedEpirf != null;
+        private bool CanOnUncheckEpirf() => SelectedEpirfToGenerate != null;
+
+        private void OnCheckEpirf() {
             if (EpirfsToGenerate.Any())
             {
                 var item = EpirfsToGenerate.FirstOrDefault(i => i.Id == SelectedEpirf.Id);
@@ -185,6 +192,14 @@
             else
             {
                 EpirfsToGenerate.Add(SelectedEpirf);
+            }
+        }
+
+        private void OnUncheckEpirf()
+        {
+            if (EpirfsToGenerate.Any())
+            {
+                EpirfsToGenerate.Remove(SelectedEpirfToGenerate);
             }
         }
 

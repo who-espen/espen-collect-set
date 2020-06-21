@@ -18,7 +18,7 @@
         {
             Argument.IsNotNull(nameof(serviceLocator), serviceLocator);
 
-            serviceLocator.RegisterType<IEpirfGenerator, EpirfGenerator>();
+            serviceLocator.RegisterType<IOnchoEpirfGenerator, OnchoEpirfGenerator>();
             serviceLocator.RegisterType<IRestApi, RestApi>();
         }
     }

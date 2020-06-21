@@ -103,7 +103,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="Services\EpirfGenerator.cs" />
+    <Compile Include="Services\OnchoEpirfGenerator.cs" />
     <Compile Include="Services\RestApi.cs" />
     <Compile Include="RootContainer.cs" />
   </ItemGroup>
@@ -119,6 +119,7 @@
     <None Include="Resources\WHO_EPIRF_PC.xlsm">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="Todo.md" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Properties\Resources.resx">

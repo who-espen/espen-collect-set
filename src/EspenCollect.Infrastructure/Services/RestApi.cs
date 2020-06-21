@@ -86,5 +86,30 @@
                 throw;
             }
         }
+
+        public async Task<MetabaseCardEpirfQuery> GetEpirfCard(string cardId)
+        {
+            try
+            {
+                var request = new RestRequest($"card/{cardId}/query", DataFormat.Json);
+
+                var response = _restClient.Get(request);
+
+                if (response.StatusCode == HttpStatusCode.OK || response.StatusCode == HttpStatusCode.Accepted
+                     || response.StatusCode == HttpStatusCode.Created)
+                {
+                    var results = JsonConvert.DeserializeObject<MetabaseCardEpirfQuery>(response.Content);
+
+                    return await Task.FromResult(results);
+                }
+
+                //return results;
+                return await Task.FromResult(new MetabaseCardEpirfQuery());
+            }
+            catch (System.Exception e)
+            {
+                throw;
+            }
+        }
     }
 }

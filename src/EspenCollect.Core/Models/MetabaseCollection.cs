@@ -1,5 +1,6 @@
 ﻿namespace EspenCollect.Core
 {
+    using System;
     using System.Collections.Generic;
 
     public class MetabaseCollection

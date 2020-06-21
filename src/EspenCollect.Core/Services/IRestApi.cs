@@ -9,5 +9,6 @@
         Task<IEnumerable<MetabaseCollection>> GetAllCollection();
 
         Task<IEnumerable<CollectionItem>> GetAllCollectionItem(string collectionId);
+        Task<MetabaseCardEpirfQuery> GetEpirfCard(string cardId);
     }
 }

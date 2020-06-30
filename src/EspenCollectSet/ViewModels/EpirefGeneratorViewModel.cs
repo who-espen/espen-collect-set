@@ -15,16 +15,19 @@
     {
         private readonly IPleaseWaitService _pleaseWaitService;
         private readonly IRestApi _restApi;
+        private readonly IOnchoEpirfGenerator _onchoEpirfGenerator;
         private static readonly ILog Log = LogManager.GetCurrentClassLogger();
 
         #region Constructors
-        public EpirefGeneratorViewModel(IPleaseWaitService pleaseWaitService, IRestApi restApi)
+        public EpirefGeneratorViewModel(IPleaseWaitService pleaseWaitService, IRestApi restApi, IOnchoEpirfGenerator onchoEpirfGenerator)
         {
             Argument.IsNotNull(() => pleaseWaitService);
             Argument.IsNotNull(() => restApi);
+            Argument.IsNotNull(() => onchoEpirfGenerator);
 
             _pleaseWaitService = pleaseWaitService;
             _restApi = restApi;
+            _onchoEpirfGenerator = onchoEpirfGenerator;
 
             Download = new TaskCommand(OnExecuteDownload, CanExecuteDownload);
 
@@ -33,6 +36,8 @@
             CheckEpirf = new Command(OnCheckEpirf, CanOnCheckEpirf);
 
             UncheckEpirf = new Command(OnUncheckEpirf, CanOnUncheckEpirf);
+
+            GenerateEpirf = new TaskCommand(OnGenerateEpirfAsync, CanGenerateEpirf);
 
             MetabaseCollections = new FastObservableCollection<MetabaseCollection>();
 
@@ -65,6 +70,8 @@
         public Command CheckEpirf { get; private set; }
         public Command UncheckEpirf { get; private set; }
 
+        public TaskCommand GenerateEpirf { get; private set; }
+
         #endregion
 
         #region Methods
@@ -87,6 +94,11 @@
                 EpirfLists = new FastObservableCollection<EpirfSpec>(results.Select(i => new EpirfSpec { Name = i.Name, Id = i.Id }));
             }
 
+        }
+
+        protected async Task OnGenerateEpirfAsync()
+        {
+            await _onchoEpirfGenerator.GenerateOnchoEpirfAsync(EpirfsToGenerate.FirstOrDefault().Id.ToString());
         }
 
         protected override async Task InitializeAsync()
@@ -173,6 +185,7 @@
         }
 
         private bool CanOnCheckEpirf() => SelectedEpirf != null;
+
         private bool CanOnUncheckEpirf() => SelectedEpirfToGenerate != null;
 
         private void OnCheckEpirf() {
@@ -202,6 +215,8 @@
                 EpirfsToGenerate.Remove(SelectedEpirfToGenerate);
             }
         }
+
+        private bool CanGenerateEpirf() => EpirfsToGenerate.Count > 0;
 
         #endregion
     }

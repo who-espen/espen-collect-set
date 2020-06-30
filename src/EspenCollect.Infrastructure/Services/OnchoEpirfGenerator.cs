@@ -1,5 +1,6 @@
 ﻿namespace EspenCollect.Services
 {
+    using System.IO;
     using System.Linq;
     using System.Threading.Tasks;
     using Excel = Microsoft.Office.Interop.Excel;
@@ -15,7 +16,8 @@
 
         public async Task GenerateOnchoEpirfAsync(string id)
         {
-            var filePath = @"Resources\WHO_EPIRF_PC.xlsm";
+            //var filePath2 = @"Resources\WHO_EPIRF_PC.xlsm";
+            var filePath = Path.GetFullPath(@"Resources\WHO_EPIRF_PC.xlsm");
             var excelApp = new Excel.Application
             {
                 Visible = false

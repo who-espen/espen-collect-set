@@ -33,7 +33,7 @@
             };
 
             _restClient = new RestClient("https://oem.securedatakit.com/api");
-            _restClient.AddDefaultHeader("X-Metabase-Session", "08be678f-8838-4f56-a8ac-183afa5f475b");
+            _restClient.AddDefaultHeader("X-Metabase-Session", "677e9caf-1828-4e31-9034-eb632e4dd833");
             _restClient.UseNewtonsoftJson(jsonNetSettings);
             _restClient.FailOnDeserializationError = true;
             _restClient.ThrowOnAnyError = true;
@@ -93,7 +93,7 @@
             {
                 var request = new RestRequest($"card/{cardId}/query", DataFormat.Json);
 
-                var response = _restClient.Get(request);
+                var response = _restClient.Post(request);
 
                 if (response.StatusCode == HttpStatusCode.OK || response.StatusCode == HttpStatusCode.Accepted
                      || response.StatusCode == HttpStatusCode.Created)

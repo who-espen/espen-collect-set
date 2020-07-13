@@ -1,62 +1,51 @@
 ﻿namespace EspenCollectSet
 {
-    using System.Windows;
-
-    using Catel.ApiCop;
-    using Catel.ApiCop.Listeners;
     using Catel.IoC;
-    using Catel.Logging;
-    using EspenCollectSet.Views;
-    using Orchestra.Services;
+    using Catel.Windows.Controls;
+    using System.Globalization;
+    using System.Threading;
+    using System.Windows;
+    using System.Windows.Markup;
 
     /// <summary>
     /// Interaction logic for App.xaml
     /// </summary>
     public partial class App : Application
     {
-        private static readonly ILog Log = LogManager.GetCurrentClassLogger();
 
         protected override void OnStartup(StartupEventArgs e)
         {
+
 #if DEBUG
-            LogManager.AddDebugListener();
+            Catel.Logging.LogManager.AddDebugListener();
 #endif
+            //This is an alternate way to initialize MaterialDesignInXAML if you don't use the MaterialDesignResourceDictionary in App.xaml
+            //Color primaryColor = SwatchHelper.Lookup[MaterialDesignColor.DeepPurple];
+            //Color accentColor = SwatchHelper.Lookup[MaterialDesignColor.Lime];
+            //ITheme theme = Theme.Create(new MaterialDesignLightTheme(), primaryColor, accentColor);
 
-            Log.Info("Starting application");
+            //Resources.SetTheme(theme);
 
-            // Want to improve performance? Uncomment the lines below. Note though that this will disable
-            // some features. 
-            //
-            // For more information, see http://docs.catelproject.com/vnext/faq/performance-considerations/
 
-            Log.Info("Improving performance");
-            Catel.Windows.Controls.UserControl.DefaultCreateWarningAndErrorValidatorForViewModelValue = false;
-            Catel.Windows.Controls.UserControl.DefaultSkipSearchingForInfoBarMessageControlValue = true;
+            Thread.CurrentThread.CurrentCulture = new CultureInfo("fr-FR");
+            Thread.CurrentThread.CurrentUICulture = new CultureInfo("fr-FR");
+            FrameworkElement.LanguageProperty.OverrideMetadata(typeof(FrameworkElement), new FrameworkPropertyMetadata(
+                        XmlLanguage.GetLanguage(CultureInfo.CurrentCulture.IetfLanguageTag)));
 
-            // TODO: Register custom types in the ServiceLocator
-            //Log.Info("Registering custom types");
             //var serviceLocator = ServiceLocator.Default;
-            //serviceLocator.RegisterType<IMyInterface, IMyClass>();
 
-            // To auto-forward styles, check out Orchestra (see https://github.com/wildgums/orchestra)
-            // StyleHelper.CreateStyleForwardersForDefaultStyles();
+            //serviceLocator.RegisterType<ISnackbarMessageQueue, SnackbarMessageQueue>();
 
-            var serviceLocator = ServiceLocator.Default;
-            var shellService = serviceLocator.ResolveType<IShellService>();
-            shellService.CreateAsync<ShellView>();
 
-            Log.Info("Calling base.OnStartup");
+            PerformanceTuning();
 
             base.OnStartup(e);
         }
 
-        protected override void OnExit(ExitEventArgs e)
+        protected void PerformanceTuning()
         {
-            // Get advisory report in console
-            ApiCopManager.AddListener(new ConsoleApiCopListener());
-            ApiCopManager.WriteResults();
-
-            base.OnExit(e);
+            UserControl.DefaultCreateWarningAndErrorValidatorForViewModelValue = false;
+            UserControl.DefaultSkipSearchingForInfoBarMessageControlValue = true;
         }
     }
 }

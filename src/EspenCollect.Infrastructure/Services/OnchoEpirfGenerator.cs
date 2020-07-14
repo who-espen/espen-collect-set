@@ -20,26 +20,27 @@
 
         public async Task GenerateOnchoEpirfAsync(string id)
         {
-            //var filePath2 = @"Resources\WHO_EPIRF_PC.xlsm";
+            var onchoRowsData = await _restApi.GetEpirfCard(id).ConfigureAwait(false);
+
             var filePath = Path.GetFullPath(@"Resources\WHO_EPIRF_PC.xlsm");
             var excelApp = new Excel.Application
             {
-                Visible = true
+                Visible = false
             };
 
             var epirfWorkBook = excelApp.Workbooks.Open(filePath, ReadOnly: false);
 
             var onchoSheet = epirfWorkBook.Worksheets.get_Item("ONCHO") as Excel.Worksheet;
 
-            var onchoRowsData = await _restApi.GetEpirfCard(id).ConfigureAwait(false);
-
             var onchoEpirfData = MetabaseCardToEpirfModel.MetabaseCardToEpirfOnchoModel(onchoRowsData);
 
             FillEpirfFile(onchoSheet, onchoEpirfData.ToList());
 
-            //epirfWorkBook.Save();
-            //epirfWorkBook.Close(true);
-            //excelApp.Quit();
+            //epirfWorkBook.Save(@"C:\Users\Dyesse\Desktop");
+            epirfWorkBook.SaveAs(@"C:\Users\Dyesse\Desktop\ToDeleteEpirf.xlsm");
+            epirfWorkBook.Close(true);
+            excelApp.Visible = true;
+            excelApp.Quit();
         }
 
         private void FillEpirfFile(Excel.Worksheet onchoSheet, IList<OnchoEpirf> onchoEpirfData) {
@@ -73,6 +74,7 @@
                 onchoSheet.Cells[i + 8, "U"] = onchoEpirfData[i].SerNumberOfPeopleExamined;
                 onchoSheet.Cells[i + 8, "V"] = onchoEpirfData[i].SerAgeGoup;
                 onchoSheet.Cells[i + 8, "W"] = onchoEpirfData[i].SerPositive;
+                onchoSheet.Cells[i + 8, "X"] = onchoEpirfData[i].SerPercentagePositive;
                 onchoSheet.Cells[i + 8, "Y"] = onchoEpirfData[i].BlackFliesExamined;
                 onchoSheet.Cells[i + 8, "Z"] = onchoEpirfData[i].SpeciesPcr;
                 onchoSheet.Cells[i + 8, "AA"] = onchoEpirfData[i].PercentagePoolScreenPositice;

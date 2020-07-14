@@ -84,6 +84,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Extensions\ObjectConverterExtension.cs" />
     <Compile Include="Models\CollectionItem.cs" />
     <Compile Include="Models\MetabaseCardEpirfQuery.cs" />
     <Compile Include="Models\OnchoEpirf.cs" />

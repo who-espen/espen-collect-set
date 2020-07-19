@@ -86,8 +86,11 @@
   <ItemGroup>
     <Compile Include="Extensions\ObjectConverterExtension.cs" />
     <Compile Include="Models\CollectionItem.cs" />
+    <Compile Include="Models\EPIRFModels\LfEpirf.cs" />
+    <Compile Include="Models\EPIRFModels\SchEpirf.cs" />
+    <Compile Include="Models\EPIRFModels\SthEpirf.cs" />
     <Compile Include="Models\MetabaseCardEpirfQuery.cs" />
-    <Compile Include="Models\OnchoEpirf.cs" />
+    <Compile Include="Models\EPIRFModels\OnchoEpirf.cs" />
     <Compile Include="Services\IOnchoEpirfGenerator.cs" />
     <Compile Include="Services\IRestApi.cs" />
     <Compile Include="Models\EpirfSpec.cs" />

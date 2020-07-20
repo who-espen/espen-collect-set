@@ -8,11 +8,8 @@
 
     public class OnchoEpirfGenerator : EpirfGeneratorBase, IOnchoEpirfGenerator
     {
-        private readonly IRestApi _restApi;
-
         public OnchoEpirfGenerator(IRestApi restApi) : base(restApi)
         {
-            _restApi = restApi;
         }
 
         public async Task GenerateOnchoEpirfAsync(string id, string path)

@@ -1,47 +1,28 @@
 ﻿namespace EspenCollect.Services
 {
-    using System.Collections.Generic;
-    using System.IO;
     using System.Linq;
     using System.Threading.Tasks;
-    using EspenCollect.Core.Models;
+    using EspenCollect.Core;
     using EspenCollect.Helpers;
     using Excel = Microsoft.Office.Interop.Excel;
 
-    public class OnchoEpirfGenerator : IOnchoEpirfGenerator
+    public class OnchoEpirfGenerator : EpirfGeneratorBase, IOnchoEpirfGenerator
     {
         private readonly IRestApi _restApi;
 
-        public OnchoEpirfGenerator(IRestApi restApi)
+        public OnchoEpirfGenerator(IRestApi restApi) : base(restApi)
         {
             _restApi = restApi;
         }
 
         public async Task GenerateOnchoEpirfAsync(string id, string path)
         {
-            var onchoRowsData = await _restApi.GetEpirfCard(id).ConfigureAwait(false);
-
-            var filePath = Path.GetFullPath(@"Resources\WHO_EPIRF_PC.xlsm");
-            var excelApp = new Excel.Application
-            {
-                Visible = false
-            };
-
-            var epirfWorkBook = excelApp.Workbooks.Open(filePath, ReadOnly: false);
-
-            var onchoSheet = epirfWorkBook.Worksheets.get_Item("ONCHO") as Excel.Worksheet;
-
-            var onchoEpirfData = MetabaseCardToEpirfModel.MetabaseCardToEpirfOnchoModel(onchoRowsData);
-
-            FillEpirfFile(onchoSheet, onchoEpirfData.ToList());
-
-            epirfWorkBook.SaveAs(path);
-            epirfWorkBook.Close(true);
-            excelApp.Visible = true;
-            excelApp.Quit();
+            await GenerateEpirfAsync(id, path, "ONCHO", FillEpirfFile);
         }
 
-        private void FillEpirfFile(Excel.Worksheet onchoSheet, IList<OnchoEpirf> onchoEpirfData) {
+        private void FillEpirfFile(Excel.Worksheet onchoSheet, MetabaseCardEpirfQuery rowsData)
+        {
+            var onchoEpirfData = MetabaseCardToEpirfModel.MetabaseCardToEpirfOnchoModel(rowsData);
 
             onchoSheet.Unprotect("MDA");
 

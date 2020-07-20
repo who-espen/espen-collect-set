@@ -7,7 +7,7 @@
 
     public class MetabaseCardToEpirfModel
     {
-        internal static IEnumerable<OnchoEpirf> MetabaseCardToEpirfOnchoModel(MetabaseCardEpirfQuery metabaseCardEpirfQuery)
+        internal static IList<OnchoEpirf> MetabaseCardToEpirfOnchoModel(MetabaseCardEpirfQuery metabaseCardEpirfQuery)
         {
             var rows = metabaseCardEpirfQuery.Data.Rows;
             var onchoEpirfs = new List<OnchoEpirf>();

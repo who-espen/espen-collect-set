@@ -4,6 +4,6 @@
 
     public interface IOnchoEpirfGenerator
     {
-        Task GenerateOnchoEpirfAsync(string id);
+        Task GenerateOnchoEpirfAsync(string id, string path);
     }
 }

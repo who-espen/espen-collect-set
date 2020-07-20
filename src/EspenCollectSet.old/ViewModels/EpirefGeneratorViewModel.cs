@@ -98,7 +98,7 @@
 
         protected async Task OnGenerateEpirfAsync()
         {
-            await _onchoEpirfGenerator.GenerateOnchoEpirfAsync(EpirfsToGenerate.FirstOrDefault().Id.ToString());
+            await _onchoEpirfGenerator.GenerateOnchoEpirfAsync(EpirfsToGenerate.FirstOrDefault().Id.ToString(),"");
         }
 
         protected override async Task InitializeAsync()

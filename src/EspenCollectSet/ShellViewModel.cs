@@ -17,17 +17,21 @@
         private readonly IRestApi _restApi;
         private readonly IOnchoEpirfGenerator _onchoEpirfGenerator;
         private static readonly ILog Log = LogManager.GetCurrentClassLogger();
+        private readonly ISaveFileService _saveFileService;
 
         #region Constructors
-        public ShellViewModel(IPleaseWaitService pleaseWaitService, IRestApi restApi, IOnchoEpirfGenerator onchoEpirfGenerator)
+        public ShellViewModel(IPleaseWaitService pleaseWaitService, IRestApi restApi, IOnchoEpirfGenerator onchoEpirfGenerator,
+            ISaveFileService saveFileService)
         {
             Argument.IsNotNull(() => pleaseWaitService);
             Argument.IsNotNull(() => restApi);
             Argument.IsNotNull(() => onchoEpirfGenerator);
+            Argument.IsNotNull(() => saveFileService);
 
             _pleaseWaitService = pleaseWaitService;
             _restApi = restApi;
             _onchoEpirfGenerator = onchoEpirfGenerator;
+            _saveFileService = saveFileService;
 
             Download = new TaskCommand(OnExecuteDownload, CanExecuteDownload);
 
@@ -98,7 +102,17 @@
 
         protected async Task OnGenerateEpirfAsync()
         {
-            await _onchoEpirfGenerator.GenerateOnchoEpirfAsync(EpirfsToGenerate.FirstOrDefault().Id.ToString());
+            var fileToSave = await _saveFileService.DetermineFileAsync(new DetermineSaveFileContext
+            {
+                Filter = "Excel Macro-enabled Workbook|*.xlsm",
+                Title = "Save EPIRF as"
+            });
+
+            if (fileToSave.Result)
+            {
+
+                await _onchoEpirfGenerator.GenerateOnchoEpirfAsync(EpirfsToGenerate.FirstOrDefault().Id.ToString(), fileToSave.FileName);
+            }
         }
 
         protected override async Task InitializeAsync()
@@ -107,7 +121,8 @@
             {
                 await base.InitializeAsync();
 
-                _pleaseWaitService.Show(async () => {
+                _pleaseWaitService.Show(async () =>
+                {
 
                     var collections = await PopulateAsync().ConfigureAwait(false);
 
@@ -147,8 +162,10 @@
                 if (treatedCollection.Any())
                 {
 
-                    collectionParrents.ForEach(p => {
-                        treatedCollection.ForEach(c => {
+                    collectionParrents.ForEach(p =>
+                    {
+                        treatedCollection.ForEach(c =>
+                        {
                             var ParentIds = c.Location.Split('/');
 
                             if (ParentIds.Length > 1 && p.Id == ParentIds[ParentIds.Length - 2])

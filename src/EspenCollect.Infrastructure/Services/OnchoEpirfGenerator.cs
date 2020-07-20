@@ -18,7 +18,7 @@
             _restApi = restApi;
         }
 
-        public async Task GenerateOnchoEpirfAsync(string id)
+        public async Task GenerateOnchoEpirfAsync(string id, string path)
         {
             var onchoRowsData = await _restApi.GetEpirfCard(id).ConfigureAwait(false);
 
@@ -36,8 +36,8 @@
 
             FillEpirfFile(onchoSheet, onchoEpirfData.ToList());
 
-            //epirfWorkBook.Save(@"C:\Users\Dyesse\Desktop");
-            epirfWorkBook.SaveAs(@"C:\Users\Dyesse\Desktop\ToDeleteEpirf.xlsm");
+            epirfWorkBook.SaveAs(path);
+            //epirfWorkBook.SaveAs(@"C:\Users\Dyesse\Desktop\ToDeleteEpirf.xlsm");
             epirfWorkBook.Close(true);
             excelApp.Visible = true;
             excelApp.Quit();

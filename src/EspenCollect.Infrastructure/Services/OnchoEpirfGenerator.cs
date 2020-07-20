@@ -4,8 +4,7 @@
     using System.IO;
     using System.Linq;
     using System.Threading.Tasks;
-    using Catel;
-    using EspenCollect.Data.Models;
+    using EspenCollect.Core.Models;
     using EspenCollect.Helpers;
     using Excel = Microsoft.Office.Interop.Excel;
 
@@ -37,7 +36,6 @@
             FillEpirfFile(onchoSheet, onchoEpirfData.ToList());
 
             epirfWorkBook.SaveAs(path);
-            //epirfWorkBook.SaveAs(@"C:\Users\Dyesse\Desktop\ToDeleteEpirf.xlsm");
             epirfWorkBook.Close(true);
             excelApp.Visible = true;
             excelApp.Quit();

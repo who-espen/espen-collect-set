@@ -1,5 +1,5 @@
 ﻿
-namespace EspenCollect.Data.Models
+namespace EspenCollect.Core.Models
 {
     public class OnchoEpirf
     {

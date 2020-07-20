@@ -3,7 +3,7 @@
     using System.Collections.Generic;
     using System.Linq;
     using EspenCollect.Core;
-    using EspenCollect.Data.Models;
+    using EspenCollect.Core.Models;
 
     public class MetabaseCardToEpirfModel
     {

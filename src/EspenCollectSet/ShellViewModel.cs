@@ -18,26 +18,29 @@
         private readonly IOnchoEpirfGenerator _onchoEpirfGenerator;
         private static readonly ILog Log = LogManager.GetCurrentClassLogger();
         private readonly ISaveFileService _saveFileService;
+        private readonly IMessageService _messageService;
 
         #region Constructors
         public ShellViewModel(IPleaseWaitService pleaseWaitService, IRestApi restApi, IOnchoEpirfGenerator onchoEpirfGenerator,
-            ISaveFileService saveFileService)
+            ISaveFileService saveFileService, IMessageService messageService)
         {
             Argument.IsNotNull(() => pleaseWaitService);
             Argument.IsNotNull(() => restApi);
             Argument.IsNotNull(() => onchoEpirfGenerator);
             Argument.IsNotNull(() => saveFileService);
+            Argument.IsNotNull(() => messageService);
 
             _pleaseWaitService = pleaseWaitService;
             _restApi = restApi;
             _onchoEpirfGenerator = onchoEpirfGenerator;
             _saveFileService = saveFileService;
+            _messageService = messageService;
 
             Download = new TaskCommand(OnExecuteDownload, CanExecuteDownload);
 
             LoadEpirfTitle = new TaskCommand(OnExecuteLoadEpirfTitle);
 
-            CheckEpirf = new Command(OnCheckEpirf, CanOnCheckEpirf);
+            CheckEpirf = new TaskCommand(OnCheckEpirfAsync, CanOnCheckEpirf);
 
             UncheckEpirf = new Command(OnUncheckEpirf, CanOnUncheckEpirf);
 
@@ -71,7 +74,7 @@
 
         public TaskCommand LoadEpirfTitle { get; private set; }
 
-        public Command CheckEpirf { get; private set; }
+        public TaskCommand CheckEpirf { get; private set; }
         public Command UncheckEpirf { get; private set; }
 
         public TaskCommand GenerateEpirf { get; private set; }
@@ -95,13 +98,22 @@
             {
                 var results = await LoadCollectionItem(SelectedItem).ConfigureAwait(false);
 
-                EpirfLists = new FastObservableCollection<EpirfSpec>(results.Select(i => new EpirfSpec { Name = i.Name, Id = i.Id }));
+                EpirfLists = new FastObservableCollection<EpirfSpec>(results.Select(i => new EpirfSpec { Name = i.Name, Id = i.Id, CollectionName = SelectedItem.Name }));
             }
 
         }
 
         protected async Task OnGenerateEpirfAsync()
         {
+            var collectionCount = (from x in EpirfsToGenerate select x.CollectionName).Distinct().Count();
+
+            if (collectionCount > 1)
+            {
+                if (await _messageService.ShowAsync("Are you sure to generate an EPIRF for more than one collection?",
+                    "Are you sure?", MessageButton.YesNo, MessageImage.Question) == MessageResult.No)
+                    return;
+            }
+
             var fileToSave = await _saveFileService.DetermineFileAsync(new DetermineSaveFileContext
             {
                 Filter = "Excel Macro-enabled Workbook|*.xlsm",
@@ -110,8 +122,14 @@
 
             if (fileToSave.Result)
             {
+                var epirfTitle = EpirfsToGenerate.FirstOrDefault().Name;
 
-                await _onchoEpirfGenerator.GenerateOnchoEpirfAsync(EpirfsToGenerate.FirstOrDefault().Id.ToString(), fileToSave.FileName);
+                if (((!string.IsNullOrEmpty(epirfTitle)) & (epirfTitle.ToUpper().Contains("ONCHO"))))
+                {
+                    await _onchoEpirfGenerator.GenerateOnchoEpirfAsync(EpirfsToGenerate.FirstOrDefault().Id.ToString(), fileToSave.FileName);
+                }
+                
+                
             }
         }
 
@@ -206,7 +224,7 @@
 
         private bool CanOnUncheckEpirf() => SelectedEpirfToGenerate != null;
 
-        private void OnCheckEpirf()
+        private async Task OnCheckEpirfAsync()
         {
             if (EpirfsToGenerate.Any())
             {

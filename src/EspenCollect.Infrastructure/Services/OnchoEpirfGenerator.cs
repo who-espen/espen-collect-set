@@ -1,5 +1,6 @@
 ﻿namespace EspenCollect.Services
 {
+    using System.IO;
     using System.Linq;
     using System.Threading.Tasks;
     using EspenCollect.Core;
@@ -8,13 +9,24 @@
 
     public class OnchoEpirfGenerator : EpirfGeneratorBase, IOnchoEpirfGenerator
     {
+        private readonly IRestApi _restApi;
+
         public OnchoEpirfGenerator(IRestApi restApi) : base(restApi)
         {
+            _restApi = restApi;
         }
 
         public async Task GenerateOnchoEpirfAsync(string id, string path)
         {
-            await GenerateEpirfAsync(id, path, "ONCHO", FillEpirfFile);
+            //await GenerateEpirfAsync(id, path, "ONCHO", FillEpirfFile);
+            //return null;
+        }
+
+        public async Task DispatchToOnchoSheet(string id, Excel.Worksheet onchoSheet)
+        {
+            var rowsData = await _restApi.GetEpirfCard(id).ConfigureAwait(false);
+
+            FillEpirfFile(onchoSheet, rowsData);            
         }
 
         private void FillEpirfFile(Excel.Worksheet onchoSheet, MetabaseCardEpirfQuery rowsData)

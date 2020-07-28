@@ -20,6 +20,7 @@
 
             serviceLocator.RegisterType<IOnchoEpirfGenerator, OnchoEpirfGenerator>();
             serviceLocator.RegisterType<ILfEpirfGenerator, LfEpirfGenerator>();
+            serviceLocator.RegisterType<IEpirfGenerator, EpirfGenerator>();
             serviceLocator.RegisterType<IRestApi, RestApi>();
         }
     }

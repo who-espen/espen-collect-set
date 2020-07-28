@@ -19,22 +19,25 @@
         private static readonly ILog Log = LogManager.GetCurrentClassLogger();
         private readonly ISaveFileService _saveFileService;
         private readonly IMessageService _messageService;
+        private readonly IEpirfGenerator _epirfGenerator;
 
         #region Constructors
         public ShellViewModel(IPleaseWaitService pleaseWaitService, IRestApi restApi, IOnchoEpirfGenerator onchoEpirfGenerator,
-            ISaveFileService saveFileService, IMessageService messageService)
+            ISaveFileService saveFileService, IMessageService messageService, IEpirfGenerator epirfGenerator)
         {
             Argument.IsNotNull(() => pleaseWaitService);
             Argument.IsNotNull(() => restApi);
             Argument.IsNotNull(() => onchoEpirfGenerator);
             Argument.IsNotNull(() => saveFileService);
             Argument.IsNotNull(() => messageService);
+            Argument.IsNotNull(() => epirfGenerator);
 
             _pleaseWaitService = pleaseWaitService;
             _restApi = restApi;
             _onchoEpirfGenerator = onchoEpirfGenerator;
             _saveFileService = saveFileService;
             _messageService = messageService;
+            _epirfGenerator = epirfGenerator;
 
             Download = new TaskCommand(OnExecuteDownload, CanExecuteDownload);
 
@@ -122,14 +125,14 @@
 
             if (fileToSave.Result)
             {
-                var epirfTitle = EpirfsToGenerate.FirstOrDefault().Name;
+                //var epirfTitle = EpirfsToGenerate.FirstOrDefault().Name;
 
-                if (((!string.IsNullOrEmpty(epirfTitle)) & (epirfTitle.ToUpper().Contains("ONCHO"))))
-                {
-                    await _onchoEpirfGenerator.GenerateOnchoEpirfAsync(EpirfsToGenerate.FirstOrDefault().Id.ToString(), fileToSave.FileName);
-                }
-                
-                
+                //if (((!string.IsNullOrEmpty(epirfTitle)) & (epirfTitle.ToUpper().Contains("ONCHO"))))
+                //{
+                //    await _onchoEpirfGenerator.GenerateOnchoEpirfAsync(EpirfsToGenerate.FirstOrDefault().Id.ToString(), fileToSave.FileName);
+                //}
+
+                await _epirfGenerator.GenerateEpirfAsync(EpirfLists, fileToSave.FileName);
             }
         }
 

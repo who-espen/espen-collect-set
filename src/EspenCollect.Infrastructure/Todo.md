@@ -2,6 +2,8 @@
 Logic to generate multiple EPIRF
  - Add control to select EPIRF for only one country
  - Add method to handle EPIRF for multiple excel file
+ - Remove individual EPIRF from loading page
+ - remove inline caracter from epirfs
 
 Done
 Test API to the view model

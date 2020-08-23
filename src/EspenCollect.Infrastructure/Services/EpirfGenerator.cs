@@ -9,10 +9,12 @@
     public class EpirfGenerator : IEpirfGenerator
     {
         private readonly IOnchoEpirfInit _onchoEpirfGenerator;
+        private readonly ILfEpirfInit _lfEpirfInit;
 
-        public EpirfGenerator(IOnchoEpirfInit onchoEpirfGenerator)
+        public EpirfGenerator(IOnchoEpirfInit onchoEpirfGenerator, ILfEpirfInit lfEpirfInit)
         {
             _onchoEpirfGenerator = onchoEpirfGenerator;
+            _lfEpirfInit = lfEpirfInit;
         }
 
         public async Task GenerateEpirfAsync(IList<EpirfSpec> epirfSpecs, string path)
@@ -37,7 +39,7 @@
                 {
                     var onchoSheet = epirfWorkBook.Worksheets.get_Item("LF") as Excel.Worksheet;
 
-                    await _onchoEpirfGenerator.DispatchToEpirfSheet(e.Id.ToString(), onchoSheet).ConfigureAwait(false);
+                    await _lfEpirfInit.DispatchToEpirfSheet(e.Id.ToString(), onchoSheet).ConfigureAwait(false);
                 }
             }
 

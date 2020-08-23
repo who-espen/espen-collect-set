@@ -15,14 +15,14 @@
     {
         private readonly IPleaseWaitService _pleaseWaitService;
         private readonly IRestApi _restApi;
-        private readonly IOnchoEpirfGenerator _onchoEpirfGenerator;
+        private readonly IOnchoEpirfInit _onchoEpirfGenerator;
         private static readonly ILog Log = LogManager.GetCurrentClassLogger();
         private readonly ISaveFileService _saveFileService;
         private readonly IMessageService _messageService;
         private readonly IEpirfGenerator _epirfGenerator;
 
         #region Constructors
-        public ShellViewModel(IPleaseWaitService pleaseWaitService, IRestApi restApi, IOnchoEpirfGenerator onchoEpirfGenerator,
+        public ShellViewModel(IPleaseWaitService pleaseWaitService, IRestApi restApi, IOnchoEpirfInit onchoEpirfGenerator,
             ISaveFileService saveFileService, IMessageService messageService, IEpirfGenerator epirfGenerator)
         {
             Argument.IsNotNull(() => pleaseWaitService);
@@ -43,7 +43,7 @@
 
             LoadEpirfTitle = new TaskCommand(OnExecuteLoadEpirfTitle);
 
-            CheckEpirf = new TaskCommand(OnCheckEpirfAsync, CanOnCheckEpirf);
+            CheckEpirf = new Command(OnCheckEpirf, CanOnCheckEpirf);
 
             UncheckEpirf = new Command(OnUncheckEpirf, CanOnUncheckEpirf);
 
@@ -77,7 +77,7 @@
 
         public TaskCommand LoadEpirfTitle { get; private set; }
 
-        public TaskCommand CheckEpirf { get; private set; }
+        public Command CheckEpirf { get; private set; }
         public Command UncheckEpirf { get; private set; }
 
         public TaskCommand GenerateEpirf { get; private set; }
@@ -132,7 +132,7 @@
                 //    await _onchoEpirfGenerator.GenerateOnchoEpirfAsync(EpirfsToGenerate.FirstOrDefault().Id.ToString(), fileToSave.FileName);
                 //}
 
-                await _epirfGenerator.GenerateEpirfAsync(EpirfLists, fileToSave.FileName);
+                await _epirfGenerator.GenerateEpirfAsync(EpirfsToGenerate, fileToSave.FileName);
             }
         }
 
@@ -227,7 +227,7 @@
 
         private bool CanOnUncheckEpirf() => SelectedEpirfToGenerate != null;
 
-        private async Task OnCheckEpirfAsync()
+        private void OnCheckEpirf()
         {
             if (EpirfsToGenerate.Any())
             {

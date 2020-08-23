@@ -5,31 +5,25 @@
     using System.Threading.Tasks;
     using EspenCollect.Core;
     using EspenCollect.Helpers;
-    using Excel = Microsoft.Office.Interop.Excel;
+    using Microsoft.Office.Interop.Excel;
 
-    public class OnchoEpirfGenerator : EpirfGeneratorBase, IOnchoEpirfGenerator
+    public class OnchoEpirfInit : IOnchoEpirfInit
     {
         private readonly IRestApi _restApi;
 
-        public OnchoEpirfGenerator(IRestApi restApi) : base(restApi)
+        public OnchoEpirfInit(IRestApi restApi)
         {
             _restApi = restApi;
         }
 
-        public async Task GenerateOnchoEpirfAsync(string id, string path)
-        {
-            //await GenerateEpirfAsync(id, path, "ONCHO", FillEpirfFile);
-            //return null;
-        }
-
-        public async Task DispatchToOnchoSheet(string id, Excel.Worksheet onchoSheet)
+        public async Task DispatchToEpirfSheet(string id, Worksheet onchoSheet)
         {
             var rowsData = await _restApi.GetEpirfCard(id).ConfigureAwait(false);
 
             FillEpirfFile(onchoSheet, rowsData);            
         }
 
-        private void FillEpirfFile(Excel.Worksheet onchoSheet, MetabaseCardEpirfQuery rowsData)
+        private void FillEpirfFile(Worksheet onchoSheet, MetabaseCardEpirfQuery rowsData)
         {
             var onchoEpirfData = MetabaseCardToEpirfModel.MetabaseCardToEpirfOnchoModel(rowsData);
 

@@ -97,8 +97,9 @@
     <Compile Include="Models\MetabaseCardEpirfQuery.cs" />
     <Compile Include="Models\EPIRFModels\OnchoEpirf.cs" />
     <Compile Include="Services\IEpirfGenerator.cs" />
-    <Compile Include="Services\ILfEpirfGenerator.cs" />
-    <Compile Include="Services\IOnchoEpirfGenerator.cs" />
+    <Compile Include="Services\IEpirfInit.cs" />
+    <Compile Include="Services\ILfEpirfInit.cs" />
+    <Compile Include="Services\IOnchoEpirfInit.cs" />
     <Compile Include="Services\IRestApi.cs" />
     <Compile Include="Models\EpirfSpec.cs" />
     <Compile Include="Models\MetabaseCollection.cs" />

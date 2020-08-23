@@ -4,17 +4,23 @@
     using System.Threading.Tasks;
     using EspenCollect.Core;
     using EspenCollect.Helpers;
+    using Microsoft.Office.Interop.Excel;
     using Excel = Microsoft.Office.Interop.Excel;
 
-    public class LfEpirfGenerator : EpirfGeneratorBase, ILfEpirfGenerator
+    public class LfEpirfInit : ILfEpirfInit
     {
-        public LfEpirfGenerator(IRestApi restApi) : base(restApi)
+        private readonly IRestApi _restApi;
+
+        public LfEpirfInit(IRestApi restApi)
         {
+            _restApi = restApi;
         }
 
-        public async Task GenerateLfEpirfAsync(string id, string path)
+        public async Task DispatchToEpirfSheet(string id, Worksheet epirfSheet)
         {
-            await GenerateEpirfAsync(id, path, "LF", FillEpirfFile);
+            var rowsData = await _restApi.GetEpirfCard(id).ConfigureAwait(false);
+
+            FillEpirfFile(epirfSheet, rowsData);
         }
 
         private void FillEpirfFile(Excel.Worksheet lfSheet, MetabaseCardEpirfQuery rowsData)

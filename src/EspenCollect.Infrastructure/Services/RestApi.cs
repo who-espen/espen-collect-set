@@ -33,7 +33,7 @@
             };
 
             _restClient = new RestClient("https://oem.securedatakit.com/api");
-            _restClient.AddDefaultHeader("X-Metabase-Session", "8420f337-d2c1-4fc3-9b49-352884abd414");
+            _restClient.AddDefaultHeader("X-Metabase-Session", "34255cb6-0b73-4d19-8ead-8bd2b2bacae3");
             _restClient.UseNewtonsoftJson(jsonNetSettings);
             _restClient.FailOnDeserializationError = true;
             _restClient.ThrowOnAnyError = true;

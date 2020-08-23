@@ -15,11 +15,11 @@
     {
         private readonly IPleaseWaitService _pleaseWaitService;
         private readonly IRestApi _restApi;
-        private readonly IOnchoEpirfGenerator _onchoEpirfGenerator;
+        private readonly IOnchoEpirfInit _onchoEpirfGenerator;
         private static readonly ILog Log = LogManager.GetCurrentClassLogger();
 
         #region Constructors
-        public EpirefGeneratorViewModel(IPleaseWaitService pleaseWaitService, IRestApi restApi, IOnchoEpirfGenerator onchoEpirfGenerator)
+        public EpirefGeneratorViewModel(IPleaseWaitService pleaseWaitService, IRestApi restApi, IOnchoEpirfInit onchoEpirfGenerator)
         {
             Argument.IsNotNull(() => pleaseWaitService);
             Argument.IsNotNull(() => restApi);

@@ -107,10 +107,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="Services\EpirfGeneratorBase.cs" />
     <Compile Include="Services\EpirfGenerator.cs" />
-    <Compile Include="Services\LfEpirfGenerator.cs" />
-    <Compile Include="Services\OnchoEpirfGenerator.cs" />
+    <Compile Include="Services\LfEpirfInit.cs" />
+    <Compile Include="Services\OnchoEpirfInit.cs" />
     <Compile Include="Services\RestApi.cs" />
     <Compile Include="RootContainer.cs" />
   </ItemGroup>

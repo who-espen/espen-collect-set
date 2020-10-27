@@ -10,11 +10,13 @@
     {
         private readonly IOnchoEpirfInit _onchoEpirfGenerator;
         private readonly ILfEpirfInit _lfEpirfInit;
+        private readonly ISthEpirfInit _sthEpirfInit;
 
-        public EpirfGenerator(IOnchoEpirfInit onchoEpirfGenerator, ILfEpirfInit lfEpirfInit)
+        public EpirfGenerator(IOnchoEpirfInit onchoEpirfGenerator, ILfEpirfInit lfEpirfInit, ISthEpirfInit sthEpirfInit)
         {
             _onchoEpirfGenerator = onchoEpirfGenerator;
             _lfEpirfInit = lfEpirfInit;
+            _sthEpirfInit = sthEpirfInit;
         }
 
         public async Task GenerateEpirfAsync(IList<EpirfSpec> epirfSpecs, string path)
@@ -37,9 +39,15 @@
                 }
                 else if (e.Name.ToUpper().Contains("LF"))
                 {
-                    var onchoSheet = epirfWorkBook.Worksheets.get_Item("LF") as Excel.Worksheet;
+                    var lfSheet = epirfWorkBook.Worksheets.get_Item("LF") as Excel.Worksheet;
 
-                    await _lfEpirfInit.DispatchToEpirfSheet(e.Id.ToString(), onchoSheet).ConfigureAwait(false);
+                    await _lfEpirfInit.DispatchToEpirfSheet(e.Id.ToString(), lfSheet).ConfigureAwait(false);
+                }
+                else if (e.Name.ToUpper().Contains("STH"))
+                {
+                    var sthSheet = epirfWorkBook.Worksheets.get_Item("STH") as Excel.Worksheet;
+
+                    await _sthEpirfInit.DispatchToEpirfSheet(e.Id.ToString(), sthSheet).ConfigureAwait(false);
                 }
             }
 

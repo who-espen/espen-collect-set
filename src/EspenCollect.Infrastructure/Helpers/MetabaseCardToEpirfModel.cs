@@ -104,5 +104,53 @@
 
             return lfEpirfs;
         }
+
+
+        internal static IList<SthEpirf> MetabaseCardToEpirSthfModel(MetabaseCardEpirfQuery metabaseCardEpirfQuery)
+        {
+            var rows = metabaseCardEpirfQuery.Data.Rows;
+            var sthEpirfs = new List<SthEpirf>();
+
+            if (rows.Any())
+            {
+                for (var i = 0; i < rows.Count(); i++)
+                {
+                    sthEpirfs.Add(new SthEpirf
+                    {
+                        SurveyType = rows[i][0] as string,
+                        IuName = rows[i][1] as string,
+                        CommunityName = rows[i][2] as string,
+                        NumberOfRoundsPC = rows[i][3] as string,
+                        Month = rows[i][4] as string,
+                        Year = rows[i][5].GetValueOrNull<int>(),
+                        Latitude = rows[i][6].GetValueOrNull<decimal>(),
+                        Longitude = rows[i][7].GetValueOrNull<decimal>(),
+                        AgeGroupSurveyed = rows[i][8] as string,
+                        DiagnosticTest = rows[i][9] as string,
+                        AscarisNumberOfPeopleExamined = rows[i][10].GetValueOrNull<int>(),
+                        AscarisNumberOfPeoplePositive = rows[i][11].GetValueOrNull<int>(),
+                        AscarisPercentagePositive = rows[i][12].GetValueOrNull<float>(),
+                        AscarisPercentageHeavy = rows[i][13].GetValueOrNull<float>(),
+                        AscarisPercentageModerate = rows[i][14].GetValueOrNull<float>(),
+                        HookwormNumberOfPeopleExamined = rows[i][15].GetValueOrNull<int>(),
+                        HookwormNumberOfPeoplePositive = rows[i][16].GetValueOrNull<int>(),
+                        HookwormPercentagePositive = rows[i][17].GetValueOrNull<float>(),
+                        HookwormPercentageHeavy = rows[i][18].GetValueOrNull<float>(),
+                        HookwormPercentageModerate = rows[i][19].GetValueOrNull<float>(),
+                        TrichurisNumberOfPeopleExamined = rows[i][20].GetValueOrNull<int>(),
+                        TrichurisNumberOfPeoplePositive = rows[i][21].GetValueOrNull<int>(),
+                        TrichurisPercentagePositive = rows[i][22].GetValueOrNull<float>(),
+                        TrichurisPercentageHeavy = rows[i][23].GetValueOrNull<float>(),
+                        TrichurisPercentageModerate = rows[i][24].GetValueOrNull<float>(),
+                        SthExamined = rows[i][25].GetValueOrNull<int>(),
+                        SthPositive = rows[i][26].GetValueOrNull<int>(),
+                        SthPercentagePositve = rows[i][27].GetValueOrNull<float>()
+
+                    }); ;
+                }
+            }
+
+            return sthEpirfs;
+        }
     }
 }

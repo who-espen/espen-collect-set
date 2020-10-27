@@ -112,6 +112,7 @@
     <Compile Include="Services\OnchoEpirfInit.cs" />
     <Compile Include="Services\RestApi.cs" />
     <Compile Include="RootContainer.cs" />
+    <Compile Include="Services\SthEpirfInit.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\EspenCollect.Core\EspenCollect.Core.csproj">

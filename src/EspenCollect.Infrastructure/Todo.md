@@ -1,5 +1,7 @@
 ﻿Todo
 Logic to generate multiple EPIRF
+ - Generate STH EPIRF
+ - Generate CHISTO EPIRF
  - Add control to select EPIRF for only one country
  - Add method to handle EPIRF for multiple excel file
  - Remove individual EPIRF from loading page

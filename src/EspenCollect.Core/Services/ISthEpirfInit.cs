@@ -1,6 +1,6 @@
 ﻿namespace EspenCollect.Services
 {
-    public interface ILfEpirfInit : IEpirfInit
+    public interface ISthEpirfInit : IEpirfInit
     {
     }
 }

@@ -23,7 +23,7 @@
             FillEpirfFile(epirfSheet, rowsData);
         }
 
-        private void FillEpirfFile(Excel.Worksheet lfSheet, MetabaseCardEpirfQuery rowsData)
+        private void FillEpirfFile(Worksheet lfSheet, MetabaseCardEpirfQuery rowsData)
         {
             var lfEpirfData = MetabaseCardToEpirfModel.MetabaseCardToEpirfLfModel(rowsData);
 

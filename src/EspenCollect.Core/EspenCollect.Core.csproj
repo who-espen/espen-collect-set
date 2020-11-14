@@ -104,6 +104,7 @@
     <Compile Include="Models\EpirfSpec.cs" />
     <Compile Include="Models\MetabaseCollection.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\ISchEpirfInit.cs" />
     <Compile Include="Services\ISthEpirfInit.cs" />
   </ItemGroup>
   <ItemGroup>

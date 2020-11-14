@@ -21,6 +21,7 @@
             serviceLocator.RegisterType<IOnchoEpirfInit, OnchoEpirfInit>();
             serviceLocator.RegisterType<ILfEpirfInit, LfEpirfInit>();
             serviceLocator.RegisterType<ISthEpirfInit, SthEpirfInit>();
+            serviceLocator.RegisterType<ISchEpirfInit, SchEpirfInit>();
             serviceLocator.RegisterType<IEpirfGenerator, EpirfGenerator>();
             serviceLocator.RegisterType<IRestApi, RestApi>();
         }

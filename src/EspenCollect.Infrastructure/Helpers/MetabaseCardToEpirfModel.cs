@@ -152,5 +152,44 @@
 
             return sthEpirfs;
         }
+
+
+        internal static IList<SchEpirf> MetabaseCardToEpirSchfModel(MetabaseCardEpirfQuery metabaseCardEpirfQuery)
+        {
+            var rows = metabaseCardEpirfQuery.Data.Rows;
+            var schEpirfs = new List<SchEpirf>();
+
+            if (rows.Any())
+            {
+                for (var i = 0; i < rows.Count(); i++)
+                {
+                    schEpirfs.Add(new SchEpirf
+                    {
+                        SurveyType = rows[i][0] as string,
+                        IuName = rows[i][1] as string,
+                        SiteName = rows[i][2] as string,
+                        Month = rows[i][3] as string,
+                        Year = rows[i][4].GetValueOrNull<int>(),
+                        Latitude = rows[i][5] as string,
+                        Longitude = rows[i][6] as string,
+                        AgeGroup = rows[i][7] as string,
+                        DiagnosticTest = rows[i][8] as string,
+                        UrinaryNumberOfPeopleExamined = rows[i][9] as string,
+                        UrinaryNumberofPositive = rows[i][10] as string,
+                        UrinaryPercentageOfPositive = rows[i][11].GetValueOrNull<float>(),
+                        UrinaryPercentageHeavy = rows[i][12].GetValueOrNull<float>(),
+                        UrinaryPercentageLow = rows[i][13].GetValueOrNull<float>(),
+                        IntestinalNumberOfPeopleExamined = rows[i][14] as string,
+                        IntestinalNumberofPositive = rows[i][15] as string,
+                        IntestinalPercentageOfPositive = rows[i][16].GetValueOrNull<float>(),
+                        IntestinalPercentageHeavy = rows[i][17].GetValueOrNull<float>(),
+                        IntestinalPercentageModerate = rows[i][18].GetValueOrNull<float>()
+                    });
+                }
+            }
+
+            return schEpirfs;
+        }
+
     }
 }

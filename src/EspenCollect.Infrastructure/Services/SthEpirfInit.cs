@@ -24,42 +24,45 @@
 
         private void FillEpirfFile(Worksheet lfSheet, MetabaseCardEpirfQuery rowsData)
         {
-            var lfEpirfData = MetabaseCardToEpirfModel.MetabaseCardToEpirSthfModel(rowsData);
+            var sthEpirfData = MetabaseCardToEpirfModel.MetabaseCardToEpirSthfModel(rowsData);
+
+            var c = lfSheet.Columns["I"] as Range;
+            c.NumberFormat = "@";
 
             lfSheet.Unprotect("MDA");
 
-            lfSheet.Range["A8:AB8"].Copy(lfSheet.Range[$"A8:AB{7 + lfEpirfData.Count()}"]);
+            lfSheet.Range["A8:AB8"].Copy(lfSheet.Range[$"A8:AB{7 + sthEpirfData.Count()}"]);
 
-            for (var i = 0; i < lfEpirfData.Count(); i++)
+            for (var i = 0; i < sthEpirfData.Count(); i++)
             {
-                lfSheet.Cells[i + 8, "A"] = lfEpirfData[i].SurveyType;
-                lfSheet.Cells[i + 8, "B"] = lfEpirfData[i].IuName;
-                lfSheet.Cells[i + 8, "C"] = lfEpirfData[i].CommunityName;
-                lfSheet.Cells[i + 8, "D"] = lfEpirfData[i].NumberOfRoundsPC;
-                lfSheet.Cells[i + 8, "E"] = lfEpirfData[i].Month;
-                lfSheet.Cells[i + 8, "F"] = lfEpirfData[i].Year;
-                lfSheet.Cells[i + 8, "G"] = lfEpirfData[i].Latitude;
-                lfSheet.Cells[i + 8, "H"] = lfEpirfData[i].Longitude;
-                lfSheet.Cells[i + 8, "I"] = lfEpirfData[i].AgeGroupSurveyed;
-                lfSheet.Cells[i + 8, "J"] = lfEpirfData[i].DiagnosticTest;
-                lfSheet.Cells[i + 8, "K"] = lfEpirfData[i].AscarisNumberOfPeopleExamined;
-                lfSheet.Cells[i + 8, "L"] = lfEpirfData[i].AscarisNumberOfPeoplePositive;
-                lfSheet.Cells[i + 8, "M"] = lfEpirfData[i].AscarisPercentagePositive;
-                lfSheet.Cells[i + 8, "N"] = lfEpirfData[i].AscarisPercentageHeavy;
-                lfSheet.Cells[i + 8, "O"] = lfEpirfData[i].AscarisPercentageModerate;
-                lfSheet.Cells[i + 8, "P"] = lfEpirfData[i].HookwormNumberOfPeopleExamined;
-                lfSheet.Cells[i + 8, "Q"] = lfEpirfData[i].HookwormNumberOfPeoplePositive;
-                lfSheet.Cells[i + 8, "R"] = lfEpirfData[i].HookwormPercentagePositive;
-                lfSheet.Cells[i + 8, "S"] = lfEpirfData[i].HookwormPercentageHeavy;
-                lfSheet.Cells[i + 8, "T"] = lfEpirfData[i].HookwormPercentageModerate;
-                lfSheet.Cells[i + 8, "U"] = lfEpirfData[i].TrichurisNumberOfPeopleExamined;
-                lfSheet.Cells[i + 8, "V"] = lfEpirfData[i].TrichurisNumberOfPeoplePositive;
-                lfSheet.Cells[i + 8, "W"] = lfEpirfData[i].TrichurisPercentagePositive;
-                lfSheet.Cells[i + 8, "X"] = lfEpirfData[i].TrichurisPercentageHeavy;
-                lfSheet.Cells[i + 8, "Y"] = lfEpirfData[i].TrichurisPercentageModerate;
-                lfSheet.Cells[i + 8, "Z"] = lfEpirfData[i].SthExamined;
-                lfSheet.Cells[i + 8, "AA"] = lfEpirfData[i].SthPositive;
-                lfSheet.Cells[i + 8, "AB"] = lfEpirfData[i].SthPercentagePositve;
+                lfSheet.Cells[i + 8, "A"] = sthEpirfData[i].SurveyType;
+                lfSheet.Cells[i + 8, "B"] = sthEpirfData[i].IuName;
+                lfSheet.Cells[i + 8, "C"] = sthEpirfData[i].CommunityName;
+                lfSheet.Cells[i + 8, "D"] = sthEpirfData[i].NumberOfRoundsPC;
+                lfSheet.Cells[i + 8, "E"] = sthEpirfData[i].Month;
+                lfSheet.Cells[i + 8, "F"] = sthEpirfData[i].Year;
+                lfSheet.Cells[i + 8, "G"] = sthEpirfData[i].Latitude;
+                lfSheet.Cells[i + 8, "H"] = sthEpirfData[i].Longitude;
+                lfSheet.Cells[i + 8, "I"] = sthEpirfData[i].AgeGroupSurveyed;
+                lfSheet.Cells[i + 8, "J"] = sthEpirfData[i].DiagnosticTest;
+                lfSheet.Cells[i + 8, "K"] = sthEpirfData[i].AscarisNumberOfPeopleExamined;
+                lfSheet.Cells[i + 8, "L"] = sthEpirfData[i].AscarisNumberOfPeoplePositive;
+                lfSheet.Cells[i + 8, "M"] = sthEpirfData[i].AscarisPercentagePositive;
+                lfSheet.Cells[i + 8, "N"] = sthEpirfData[i].AscarisPercentageHeavy;
+                lfSheet.Cells[i + 8, "O"] = sthEpirfData[i].AscarisPercentageModerate;
+                lfSheet.Cells[i + 8, "P"] = sthEpirfData[i].HookwormNumberOfPeopleExamined;
+                lfSheet.Cells[i + 8, "Q"] = sthEpirfData[i].HookwormNumberOfPeoplePositive;
+                lfSheet.Cells[i + 8, "R"] = sthEpirfData[i].HookwormPercentagePositive;
+                lfSheet.Cells[i + 8, "S"] = sthEpirfData[i].HookwormPercentageHeavy;
+                lfSheet.Cells[i + 8, "T"] = sthEpirfData[i].HookwormPercentageModerate;
+                lfSheet.Cells[i + 8, "U"] = sthEpirfData[i].TrichurisNumberOfPeopleExamined;
+                lfSheet.Cells[i + 8, "V"] = sthEpirfData[i].TrichurisNumberOfPeoplePositive;
+                lfSheet.Cells[i + 8, "W"] = sthEpirfData[i].TrichurisPercentagePositive;
+                lfSheet.Cells[i + 8, "X"] = sthEpirfData[i].TrichurisPercentageHeavy;
+                lfSheet.Cells[i + 8, "Y"] = sthEpirfData[i].TrichurisPercentageModerate;
+                lfSheet.Cells[i + 8, "Z"] = sthEpirfData[i].SthExamined;
+                lfSheet.Cells[i + 8, "AA"] = sthEpirfData[i].SthPositive;
+                lfSheet.Cells[i + 8, "AB"] = sthEpirfData[i].SthPercentagePositve;
             }
 
             lfSheet.Protect();

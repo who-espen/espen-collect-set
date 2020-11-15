@@ -31,6 +31,9 @@
 
             lfSheet.Range["A17:AC17"].Copy(lfSheet.Range[$"A17:AC{16 + lfEpirfData.Count()}"]);
 
+            var c = lfSheet.Columns["L"] as Range;
+            c.NumberFormat = "@";
+
             for (var i = 0; i < lfEpirfData.Count(); i++)
             {
                 lfSheet.Cells[i + 17, "A"] = lfEpirfData[i].TypeOfSurvey;

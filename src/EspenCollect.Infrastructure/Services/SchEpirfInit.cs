@@ -21,38 +21,41 @@
             FillEpirfFile(epirfSheet, rowsData);
         }
 
-        private void FillEpirfFile(Worksheet sthSheet, MetabaseCardEpirfQuery rowsData)
+        private void FillEpirfFile(Worksheet schSheet, MetabaseCardEpirfQuery rowsData)
         {
             var sthEpirfData = MetabaseCardToEpirfModel.MetabaseCardToEpirSchfModel(rowsData);
 
-            sthSheet.Unprotect("MDA");
+            schSheet.Unprotect("MDA");
 
-            sthSheet.Range["A8:S8"].Copy(sthSheet.Range[$"A8:S{7 + sthEpirfData.Count}"]);
+            schSheet.Range["A8:S8"].Copy(schSheet.Range[$"A8:S{7 + sthEpirfData.Count}"]);
+
+            var c = schSheet.Columns["H"] as Range;
+            c.NumberFormat = "@";
 
             for (var i = 0; i < sthEpirfData.Count; i++)
             {
-                sthSheet.Cells[i + 8, "A"] = sthEpirfData[i].SurveyType;
-                sthSheet.Cells[i + 8, "B"] = sthEpirfData[i].IuName;
-                sthSheet.Cells[i + 8, "C"] = sthEpirfData[i].SiteName;
-                sthSheet.Cells[i + 8, "D"] = sthEpirfData[i].Month;
-                sthSheet.Cells[i + 8, "E"] = sthEpirfData[i].Year;
-                sthSheet.Cells[i + 8, "F"] = sthEpirfData[i].Latitude;
-                sthSheet.Cells[i + 8, "G"] = sthEpirfData[i].Longitude;
-                sthSheet.Cells[i + 8, "H"] = sthEpirfData[i].AgeGroup;
-                sthSheet.Cells[i + 8, "I"] = sthEpirfData[i].DiagnosticTest;
-                sthSheet.Cells[i + 8, "J"] = sthEpirfData[i].UrinaryNumberOfPeopleExamined;
-                sthSheet.Cells[i + 8, "K"] = sthEpirfData[i].UrinaryNumberofPositive;
-                sthSheet.Cells[i + 8, "L"] = sthEpirfData[i].UrinaryPercentageOfPositive;
-                sthSheet.Cells[i + 8, "M"] = sthEpirfData[i].UrinaryPercentageHeavy;
-                sthSheet.Cells[i + 8, "N"] = sthEpirfData[i].UrinaryPercentageLow;
-                sthSheet.Cells[i + 8, "O"] = sthEpirfData[i].IntestinalNumberOfPeopleExamined;
-                sthSheet.Cells[i + 8, "P"] = sthEpirfData[i].IntestinalNumberofPositive;
-                sthSheet.Cells[i + 8, "Q"] = sthEpirfData[i].IntestinalPercentageOfPositive;
-                sthSheet.Cells[i + 8, "R"] = sthEpirfData[i].IntestinalPercentageHeavy;
-                sthSheet.Cells[i + 8, "S"] = sthEpirfData[i].IntestinalPercentageModerate;
+                schSheet.Cells[i + 8, "A"] = sthEpirfData[i].SurveyType;
+                schSheet.Cells[i + 8, "B"] = sthEpirfData[i].IuName;
+                schSheet.Cells[i + 8, "C"] = sthEpirfData[i].SiteName;
+                schSheet.Cells[i + 8, "D"] = sthEpirfData[i].Month;
+                schSheet.Cells[i + 8, "E"] = sthEpirfData[i].Year;
+                schSheet.Cells[i + 8, "F"] = sthEpirfData[i].Latitude;
+                schSheet.Cells[i + 8, "G"] = sthEpirfData[i].Longitude;
+                schSheet.Cells[i + 8, "H"] = sthEpirfData[i].AgeGroup;
+                schSheet.Cells[i + 8, "I"] = sthEpirfData[i].DiagnosticTest;
+                schSheet.Cells[i + 8, "J"] = sthEpirfData[i].UrinaryNumberOfPeopleExamined;
+                schSheet.Cells[i + 8, "K"] = sthEpirfData[i].UrinaryNumberofPositive;
+                schSheet.Cells[i + 8, "L"] = sthEpirfData[i].UrinaryPercentageOfPositive;
+                schSheet.Cells[i + 8, "M"] = sthEpirfData[i].UrinaryPercentageHeavy;
+                schSheet.Cells[i + 8, "N"] = sthEpirfData[i].UrinaryPercentageLow;
+                schSheet.Cells[i + 8, "O"] = sthEpirfData[i].IntestinalNumberOfPeopleExamined;
+                schSheet.Cells[i + 8, "P"] = sthEpirfData[i].IntestinalNumberofPositive;
+                schSheet.Cells[i + 8, "Q"] = sthEpirfData[i].IntestinalPercentageOfPositive;
+                schSheet.Cells[i + 8, "R"] = sthEpirfData[i].IntestinalPercentageHeavy;
+                schSheet.Cells[i + 8, "S"] = sthEpirfData[i].IntestinalPercentageModerate;
             }
 
-            sthSheet.Protect();
+            schSheet.Protect();
         }
     }
 }

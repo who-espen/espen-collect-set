@@ -31,6 +31,9 @@
 
             onchoSheet.Range["A8:AE8"].Copy(onchoSheet.Range[$"A8:AE{7 + onchoEpirfData.Count()}"]);
 
+            var c = onchoSheet.Columns["V"] as Range;
+            c.NumberFormat = "@";
+
             for (var i = 0; i < onchoEpirfData.Count(); i++)
             {
                 onchoSheet.Cells[i + 8, "A"] = onchoEpirfData[i].TypeOfsurvey;

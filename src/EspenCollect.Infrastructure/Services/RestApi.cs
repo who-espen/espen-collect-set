@@ -40,6 +40,23 @@
             _restClient.ThrowOnDeserializationError = true;
         }
 
+        public async Task<Session> Authenticate(string username, string password)
+        {
+            try
+            {
+                var request = new RestRequest("session", DataFormat.Json).AddJsonBody(new { username, password });
+
+                var session = await _restClient.GetAsync<Session>(request).ConfigureAwait(false);
+
+                return session;
+            }
+            catch (System.Exception e)
+            {
+
+                throw;
+            }
+        }
+
         public async Task<IEnumerable<MetabaseCollection>> GetAllCollection()
         {
             try

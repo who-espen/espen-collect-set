@@ -107,6 +107,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="Services\AuthenticationService.cs" />
     <Compile Include="Services\EpirfGenerator.cs" />
     <Compile Include="Services\LfEpirfInit.cs" />
     <Compile Include="Services\OnchoEpirfInit.cs" />

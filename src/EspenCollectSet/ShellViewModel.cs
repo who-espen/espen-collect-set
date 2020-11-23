@@ -5,6 +5,7 @@
     using System.Threading.Tasks;
     using Catel;
     using Catel.Collections;
+    using Catel.IoC;
     using Catel.Logging;
     using Catel.MVVM;
     using Catel.Services;
@@ -23,7 +24,7 @@
 
         #region Constructors
         public ShellViewModel(IPleaseWaitService pleaseWaitService, IRestApi restApi, IOnchoEpirfInit onchoEpirfGenerator,
-            ISaveFileService saveFileService, IMessageService messageService, IEpirfGenerator epirfGenerator)
+            ISaveFileService saveFileService, IMessageService messageService, IEpirfGenerator epirfGenerator, IUIVisualizerService visualizerService)
         {
             Argument.IsNotNull(() => pleaseWaitService);
             Argument.IsNotNull(() => restApi);
@@ -52,6 +53,13 @@
             MetabaseCollections = new FastObservableCollection<MetabaseCollection>();
 
             EpirfsToGenerate = new FastObservableCollection<EpirfSpec>();
+
+            var typeFactory = this.GetTypeFactory();
+
+            var loginViewModel = typeFactory.CreateInstance<LoginViewModel>();
+
+
+            visualizerService.ShowDialogAsync(loginViewModel);
         }
 
         #endregion

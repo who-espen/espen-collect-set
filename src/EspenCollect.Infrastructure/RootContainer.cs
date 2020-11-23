@@ -24,6 +24,7 @@
             serviceLocator.RegisterType<ISchEpirfInit, SchEpirfInit>();
             serviceLocator.RegisterType<IEpirfGenerator, EpirfGenerator>();
             serviceLocator.RegisterType<IRestApi, RestApi>();
+            serviceLocator.RegisterType<IAuthenticationService, AuthenticationService>();
         }
     }
 }

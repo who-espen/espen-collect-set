@@ -1,5 +1,7 @@
-﻿using Catel.IoC;
+﻿using Catel.Data;
+using Catel.IoC;
 using EspenCollect.Infrastructure;
+using Orc.FluentValidation;
 
 /// <summary>
 /// Used by the ModuleInit. All code inside the Initialize method is ran as soon as the assembly is loaded.
@@ -15,6 +17,9 @@ public static class ModuleInitializer
 
 
         var rootContainer = new RootContainer();
+
+        ServiceLocator.Default.RegisterType<IValidatorProvider, FluentValidatorProvider>();
+
 
         rootContainer.Initialize(serviceLocator);
     }

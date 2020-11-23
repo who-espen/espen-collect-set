@@ -46,7 +46,7 @@
             {
                 var request = new RestRequest("session", DataFormat.Json).AddJsonBody(new { username, password });
 
-                var session = await _restClient.GetAsync<Session>(request).ConfigureAwait(false);
+                var session = await _restClient.PostAsync<Session>(request).ConfigureAwait(false);
 
                 return session;
             }

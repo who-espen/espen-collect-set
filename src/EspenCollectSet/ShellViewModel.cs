@@ -59,7 +59,7 @@
             var loginViewModel = typeFactory.CreateInstance<LoginViewModel>();
 
 
-            visualizerService.ShowDialogAsync(loginViewModel);
+            visualizerService.ShowDialogAsync(loginViewModel).ConfigureAwait(false);
         }
 
         #endregion

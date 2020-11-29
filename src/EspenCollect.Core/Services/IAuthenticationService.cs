@@ -5,7 +5,6 @@
 
     public interface IAuthenticationService
     {
-        Task Authenticate(string username, string password, Action<string> successCallback,
-            Action<string> failureCallback);
+        Task<string> Authenticate(string username, string password);
     }
 }

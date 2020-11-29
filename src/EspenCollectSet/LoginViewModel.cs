@@ -76,9 +76,9 @@
 
         protected async Task OnSaveCommandExecuteAsync()
         {
-            await _authenticationService.Authenticate(Username, Password, LoginSuccess, LoginFailure).ConfigureAwait(true);
+           var sessionId = await _authenticationService.Authenticate(Username, Password).ConfigureAwait(true);
 
-            //OnLoginExecuteFinished();
+            await OnLoginExecuteFinished(sessionId).ConfigureAwait(false);
         }
 
         protected bool CanSaveCommandExecute()
@@ -88,31 +88,15 @@
 
         protected async Task OnCancelCommandExecuteAsync()
         {
-            await CloseViewModelAsync(true);
+            await CloseViewModelAsync(true).ConfigureAwait(false);
         }
-
-        private async void LoginSuccess(string roleOfAuthenticatedUser)
+        private async Task OnLoginExecuteFinished(string sessionId)
         {
-            Argument.IsNotNullOrWhitespace("roleOfAuthenticatedUser", roleOfAuthenticatedUser);
-
-            LoginStatus = "Succeed";
-
-            //_authorizationService.GetAllowedModules(
-            //    roleOfAuthenticatedUser,
-            //    LoadCorrespondingModules);
-
-            //await CloseViewModel(true).ConfigureAwait(true);
-
-            await CloseViewModelAsync(true).ConfigureAwait(true);
-        }
-
-
-        private void LoginFailure(string errorMessage)
-        {
-            Argument.IsNotNullOrWhitespace("errorMessage", errorMessage);
-
-            LoginStatus = "Failed";
-            _messageService.ShowErrorAsync(errorMessage);
+            if (!string.IsNullOrEmpty(sessionId))
+            {
+                await CloseViewModelAsync(true).ConfigureAwait(false);
+            }
+            else await _messageService.ShowErrorAsync("Username or password incorrect").ConfigureAwait(false);
         }
 
         /// <summary>
@@ -125,14 +109,13 @@
         /// </param>
         protected async override Task OnClosedAsync(bool? result)
         {
-           await base.OnClosedAsync(result);
-
-            var b = !result;
-            if (b != null && (bool)b)
+            var value = !result;
+            if (value == null || (bool)value)
             {
-                Application.Current.Shutdown();
+                Application.Current.Shutdown(-1);
             }
-        }
 
+            await base.OnClosedAsync(result).ConfigureAwait(false);
+        }
     }
 }

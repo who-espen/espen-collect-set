@@ -14,15 +14,17 @@
             _restApi = restApi;
         }
 
-        public async Task Authenticate(string userName, string password, Action<string> successCallback, Action<string> failureCallback)
+        public async Task<string> Authenticate(string username, string password)
         {
 
-            Argument.IsNotNullOrWhitespace("userName", userName);
+            Argument.IsNotNullOrWhitespace("userName", username);
             Argument.IsNotNullOrWhitespace("password", password);
 
-            var session = await _restApi.Authenticate(userName, password);
+            var session = await _restApi.Authenticate(username, password);
 
             ServiceLocator.Default.RegisterInstance(session);
+
+            return session.Id;
         }
     }
 }

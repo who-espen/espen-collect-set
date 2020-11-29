@@ -37,16 +37,16 @@
             </i:Interaction.Behaviors>
         </PasswordBox>
 
-        <Button Margin="0,140,106,0"
+        <Button Margin="0,140,21,0"
                     HorizontalAlignment="Right"
                     VerticalAlignment="Top"
                     Command="{Binding SaveCommand}"
                     Content="Log In"
                     ToolTip="Click to log in" />
-        <Button Margin="0,140,17,0"
+        <!--<Button Margin="0,140,17,0"
                     HorizontalAlignment="Right"
                     VerticalAlignment="Top"
                     Command="{Binding CancelCommand}"
-                    Content="Cancel" />
+                    Content="Cancel" />-->
     </Grid>
 </catel:Window>

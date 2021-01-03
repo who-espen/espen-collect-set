@@ -6,7 +6,7 @@
 
     public interface IRestApi
     {
-        Task<Session> Authenticate(string username, string password);
+        Task<SessionType> Authenticate(string username, string password);
 
         Task<IEnumerable<MetabaseCollection>> GetAllCollection();
 

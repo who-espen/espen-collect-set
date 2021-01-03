@@ -1,7 +1,12 @@
 ﻿namespace EspenCollect.Core
 {
 
-    public class Session
+    public static class Session
+    {
+        public static string Id { get; set; }
+    }
+
+    public class SessionType
     {
         public string Id { get; set; }
     }

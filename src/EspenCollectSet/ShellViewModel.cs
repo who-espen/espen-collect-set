@@ -21,6 +21,7 @@
         private readonly ISaveFileService _saveFileService;
         private readonly IMessageService _messageService;
         private readonly IEpirfGenerator _epirfGenerator;
+        private readonly IUIVisualizerService _visualizerService;
 
         #region Constructors
         public ShellViewModel(IPleaseWaitService pleaseWaitService, IRestApi restApi, IOnchoEpirfInit onchoEpirfGenerator,
@@ -32,6 +33,7 @@
             Argument.IsNotNull(() => saveFileService);
             Argument.IsNotNull(() => messageService);
             Argument.IsNotNull(() => epirfGenerator);
+            Argument.IsNotNull(() => visualizerService);
 
             _pleaseWaitService = pleaseWaitService;
             _restApi = restApi;
@@ -39,6 +41,7 @@
             _saveFileService = saveFileService;
             _messageService = messageService;
             _epirfGenerator = epirfGenerator;
+            _visualizerService = visualizerService;
 
             Download = new TaskCommand(OnExecuteDownload, CanExecuteDownload);
 
@@ -53,13 +56,8 @@
             MetabaseCollections = new FastObservableCollection<MetabaseCollection>();
 
             EpirfsToGenerate = new FastObservableCollection<EpirfSpec>();
-
-            var typeFactory = this.GetTypeFactory();
-
-            var loginViewModel = typeFactory.CreateInstance<LoginViewModel>();
-
-
-            visualizerService.ShowDialogAsync(loginViewModel).ConfigureAwait(false);
+            
+                InitializeDataAsync();
         }
 
         #endregion
@@ -144,26 +142,65 @@
             }
         }
 
-        protected override async Task InitializeAsync()
+        //protected override async Task InitializeAsync()
+        //{
+        //    try
+        //    {
+        //        await base.InitializeAsync();
+
+        //        _pleaseWaitService.Show(async () =>
+        //        {
+
+        //            var collections = await PopulateAsync().ConfigureAwait(false);
+
+        //            MetabaseCollections.AddItems(collections);
+
+        //        }, "Loading Metabase collections");
+
+        //        //var collections = await PopulateAsync().ConfigureAwait(false);
+
+        //        //MetabaseCollections.AddItems(collections);
+        //    }
+        //    catch (System.Exception e)
+        //    {
+
+        //        throw e;
+        //    }
+        //}
+
+        protected async Task InitializeDataAsync()
         {
             try
             {
-                await base.InitializeAsync();
+                var typeFactory = this.GetTypeFactory();
 
-                _pleaseWaitService.Show(async () =>
+                var loginViewModel = typeFactory.CreateInstance<LoginViewModel>();
+
+                var r = await _visualizerService.ShowDialogAsync(loginViewModel).ConfigureAwait(false);
+
+                //_pleaseWaitService.Show(async () =>
+                //{
+
+                //    var collections = await PopulateAsync().ConfigureAwait(false);
+
+                //    MetabaseCollections.AddItems(collections);
+
+                //}, "Loading Metabase collections");
+
+                if (r == true)
                 {
-
                     var collections = await PopulateAsync().ConfigureAwait(false);
 
                     MetabaseCollections.AddItems(collections);
-
-                }, "Loading Metabase collections");
+                }
             }
             catch (System.Exception e)
             {
 
                 throw e;
             }
+
+            //return Task.CompletedTask;
         }
 
         private async Task<IEnumerable<MetabaseCollection>> PopulateAsync()

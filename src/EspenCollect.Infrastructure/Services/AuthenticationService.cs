@@ -4,6 +4,7 @@
     using System.Threading.Tasks;
     using Catel;
     using Catel.IoC;
+    using EspenCollect.Core;
 
     public class AuthenticationService : IAuthenticationService
     {
@@ -22,7 +23,8 @@
 
             var session = await _restApi.Authenticate(username, password);
 
-            ServiceLocator.Default.RegisterInstance(session);
+            //ServiceLocator.Default.RegisterInstance<Session>(session);
+            Session.Id = session.Id;
 
             return session.Id;
         }

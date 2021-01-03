@@ -4,6 +4,7 @@
     using System.Linq;
     using System.Net;
     using System.Threading.Tasks;
+    using Catel.IoC;
     using EspenCollect.Core;
     using Newtonsoft.Json;
     using Newtonsoft.Json.Serialization;
@@ -13,6 +14,7 @@
     public class RestApi: IRestApi
     {
         private readonly RestClient _restClient;
+        private readonly IDependencyResolver _dependencyResolver;
 
         public RestApi()
         {
@@ -33,20 +35,20 @@
             };
 
             _restClient = new RestClient("https://oem.securedatakit.com/api");
-            _restClient.AddDefaultHeader("X-Metabase-Session", "72719124-b94e-44b0-8ce6-55bcd3dd3a1b");
+            _restClient.AddDefaultHeader("X-Metabase-Session", "1730bee4-a7d1-442a-83dc-b45bcf36f204");
             _restClient.UseNewtonsoftJson(jsonNetSettings);
             _restClient.FailOnDeserializationError = true;
             _restClient.ThrowOnAnyError = true;
             _restClient.ThrowOnDeserializationError = true;
         }
 
-        public async Task<Session> Authenticate(string username, string password)
+        public async Task<SessionType> Authenticate(string username, string password)
         {
             try
             {
                 var request = new RestRequest("session", DataFormat.Json).AddJsonBody(new { username, password });
 
-                var session = await _restClient.PostAsync<Session>(request).ConfigureAwait(false);
+                var session = await _restClient.PostAsync<SessionType>(request).ConfigureAwait(false);
 
                 return session;
             }
@@ -63,6 +65,7 @@
             {
                 var request = new RestRequest("collection", DataFormat.Json);
 
+                //_restClient.AddDefaultHeader("X-Metabase-Session", Session.Id);
                 var collections = await _restClient.GetAsync<List<MetabaseCollection>>(request).ConfigureAwait(false);
 
                 var results = collections.Where(c => !c.Archived && c.PersonalOwnerId == null && c.Id != "root");
@@ -82,6 +85,7 @@
             {
                 var request = new RestRequest($"collection/{collectionId}/items", DataFormat.Json);
 
+                //_restClient.AddDefaultHeader("X-Metabase-Session", Session.Id);
                 var response = _restClient.Get(request);
 
                 if(response.StatusCode == HttpStatusCode.OK || response.StatusCode == HttpStatusCode.Accepted
@@ -110,6 +114,7 @@
             {
                 var request = new RestRequest($"card/{cardId}/query", DataFormat.Json);
 
+                //_restClient.AddDefaultHeader("X-Metabase-Session", Session.Id);
                 var response = _restClient.Post(request);
 
                 if (response.StatusCode == HttpStatusCode.OK || response.StatusCode == HttpStatusCode.Accepted

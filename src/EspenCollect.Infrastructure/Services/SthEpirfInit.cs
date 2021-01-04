@@ -26,10 +26,10 @@
         {
             var sthEpirfData = MetabaseCardToEpirfModel.MetabaseCardToEpirSthfModel(rowsData);
 
+            lfSheet.Unprotect("MDA");
+
             var c = lfSheet.Columns["I"] as Range;
             c.NumberFormat = "@";
-
-            lfSheet.Unprotect("MDA");
 
             lfSheet.Range["A8:AB8"].Copy(lfSheet.Range[$"A8:AB{7 + sthEpirfData.Count()}"]);
 

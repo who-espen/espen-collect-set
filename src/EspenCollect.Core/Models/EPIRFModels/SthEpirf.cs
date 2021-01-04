@@ -5,7 +5,7 @@
         public string SurveyType { get; set; }
         public string IuName { get; set; }
         public string CommunityName { get; set; }
-        public string NumberOfRoundsPC { get; set; }
+        public int? NumberOfRoundsPC { get; set; }
         public string Month { get; set; }
         public int? Year { get; set; }
         public decimal? Latitude { get; set; }

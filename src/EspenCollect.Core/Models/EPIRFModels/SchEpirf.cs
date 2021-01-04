@@ -7,8 +7,8 @@
         public string SiteName { get; set; }
         public string Month { get; set; }
         public int? Year { get; set; }
-        public string Latitude { get; set; }
-        public string Longitude { get; set; }
+        public decimal? Latitude { get; set; }
+        public decimal? Longitude { get; set; }
         public string AgeGroup { get; set; }
         public string DiagnosticTest { get; set; }
         public string UrinaryNumberOfPeopleExamined { get; set; }

@@ -1,5 +1,6 @@
 ﻿namespace EspenCollect.Services
 {
+    using System.Collections.Generic;
     using System.IO;
     using System.Linq;
     using System.Threading.Tasks;
@@ -21,6 +22,11 @@
             var rowsData = await _restApi.GetEpirfCard(id).ConfigureAwait(false);
 
             FillEpirfFile(onchoSheet, rowsData);            
+        }
+
+        public Task DispatchToEpirfSheet2(List<string> id, Worksheet epirfSheet)
+        {
+            throw new System.NotImplementedException();
         }
 
         private void FillEpirfFile(Worksheet onchoSheet, MetabaseCardEpirfQuery rowsData)

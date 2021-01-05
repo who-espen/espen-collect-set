@@ -1,5 +1,6 @@
 ﻿namespace EspenCollect.Services
 {
+    using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
     using EspenCollect.Core;
@@ -20,7 +21,25 @@
         {
             var rowsData = await _restApi.GetEpirfCard(id).ConfigureAwait(false);
 
+
             FillEpirfFile(epirfSheet, rowsData);
+        }
+
+        public Task DispatchToEpirfSheet2(List<string> ids, Worksheet epirfSheet)
+        {
+            var metabaseCard = new MetabaseCardEpirfQuery();
+
+            ids.ForEach(async id =>
+            {
+                var rowsData = await _restApi.GetEpirfCard(id).ConfigureAwait(false);
+
+                metabaseCard.RowCount = rowsData.RowCount;
+                metabaseCard.Data.Rows.AddRange(rowsData.Data.Rows);
+            });
+
+            FillEpirfFile(epirfSheet, metabaseCard);
+
+            return Task.CompletedTask;
         }
 
         private void FillEpirfFile(Worksheet lfSheet, MetabaseCardEpirfQuery rowsData)

@@ -2,6 +2,7 @@
 {
     using System.Collections.Generic;
     using System.IO;
+    using System.Linq;
     using System.Threading.Tasks;
     using EspenCollect.Core;
     using Excel = Microsoft.Office.Interop.Excel;
@@ -31,6 +32,34 @@
 
             var epirfWorkBook = excelApp.Workbooks.Open(filePath, ReadOnly: false);
 
+            var EpirfCardsIds = new EpirfCardsIds();
+
+            foreach (var e in epirfSpecs)
+            {
+                if (e.Name.ToUpper().Contains("ONCHO"))
+                {
+                    EpirfCardsIds.OnchoIds.Add(e.Id.ToString());
+                }
+                else if (e.Name.ToUpper().Contains("LF"))
+                {
+                    EpirfCardsIds.LfIds.Add(e.Id.ToString());
+                }
+                else if (e.Name.ToUpper().Contains("STH"))
+                {
+                    EpirfCardsIds.SchIds.Add(e.Id.ToString());
+                }
+                else if (e.Name.ToUpper().Contains("SCH") || e.Name.ToUpper().Contains("SCHISTO"))
+                {
+                    EpirfCardsIds.SthIds.Add(e.Id.ToString());
+                }
+            }
+
+            if (EpirfCardsIds.LfIds.Any()){
+                var lfSheet = epirfWorkBook.Worksheets.get_Item("LF") as Excel.Worksheet;
+
+                await _lfEpirfInit.DispatchToEpirfSheet2(EpirfCardsIds.LfIds, lfSheet).ConfigureAwait(false);
+            }
+
             foreach (var e in epirfSpecs)
             {
                 if (e.Name.ToUpper().Contains("ONCHO"))
@@ -41,9 +70,9 @@
                 }
                 else if (e.Name.ToUpper().Contains("LF"))
                 {
-                    var lfSheet = epirfWorkBook.Worksheets.get_Item("LF") as Excel.Worksheet;
+                    //var lfSheet = epirfWorkBook.Worksheets.get_Item("LF") as Excel.Worksheet;
 
-                    await _lfEpirfInit.DispatchToEpirfSheet(e.Id.ToString(), lfSheet).ConfigureAwait(false);
+                    //await _lfEpirfInit.DispatchToEpirfSheet(e.Id.ToString(), lfSheet).ConfigureAwait(false);
                 }
                 else if (e.Name.ToUpper().Contains("STH"))
                 {

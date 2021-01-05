@@ -91,6 +91,7 @@
   <ItemGroup>
     <Compile Include="Extensions\ObjectConverterExtension.cs" />
     <Compile Include="Models\CollectionItem.cs" />
+    <Compile Include="Models\EpirfCardsIds.cs" />
     <Compile Include="Models\EPIRFModels\LfEpirf.cs" />
     <Compile Include="Models\EPIRFModels\SchEpirf.cs" />
     <Compile Include="Models\EPIRFModels\SthEpirf.cs" />

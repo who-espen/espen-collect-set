@@ -17,15 +17,15 @@
             _restApi = restApi;
         }
 
-        public async Task DispatchToEpirfSheet(string id, Worksheet epirfSheet)
-        {
-            var rowsData = await _restApi.GetEpirfCard(id).ConfigureAwait(false);
+        //public async Task DispatchToEpirfSheet(string id, Worksheet epirfSheet)
+        //{
+        //    var rowsData = await _restApi.GetEpirfCard(id).ConfigureAwait(false);
 
 
-            FillEpirfFile(epirfSheet, rowsData);
-        }
+        //    FillEpirfFile(epirfSheet, rowsData);
+        //}
 
-        public Task DispatchToEpirfSheet2(List<string> ids, Worksheet epirfSheet)
+        public Task DispatchToEpirfSheet(List<string> ids, Worksheet epirfSheet)
         {
             var metabaseCard = new MetabaseCardEpirfQuery();
 

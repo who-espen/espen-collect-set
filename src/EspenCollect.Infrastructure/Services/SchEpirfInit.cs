@@ -15,16 +15,28 @@
             _restApi = restApi;
         }
 
-        public async Task DispatchToEpirfSheet(string id, Worksheet epirfSheet)
-        {
-            var rowsData = await _restApi.GetEpirfCard(id).ConfigureAwait(false);
+        //public async Task DispatchToEpirfSheet(string id, Worksheet epirfSheet)
+        //{
+        //    var rowsData = await _restApi.GetEpirfCard(id).ConfigureAwait(false);
 
-            FillEpirfFile(epirfSheet, rowsData);
-        }
+        //    FillEpirfFile(epirfSheet, rowsData);
+        //}
 
-        public Task DispatchToEpirfSheet2(List<string> id, Worksheet epirfSheet)
+        public Task DispatchToEpirfSheet(List<string> ids, Worksheet epirfSheet)
         {
-            throw new System.NotImplementedException();
+            var metabaseCard = new MetabaseCardEpirfQuery();
+
+            ids.ForEach(async id =>
+            {
+                var rowsData = await _restApi.GetEpirfCard(id).ConfigureAwait(false);
+
+                metabaseCard.RowCount = rowsData.RowCount;
+                metabaseCard.Data.Rows.AddRange(rowsData.Data.Rows);
+            });
+
+            FillEpirfFile(epirfSheet, metabaseCard);
+
+            return Task.CompletedTask;
         }
 
         private void FillEpirfFile(Worksheet schSheet, MetabaseCardEpirfQuery rowsData)

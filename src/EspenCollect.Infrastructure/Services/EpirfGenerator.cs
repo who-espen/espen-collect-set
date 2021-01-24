@@ -46,46 +46,38 @@
                 }
                 else if (e.Name.ToUpper().Contains("STH"))
                 {
-                    EpirfCardsIds.SchIds.Add(e.Id.ToString());
+                    EpirfCardsIds.SthIds.Add(e.Id.ToString());
                 }
                 else if (e.Name.ToUpper().Contains("SCH") || e.Name.ToUpper().Contains("SCHISTO"))
                 {
-                    EpirfCardsIds.SthIds.Add(e.Id.ToString());
+                    EpirfCardsIds.SchIds.Add(e.Id.ToString());
                 }
-            }
 
-            if (EpirfCardsIds.LfIds.Any()){
-                var lfSheet = epirfWorkBook.Worksheets.get_Item("LF") as Excel.Worksheet;
+                if (EpirfCardsIds.LfIds.Any())
+                {
+                    var lfSheet = epirfWorkBook.Worksheets.get_Item("LF") as Excel.Worksheet;
 
-                await _lfEpirfInit.DispatchToEpirfSheet2(EpirfCardsIds.LfIds, lfSheet).ConfigureAwait(false);
-            }
-
-            foreach (var e in epirfSpecs)
-            {
-                if (e.Name.ToUpper().Contains("ONCHO"))
+                    await _lfEpirfInit.DispatchToEpirfSheet(EpirfCardsIds.LfIds, lfSheet).ConfigureAwait(false);
+                }
+                else if (EpirfCardsIds.OnchoIds.Any())
                 {
                     var onchoSheet = epirfWorkBook.Worksheets.get_Item("ONCHO") as Excel.Worksheet;
 
-                    await _onchoEpirfGenerator.DispatchToEpirfSheet(e.Id.ToString(), onchoSheet).ConfigureAwait(false);
+                    await _onchoEpirfGenerator.DispatchToEpirfSheet(EpirfCardsIds.OnchoIds, onchoSheet).ConfigureAwait(false);
                 }
-                else if (e.Name.ToUpper().Contains("LF"))
-                {
-                    //var lfSheet = epirfWorkBook.Worksheets.get_Item("LF") as Excel.Worksheet;
-
-                    //await _lfEpirfInit.DispatchToEpirfSheet(e.Id.ToString(), lfSheet).ConfigureAwait(false);
-                }
-                else if (e.Name.ToUpper().Contains("STH"))
+                else if (EpirfCardsIds.SthIds.Any())
                 {
                     var sthSheet = epirfWorkBook.Worksheets.get_Item("STH") as Excel.Worksheet;
 
-                    await _sthEpirfInit.DispatchToEpirfSheet(e.Id.ToString(), sthSheet).ConfigureAwait(false);
+                    await _sthEpirfInit.DispatchToEpirfSheet(EpirfCardsIds.SthIds, sthSheet).ConfigureAwait(false);
                 }
-                else if (e.Name.ToUpper().Contains("SCH") || e.Name.ToUpper().Contains("SCHISTO"))
+                else if (EpirfCardsIds.SchIds.Any())
                 {
                     var sthSheet = epirfWorkBook.Worksheets.get_Item("SCH") as Excel.Worksheet;
 
-                    await _schEpirfInit.DispatchToEpirfSheet(e.Id.ToString(), sthSheet).ConfigureAwait(false);
+                    await _schEpirfInit.DispatchToEpirfSheet(EpirfCardsIds.SchIds, sthSheet).ConfigureAwait(false);
                 }
+
             }
 
 

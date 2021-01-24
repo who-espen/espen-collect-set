@@ -6,9 +6,6 @@
 
     public interface IEpirfInit
     {
-        Task DispatchToEpirfSheet(string id, Worksheet epirfSheet);
-
-
-        Task DispatchToEpirfSheet2(List<string> id, Worksheet epirfSheet);
+        Task DispatchToEpirfSheet(List<string> ids, Worksheet epirfSheet);
     }
 }

@@ -16,7 +16,6 @@
     {
         private readonly IPleaseWaitService _pleaseWaitService;
         private readonly IRestApi _restApi;
-        private readonly IOnchoEpirfInit _onchoEpirfGenerator;
         private static readonly ILog Log = LogManager.GetCurrentClassLogger();
         private readonly ISaveFileService _saveFileService;
         private readonly IMessageService _messageService;
@@ -24,12 +23,11 @@
         private readonly IUIVisualizerService _visualizerService;
 
         #region Constructors
-        public ShellViewModel(IPleaseWaitService pleaseWaitService, IRestApi restApi, IOnchoEpirfInit onchoEpirfGenerator,
-            ISaveFileService saveFileService, IMessageService messageService, IEpirfGenerator epirfGenerator, IUIVisualizerService visualizerService)
+        public ShellViewModel(IPleaseWaitService pleaseWaitService, IRestApi restApi, ISaveFileService saveFileService,
+            IMessageService messageService, IEpirfGenerator epirfGenerator, IUIVisualizerService visualizerService)
         {
             Argument.IsNotNull(() => pleaseWaitService);
             Argument.IsNotNull(() => restApi);
-            Argument.IsNotNull(() => onchoEpirfGenerator);
             Argument.IsNotNull(() => saveFileService);
             Argument.IsNotNull(() => messageService);
             Argument.IsNotNull(() => epirfGenerator);
@@ -37,7 +35,6 @@
 
             _pleaseWaitService = pleaseWaitService;
             _restApi = restApi;
-            _onchoEpirfGenerator = onchoEpirfGenerator;
             _saveFileService = saveFileService;
             _messageService = messageService;
             _epirfGenerator = epirfGenerator;
@@ -56,8 +53,8 @@
             MetabaseCollections = new FastObservableCollection<MetabaseCollection>();
 
             EpirfsToGenerate = new FastObservableCollection<EpirfSpec>();
-            
-                InitializeDataAsync();
+
+            InitializeDataAsync();
         }
 
         #endregion
@@ -131,14 +128,11 @@
 
             if (fileToSave.Result)
             {
-                //var epirfTitle = EpirfsToGenerate.FirstOrDefault().Name;
+                _pleaseWaitService.Show();
 
-                //if (((!string.IsNullOrEmpty(epirfTitle)) & (epirfTitle.ToUpper().Contains("ONCHO"))))
-                //{
-                //    await _onchoEpirfGenerator.GenerateOnchoEpirfAsync(EpirfsToGenerate.FirstOrDefault().Id.ToString(), fileToSave.FileName);
-                //}
+                var results = await _epirfGenerator.GenerateEpirfAsync(EpirfsToGenerate, fileToSave.FileName);
 
-                await _epirfGenerator.GenerateEpirfAsync(EpirfsToGenerate, fileToSave.FileName);
+                _pleaseWaitService.Hide();
             }
         }
 

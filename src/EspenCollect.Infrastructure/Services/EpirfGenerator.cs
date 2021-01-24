@@ -22,7 +22,7 @@
             _schEpirfInit = schEpirfInit;
         }
 
-        public async Task GenerateEpirfAsync(IList<EpirfSpec> epirfSpecs, string path)
+        public async Task<bool> GenerateEpirfAsync(IList<EpirfSpec> epirfSpecs, string path)
         {
             var filePath = Path.GetFullPath(@"Resources\WHO_EPIRF_PC.xlsm");
             var excelApp = new Excel.Application
@@ -85,6 +85,9 @@
             epirfWorkBook.SaveAs(path);
             epirfWorkBook.Close(true);
             excelApp.Quit();
+
+            return true;
         }
+
     }
 }

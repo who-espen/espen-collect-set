@@ -86,7 +86,7 @@
             epirfWorkBook.Close(true);
             excelApp.Quit();
 
-            return true;
+            return await Task.FromResult(true);
         }
 
     }

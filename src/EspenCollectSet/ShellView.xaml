@@ -6,75 +6,80 @@
         xmlns:local="clr-namespace:EspenCollectSet"
         mc:Ignorable="d"
         xmlns:catel="http://schemas.catelproject.com" 
-        xmlns:i="http://schemas.microsoft.com/xaml/behaviors">
+        xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+        xmlns:busyindicator="clr-namespace:BusyIndicator;assembly=BusyIndicator"
+              >
 
-    <Grid>
+    <busyindicator:BusyMask x:Name="BusyIndicator" IsBusy="{Binding IsLoading, Mode=TwoWay}" IndicatorType="Spinner" BusyContent="Please wait..." >
 
-        <Grid.Background>
-            <ImageBrush ImageSource="/Resources/Images/logo.png" Opacity="0.3" Stretch="None" />
-        </Grid.Background>
+        <Grid>
 
-        <Grid.RowDefinitions>
-            <RowDefinition Height="*" />
-            <RowDefinition Height="40"  />
-        </Grid.RowDefinitions>
+            <Grid.Background>
+                <ImageBrush ImageSource="/Resources/Images/logo.png" Opacity="0.3" Stretch="None" />
+            </Grid.Background>
 
-        <Grid Grid.Row="0">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="250" />
-                <ColumnDefinition Width="3" />
-                <ColumnDefinition Width="300" />
-                <ColumnDefinition Width="3" />
-                <ColumnDefinition Width="100" />
-                <ColumnDefinition Width="3" />
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="45"  />
+            </Grid.RowDefinitions>
 
-            <DockPanel  Grid.Column="0">
-                <Label DockPanel.Dock="Top" FontSize="14" HorizontalAlignment="Center" FontWeight="Bold" >Collections</Label>
-                <Grid  DockPanel.Dock="Bottom">
+            <Grid Grid.Row="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="250" />
+                    <ColumnDefinition Width="3" />
+                    <ColumnDefinition Width="300" />
+                    <ColumnDefinition Width="3" />
+                    <ColumnDefinition Width="53.761" />
+                    <ColumnDefinition Width="65"/>
+                    <ColumnDefinition Width="3" />
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
 
-                    <TreeView  ItemsSource="{Binding MetabaseCollections}" >
+                <DockPanel  Grid.Column="0">
+                    <Label DockPanel.Dock="Top" FontSize="14" HorizontalAlignment="Center" FontWeight="Bold" >Collections</Label>
+                    <Grid  DockPanel.Dock="Bottom">
 
-                        <i:Interaction.Behaviors>
-                            <local:BindableSelectedItemBehavior SelectedItem="{Binding SelectedItem, Mode=TwoWay}" />
-                        </i:Interaction.Behaviors>
+                        <TreeView  ItemsSource="{Binding MetabaseCollections}" >
 
-                        <i:Interaction.Triggers>
-                            <i:EventTrigger EventName="GotFocus">
-                                <catel:EventToCommand Command="{Binding LoadEpirfTitle}" />
-                            </i:EventTrigger>
-                        </i:Interaction.Triggers>
+                            <i:Interaction.Behaviors>
+                                <local:BindableSelectedItemBehavior SelectedItem="{Binding SelectedItem, Mode=TwoWay}" />
+                            </i:Interaction.Behaviors>
 
-                        <TreeView.ItemTemplate>
-                            <HierarchicalDataTemplate ItemsSource="{Binding MetabaseInnerCollections}">
-                                <DockPanel>
-                                    <TextBlock Text="{Binding Name}" MinWidth="150" Foreground="DarkBlue" HorizontalAlignment="Center">
-                                    </TextBlock>
-                                </DockPanel>
-                            </HierarchicalDataTemplate>
-                        </TreeView.ItemTemplate>
-                    </TreeView>
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="GotFocus">
+                                    <catel:EventToCommand Command="{Binding LoadEpirfTitle}" />
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
 
-                </Grid>
-            </DockPanel>
+                            <TreeView.ItemTemplate>
+                                <HierarchicalDataTemplate ItemsSource="{Binding MetabaseInnerCollections}">
+                                    <DockPanel>
+                                        <TextBlock Text="{Binding Name}" MinWidth="150" Foreground="DarkBlue" HorizontalAlignment="Center">
+                                        </TextBlock>
+                                    </DockPanel>
+                                </HierarchicalDataTemplate>
+                            </TreeView.ItemTemplate>
+                        </TreeView>
 
-            <GridSplitter Grid.Column="1" Width="3" HorizontalAlignment="Stretch" />
+                    </Grid>
+                </DockPanel>
 
-            <DockPanel Grid.Column="2">
+                <GridSplitter Grid.Column="1" Width="3" HorizontalAlignment="Stretch" />
 
-                <Label DockPanel.Dock="Top" FontSize="14" HorizontalAlignment="Center" FontWeight="Bold" >EPIRF</Label>
-                <ListView DockPanel.Dock="Bottom"
+                <DockPanel Grid.Column="2">
+
+                    <Label DockPanel.Dock="Top" FontSize="14" HorizontalAlignment="Center" FontWeight="Bold" >EPIRF</Label>
+                    <ListView DockPanel.Dock="Bottom"
                           ItemsSource="{Binding EpirfLists}"
                           SelectedItem="{Binding SelectedEpirf, Mode=TwoWay}">
 
-                    <!--<ListView.Background>
+                        <!--<ListView.Background>
                     <ImageBrush ImageSource="/Resources/Images/logo.png"
                                 Opacity="0.3"
                                 Stretch="None" />
                 </ListView.Background>-->
 
-                    <!--<i:Interaction.Triggers>
+                        <!--<i:Interaction.Triggers>
 
                         <i:EventTrigger EventName="SelectionChanged">
                             <catel:EventToCommand Command="{Binding CheckUncheckEpirf}"
@@ -82,58 +87,61 @@
                         </i:EventTrigger>
                     </i:Interaction.Triggers>-->
 
-                    <ListView.ItemTemplate>
-                        <DataTemplate >
-                            <StackPanel>
-                                <!--<TextBlock Text="{Binding Name}" Width="150" Foreground="DarkBlue" HorizontalAlignment="Center"/>-->
-                                <!--<CheckBox Margin="0" IsChecked="{Binding IsChecked, Mode=TwoWay}">-->
-                                <TextBlock Text="{Binding Name}" Margin="5 0 5 0" Foreground="DarkBlue" HorizontalAlignment="Center"/>
-                                <!--</CheckBox>-->
-                            </StackPanel>
-                        </DataTemplate>
-                    </ListView.ItemTemplate>
-                </ListView>
-            </DockPanel>
+                        <ListView.ItemTemplate>
+                            <DataTemplate >
+                                <StackPanel>
+                                    <!--<TextBlock Text="{Binding Name}" Width="150" Foreground="DarkBlue" HorizontalAlignment="Center"/>-->
+                                    <!--<CheckBox Margin="0" IsChecked="{Binding IsChecked, Mode=TwoWay}">-->
+                                    <TextBlock Text="{Binding Name}" Margin="5 0 5 0" Foreground="DarkBlue" HorizontalAlignment="Center"/>
+                                    <!--</CheckBox>-->
+                                </StackPanel>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                </DockPanel>
 
-            <GridSplitter Grid.Column="3" Width="3" HorizontalAlignment="Stretch" />
+                <GridSplitter Grid.Column="3" Width="3" HorizontalAlignment="Stretch" />
 
-            <StackPanel Grid.Column="4"  HorizontalAlignment="Center" VerticalAlignment="center">
-                <Button Content="Add >>"  Margin="0 1.5 0 1.5" Command="{Binding CheckEpirf}"></Button>
-                <Button Content="&lt;&lt; Remove"  Margin="0 1.5 0 1.5" Width="85" Command="{Binding UncheckEpirf}" ></Button>
-            </StackPanel>
+                <StackPanel Grid.Column="4"  HorizontalAlignment="Center" VerticalAlignment="center" Grid.ColumnSpan="2" Margin="0,197">
+                    <Button Content="Add >>"  Margin="0 1.5 0 1.5" Width="110"  Command="{Binding CheckEpirf}"></Button>
+                    <Button Content="&lt;&lt; Remove"  Margin="0 1.5 0 1.5" Width="110" Command="{Binding UncheckEpirf}" ></Button>
+                </StackPanel>
 
-            <GridSplitter Grid.Column="5" Width="3" HorizontalAlignment="Stretch" />
+                <GridSplitter Grid.Column="6" Width="3" HorizontalAlignment="Stretch" />
 
-            <DockPanel Grid.Column="6">
-                <Label DockPanel.Dock="Top" FontSize="14" HorizontalAlignment="Center"  FontWeight="Bold" >EPIR To Generate</Label>
+                <DockPanel Grid.Column="7">
+                    <Label DockPanel.Dock="Top" FontSize="14" HorizontalAlignment="Center"  FontWeight="Bold" >EPIR To Generate</Label>
 
-                <ListView DockPanel.Dock="Bottom"
+                    <ListView DockPanel.Dock="Bottom"
                           ItemsSource="{Binding EpirfsToGenerate, Mode=TwoWay}"
                           SelectedItem="{Binding SelectedEpirfToGenerate, Mode=TwoWay}">
 
 
-                    <!--<ListView.View>
+                        <!--<ListView.View>
                         <GridView>
                             <GridViewColumn Width="250"
                                         DisplayMemberBinding="{Binding Name}"
                                         Header="Country" />
                         </GridView>
                     </ListView.View>-->
-                    <ListView.ItemTemplate>
-                        <DataTemplate >
-                            <StackPanel>
-                                <TextBlock Text="{Binding Name}" Margin="5 0 5 0" Foreground="DarkBlue" HorizontalAlignment="Center"/>
-                            </StackPanel>
-                        </DataTemplate>
-                    </ListView.ItemTemplate>
-                </ListView>
-            </DockPanel>
+                        <ListView.ItemTemplate>
+                            <DataTemplate >
+                                <StackPanel>
+                                    <TextBlock Text="{Binding Name}" Margin="5 0 5 0" Foreground="DarkBlue" HorizontalAlignment="Center"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                </DockPanel>
 
+            </Grid>
+
+            <Button Grid.Row="1" Padding="5" HorizontalAlignment="Right" VerticalAlignment="Center" 
+                    Command="{Binding GenerateEpirf}" Content="Generate the EPIRF" Margin="0,6,7,7" >
+            </Button>
         </Grid>
 
-        <Button Grid.Row="1" Padding="5" HorizontalAlignment="Right" VerticalAlignment="Center" 
-                    Command="{Binding GenerateEpirf}" Content="Generate the EPIRF" >
-        </Button>
-    </Grid>
+
+    </busyindicator:BusyMask>
 
 </catel:Window>

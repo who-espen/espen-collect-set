@@ -85,6 +85,8 @@
 
         public TaskCommand GenerateEpirf { get; private set; }
 
+        public bool IsLoading { get; private set; }
+
         #endregion
 
         #region Methods
@@ -111,28 +113,44 @@
 
         protected async Task OnGenerateEpirfAsync()
         {
-            var collectionCount = (from x in EpirfsToGenerate select x.CollectionName).Distinct().Count();
-
-            if (collectionCount > 1)
+            try
             {
-                if (await _messageService.ShowAsync("Are you sure to generate an EPIRF for more than one collection?",
-                    "Are you sure?", MessageButton.YesNo, MessageImage.Question) == MessageResult.No)
-                    return;
+                IsLoading = true;
+                var collectionCount = (from x in EpirfsToGenerate select x.CollectionName).Distinct().Count();
+
+                if (collectionCount > 1)
+                {
+                    if (await _messageService.ShowAsync("Are you sure to generate an EPIRF for more than one collection?",
+                        "Are you sure?", MessageButton.YesNo, MessageImage.Question) == MessageResult.No)
+                    {
+                        IsLoading = false;
+                        return;
+                    }
+                }
+
+
+
+                var fileToSave = await _saveFileService.DetermineFileAsync(new DetermineSaveFileContext
+                {
+                    Filter = "Excel Macro-enabled Workbook|*.xlsm",
+                    Title = "Save EPIRF as"
+                }).ConfigureAwait(false);
+
+                if (fileToSave.Result)
+                {
+                    //_pleaseWaitService.Show();
+
+                    var results = await _epirfGenerator.GenerateEpirfAsync(EpirfsToGenerate, fileToSave.FileName).ConfigureAwait(false);
+
+                    //_pleaseWaitService.Hide();
+                }
+
+                IsLoading = false;
             }
-
-            var fileToSave = await _saveFileService.DetermineFileAsync(new DetermineSaveFileContext
+            catch (System.Exception e)
             {
-                Filter = "Excel Macro-enabled Workbook|*.xlsm",
-                Title = "Save EPIRF as"
-            });
-
-            if (fileToSave.Result)
-            {
-                _pleaseWaitService.Show();
-
-                var results = await _epirfGenerator.GenerateEpirfAsync(EpirfsToGenerate, fileToSave.FileName);
-
-                _pleaseWaitService.Hide();
+                await _messageService.ShowAsync($"Error {e.Message} has occurred, please contact the administrator",
+                                        "Error", MessageButton.OK, MessageImage.Error);
             }
         }
 

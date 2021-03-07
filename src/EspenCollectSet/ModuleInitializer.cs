@@ -1,9 +1,7 @@
-﻿using Catel.IoC;
-using EspenCollect.Data.Repositories;
-using EspenCollect.Data.Services;
-using EspenCollectSet.Services;
-using EspenCollectSet.Windows.Tabs;
-using Orchestra.Services;
+﻿using Catel.Data;
+using Catel.IoC;
+using EspenCollect.Infrastructure;
+using Orc.FluentValidation;
 
 /// <summary>
 /// Used by the ModuleInit. All code inside the Initialize method is ran as soon as the assembly is loaded.
@@ -17,13 +15,12 @@ public static class ModuleInitializer
     {
         var serviceLocator = ServiceLocator.Default;
 
-        serviceLocator.RegisterType<IRibbonService, RibbonService>();
-        serviceLocator.RegisterType<ITabService, TabService>();
-        serviceLocator.RegisterType<IApplicationInitializationService, ApplicationInitializationService>();
 
-        serviceLocator.RegisterType<IRepository, RepositoryBase>();
-        serviceLocator.RegisterType<IOnchoEpirfRepository, OnchoEpirfRepository>();
+        var rootContainer = new RootContainer();
 
-        serviceLocator.RegisterType<IEpirfGenerator, EpirfGenerator>();
+        ServiceLocator.Default.RegisterType<IValidatorProvider, FluentValidatorProvider>();
+
+
+        rootContainer.Initialize(serviceLocator);
     }
 }

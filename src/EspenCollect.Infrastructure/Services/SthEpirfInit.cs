@@ -6,6 +6,7 @@
     using EspenCollect.Core;
     using EspenCollect.Helpers;
     using Microsoft.Office.Interop.Excel;
+    using Excel = Microsoft.Office.Interop.Excel;
 
     public class SthEpirfInit : ISthEpirfInit
     {
@@ -16,16 +17,11 @@
             _restApi = restApi;
         }
 
-        //public async Task DispatchToEpirfSheet(string id, Worksheet epirfSheet)
-        //{
-        //    var rowsData = await _restApi.GetEpirfCard(id).ConfigureAwait(false);
-
-        //    FillEpirfFile(epirfSheet, rowsData);
-        //}
-
-        public Task DispatchToEpirfSheet(List<string> ids, Worksheet epirfSheet)
+        public Task DispatchToEpirfSheet(List<string> ids, Workbook epirfWorkBook)
         {
             var metabaseCard = new MetabaseCardEpirfQuery();
+
+            var sthSheet = epirfWorkBook.Worksheets.get_Item("STH") as Excel.Worksheet;
 
             ids.ForEach(async id =>
             {
@@ -35,7 +31,7 @@
                 metabaseCard.Data.Rows.AddRange(rowsData.Data.Rows);
             });
 
-            FillEpirfFile(epirfSheet, metabaseCard);
+            FillEpirfFile(sthSheet, metabaseCard);
 
             return Task.CompletedTask;
         }

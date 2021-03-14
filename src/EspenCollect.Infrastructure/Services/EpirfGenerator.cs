@@ -55,27 +55,19 @@
 
                 if (EpirfCardsIds.LfIds.Any())
                 {
-                    var lfSheet = epirfWorkBook.Worksheets.get_Item("LF") as Excel.Worksheet;
-
-                    await _lfEpirfInit.DispatchToEpirfSheet(EpirfCardsIds.LfIds, lfSheet).ConfigureAwait(false);
+                    await _lfEpirfInit.DispatchToEpirfSheet(EpirfCardsIds.LfIds, epirfWorkBook).ConfigureAwait(false);
                 }
                 else if (EpirfCardsIds.OnchoIds.Any())
                 {
-                    var onchoSheet = epirfWorkBook.Worksheets.get_Item("ONCHO") as Excel.Worksheet;
-
-                    await _onchoEpirfGenerator.DispatchToEpirfSheet(EpirfCardsIds.OnchoIds, onchoSheet).ConfigureAwait(false);
+                    await _onchoEpirfGenerator.DispatchToEpirfSheet(EpirfCardsIds.OnchoIds, epirfWorkBook).ConfigureAwait(false);
                 }
                 else if (EpirfCardsIds.SthIds.Any())
                 {
-                    var sthSheet = epirfWorkBook.Worksheets.get_Item("STH") as Excel.Worksheet;
-
-                    await _sthEpirfInit.DispatchToEpirfSheet(EpirfCardsIds.SthIds, sthSheet).ConfigureAwait(false);
+                    await _sthEpirfInit.DispatchToEpirfSheet(EpirfCardsIds.SthIds, epirfWorkBook).ConfigureAwait(false);
                 }
                 else if (EpirfCardsIds.SchIds.Any())
                 {
-                    var sthSheet = epirfWorkBook.Worksheets.get_Item("SCH") as Excel.Worksheet;
-
-                    await _schEpirfInit.DispatchToEpirfSheet(EpirfCardsIds.SchIds, sthSheet).ConfigureAwait(false);
+                    await _schEpirfInit.DispatchToEpirfSheet(EpirfCardsIds.SchIds, epirfWorkBook).ConfigureAwait(false);
                 }
 
             }

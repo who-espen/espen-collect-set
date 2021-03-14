@@ -1,12 +1,12 @@
 ﻿namespace EspenCollect.Services
 {
     using System.Collections.Generic;
-    using System.IO;
     using System.Linq;
     using System.Threading.Tasks;
     using EspenCollect.Core;
     using EspenCollect.Helpers;
     using Microsoft.Office.Interop.Excel;
+    using Excel = Microsoft.Office.Interop.Excel;
 
     public class OnchoEpirfInit : IOnchoEpirfInit
     {
@@ -17,16 +17,10 @@
             _restApi = restApi;
         }
 
-        //public async Task DispatchToEpirfSheet(string id, Worksheet onchoSheet)
-        //{
-        //    var rowsData = await _restApi.GetEpirfCard(id).ConfigureAwait(false);
-
-        //    FillEpirfFile(onchoSheet, rowsData);            
-        //}
-
-        public Task DispatchToEpirfSheet(List<string> ids, Worksheet epirfSheet)
+        public Task DispatchToEpirfSheet(List<string> ids, Workbook epirfWorkBook)
         {
             var metabaseCard = new MetabaseCardEpirfQuery();
+            var onchoSheet = epirfWorkBook.Worksheets.get_Item("ONCHO") as Excel.Worksheet;
 
             ids.ForEach(async id =>
             {
@@ -36,7 +30,7 @@
                 metabaseCard.Data.Rows.AddRange(rowsData.Data.Rows);
             });
 
-            FillEpirfFile(epirfSheet, metabaseCard);
+            FillEpirfFile(onchoSheet, metabaseCard);
 
             return Task.CompletedTask;
         }

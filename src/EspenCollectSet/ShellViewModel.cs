@@ -50,6 +50,8 @@
 
             GenerateEpirf = new TaskCommand(OnGenerateEpirfAsync, CanGenerateEpirf);
 
+            GenerateEpirfForEdit = new TaskCommand(OnGenerateEpirfForEditAsync, CanGenerateEpirf);
+
             MetabaseCollections = new FastObservableCollection<MetabaseCollection>();
 
             EpirfsToGenerate = new FastObservableCollection<EpirfSpec>();
@@ -84,6 +86,7 @@
         public Command UncheckEpirf { get; private set; }
 
         public TaskCommand GenerateEpirf { get; private set; }
+        public TaskCommand GenerateEpirfForEdit { get; private set; }
 
         public bool IsLoading { get; private set; }
 
@@ -154,31 +157,45 @@
             }
         }
 
-        //protected override async Task InitializeAsync()
-        //{
-        //    try
-        //    {
-        //        await base.InitializeAsync();
 
-        //        _pleaseWaitService.Show(async () =>
-        //        {
+        protected async Task OnGenerateEpirfForEditAsync()
+        {
+            try
+            {
+                IsLoading = true;
+                var collectionCount = (from x in EpirfsToGenerate select x.CollectionName).Distinct().Count();
 
-        //            var collections = await PopulateAsync().ConfigureAwait(false);
+                if (collectionCount > 1)
+                {
+                    if (await _messageService.ShowAsync("Are you sure to generate an EPIRF for more than one collection?",
+                        "Are you sure?", MessageButton.YesNo, MessageImage.Question) == MessageResult.No)
+                    {
+                        IsLoading = false;
+                        return;
+                    }
+                }
 
-        //            MetabaseCollections.AddItems(collections);
 
-        //        }, "Loading Metabase collections");
 
-        //        //var collections = await PopulateAsync().ConfigureAwait(false);
+                var fileToSave = await _saveFileService.DetermineFileAsync(new DetermineSaveFileContext
+                {
+                    Filter = "Excel Macro-enabled Workbook|*.xlsm",
+                    Title = "Save EPIRF as"
+                }).ConfigureAwait(false);
 
-        //        //MetabaseCollections.AddItems(collections);
-        //    }
-        //    catch (System.Exception e)
-        //    {
+                if (fileToSave.Result)
+                {
+                    var results = await _epirfGenerator.GenerateEpirfForEditAsync(EpirfsToGenerate, fileToSave.FileName).ConfigureAwait(false);
+                }
 
-        //        throw e;
-        //    }
-        //}
+                IsLoading = false;
+            }
+            catch (System.Exception e)
+            {
+                await _messageService.ShowAsync($"Error {e.Message} has occurred, please contact the administrator",
+                                        "Error", MessageButton.OK, MessageImage.Error);
+            }
+        }
 
         protected async Task InitializeDataAsync()
         {

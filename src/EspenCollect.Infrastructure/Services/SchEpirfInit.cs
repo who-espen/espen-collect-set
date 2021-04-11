@@ -1,6 +1,7 @@
 ﻿namespace EspenCollect.Services
 {
     using System.Collections.Generic;
+    using System.Linq;
     using System.Threading.Tasks;
     using EspenCollect.Core;
     using EspenCollect.Helpers;
@@ -31,6 +32,27 @@
             });
 
             FillEpirfFile(schSheet, metabaseCard);
+
+            return Task.CompletedTask;
+        }
+
+        public Task DispatchToEpirfSheetToEdit(List<string> ids, Workbook epirfWorkBook)
+        {
+
+            var metabaseCard = new MetabaseCardEpirfQuery();
+
+            var schSheet = epirfWorkBook.Worksheets.get_Item("SCH") as Excel.Worksheet;
+
+            ids.ForEach(async id =>
+            {
+                var rowsData = await _restApi.GetEpirfCard(id).ConfigureAwait(false);
+
+                metabaseCard.RowCount = rowsData.RowCount;
+                metabaseCard.Data.Rows.AddRange(rowsData.Data.Rows);
+            });
+
+            FillEpirfFile(schSheet, metabaseCard);
+            FillOtherEpirfFile(epirfWorkBook, metabaseCard, schSheet);
 
             return Task.CompletedTask;
         }
@@ -70,6 +92,19 @@
             }
 
             schSheet.Protect();
+        }
+
+        private void FillOtherEpirfFile(Workbook epirfWorkBook, MetabaseCardEpirfQuery rowsData, Excel.Worksheet schSheet)
+        {
+            schSheet.Unprotect("MDA");
+            epirfWorkBook.Unprotect("MDA");
+            var newSchSheet = (Worksheet)epirfWorkBook.Worksheets.Add(After: epirfWorkBook.Sheets[epirfWorkBook.Sheets.Count]);
+            newSchSheet.Name = "SCH Raw";
+
+            schSheet.Range["A6:AS6"].Copy();
+            newSchSheet.Range["A1:AS1"].PasteSpecial(XlPasteType.xlPasteValues);
+            schSheet.Range[$"A8:AS{rowsData.Data.Rows.Count()+8}"].Copy();
+            newSchSheet.Range[$"A2:AS{rowsData.Data.Rows.Count()}"].PasteSpecial(XlPasteType.xlPasteValues);
         }
     }
 }

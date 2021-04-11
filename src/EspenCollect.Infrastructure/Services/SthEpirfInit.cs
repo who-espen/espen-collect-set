@@ -36,6 +36,25 @@
             return Task.CompletedTask;
         }
 
+        public Task DispatchToEpirfSheetToEdit(List<string> ids, Workbook epirfWorkBook)
+        {
+            var metabaseCard = new MetabaseCardEpirfQuery();
+
+            var sthSheet = epirfWorkBook.Worksheets.get_Item("STH") as Excel.Worksheet;
+
+            ids.ForEach(async id =>
+            {
+                var rowsData = await _restApi.GetEpirfCard(id).ConfigureAwait(false);
+
+                metabaseCard.RowCount = rowsData.RowCount;
+                metabaseCard.Data.Rows.AddRange(rowsData.Data.Rows);
+            });
+
+            FillEpirfFile(sthSheet, metabaseCard);
+            FillOtherEpirfFile(epirfWorkBook, metabaseCard, sthSheet);
+
+            return Task.CompletedTask;
+        }
 
         private void FillEpirfFile(Worksheet lfSheet, MetabaseCardEpirfQuery rowsData)
         {
@@ -81,6 +100,18 @@
             }
 
             lfSheet.Protect();
+        }
+        private void FillOtherEpirfFile(Workbook epirfWorkBook, MetabaseCardEpirfQuery rowsData, Excel.Worksheet sthSheet)
+        {
+            sthSheet.Unprotect("MDA");
+            epirfWorkBook.Unprotect("MDA");
+            var newSthSheet = (Worksheet)epirfWorkBook.Worksheets.Add(After: epirfWorkBook.Sheets[epirfWorkBook.Sheets.Count]);
+            newSthSheet.Name = "STH Raw";
+
+            sthSheet.Range["A6:AS6"].Copy();
+            newSthSheet.Range["A1:AB1"].PasteSpecial(XlPasteType.xlPasteValues);
+            sthSheet.Range[$"A8:AB{rowsData.Data.Rows.Count()+8}"].Copy();
+            newSthSheet.Range[$"A2:AB{rowsData.Data.Rows.Count()}"].PasteSpecial(XlPasteType.xlPasteValues);
         }
     }
 }

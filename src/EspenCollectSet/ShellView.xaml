@@ -139,6 +139,8 @@
             <Button Grid.Row="1" Padding="5" HorizontalAlignment="Right" VerticalAlignment="Center" 
                     Command="{Binding GenerateEpirf}" Content="Generate the EPIRF" Margin="0,6,7,7" >
             </Button>
+            <Button Grid.Row="1" Padding="5" HorizontalAlignment="Right" VerticalAlignment="Center" 
+                Command="{Binding GenerateEpirfForEdit}" Content="Generate the EPIRF for edit" Margin="0,6,143,7" />
         </Grid>
 
 

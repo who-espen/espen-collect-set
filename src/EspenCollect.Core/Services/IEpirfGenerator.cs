@@ -8,5 +8,7 @@ namespace EspenCollect.Services
     public interface IEpirfGenerator
     {
         Task<bool> GenerateEpirfAsync(IList<EpirfSpec> epirfSpecs, string path);
+
+        Task<bool> GenerateEpirfForEditAsync(IList<EpirfSpec> epirfSpecs, string path);
     }
 }

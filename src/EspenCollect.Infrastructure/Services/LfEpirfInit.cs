@@ -104,20 +104,6 @@ namespace EspenCollect.Services
             lfSheet.Protect();
         }
 
-        //private void FillOtherEpirfFile(Workbook epirfWorkBook, MetabaseCardEpirfQuery rowsData, Excel.Worksheet lfSheet)
-        //{
-        //    lfSheet.Unprotect("MDA");
-        //    epirfWorkBook.Unprotect("MDA");
-        //    var newLfSheet = (Worksheet) epirfWorkBook.Worksheets.Add(After: epirfWorkBook.Sheets[epirfWorkBook.Sheets.Count]);
-        //    newLfSheet.Name = "LF Raw";
-
-        //    lfSheet.Range["A15:AC15"].Copy();
-        //    newLfSheet.Range["A1:AC1"].PasteSpecial(XlPasteType.xlPasteValues);
-        //    lfSheet.Range[$"A17:AC{rowsData.Data.Rows.Count()+17}"].Copy();
-        //    newLfSheet.Range[$"A2:AC{rowsData.Data.Rows.Count()}"].PasteSpecial(XlPasteType.xlPasteValues);
-
-        //}
-
         private void FillOtherEpirfFile(Workbook epirfWorkBook, MetabaseCardEpirfQuery rowsData, Excel.Worksheet lfSheet)
         {
             lfSheet.Unprotect("MDA");

@@ -112,8 +112,42 @@
 
             onchoSheet.Range["A6:AE6"].Copy();
             newOnchoSheet.Range["A1:AE1"].PasteSpecial(XlPasteType.xlPasteValues);
-            onchoSheet.Range[$"A8:AE{rowsData.Data.Rows.Count()+8}"].Copy();
-            newOnchoSheet.Range[$"A2:AE{rowsData.Data.Rows.Count()}"].PasteSpecial(XlPasteType.xlPasteValues);
+            //onchoSheet.Range[$"A8:AE{rowsData.Data.Rows.Count()+8}"].Copy();
+            //newOnchoSheet.Range[$"A2:AE{rowsData.Data.Rows.Count()}"].PasteSpecial(XlPasteType.xlPasteValues);
+
+            for (var i = 0; i < rowsData.Data.Rows.Count(); i++)
+            {
+                newOnchoSheet.Range[$"A{i + 2}"].Formula = $"=ONCHO!A{i + 8}";
+                newOnchoSheet.Range[$"B{i + 2}"].Formula = $"=ONCHO!B{i + 8}";
+                newOnchoSheet.Range[$"C{i + 2}"].Formula = $"=ONCHO!C{i + 8}";
+                newOnchoSheet.Range[$"D{i + 2}"].Formula = $"=ONCHO!D{i + 8}";
+                newOnchoSheet.Range[$"E{i + 2}"].Formula = $"=ONCHO!E{i + 8}";
+                newOnchoSheet.Range[$"F{i + 2}"].Formula = $"=ONCHO!F{i + 8}";
+                newOnchoSheet.Range[$"G{i + 2}"].Formula = $"=ONCHO!G{i + 8}";
+                newOnchoSheet.Range[$"H{i + 2}"].Formula = $"=ONCHO!H{i + 8}";
+                newOnchoSheet.Range[$"I{i + 2}"].Formula = $"=ONCHO!I{i + 8}";
+                newOnchoSheet.Range[$"J{i + 2}"].Formula = $"=ONCHO!J{i + 8}";
+                newOnchoSheet.Range[$"K{i + 2}"].Formula = $"=ONCHO!K{i + 8}";
+                newOnchoSheet.Range[$"L{i + 2}"].Formula = $"=ONCHO!L{i + 8}";
+                newOnchoSheet.Range[$"M{i + 2}"].Formula = $"=ONCHO!M{i + 8}";
+                newOnchoSheet.Range[$"N{i + 2}"].Formula = $"=ONCHO!N{i + 8}";
+                newOnchoSheet.Range[$"O{i + 2}"].Formula = $"=ONCHO!O{i + 8}";
+                newOnchoSheet.Range[$"P{i + 2}"].Formula = $"=ONCHO!P{i + 8}";
+                newOnchoSheet.Range[$"Q{i + 2}"].Formula = $"=ONCHO!Q{i + 8}";
+                newOnchoSheet.Range[$"R{i + 2}"].Formula = $"=ONCHO!R{i + 8}";
+                newOnchoSheet.Range[$"S{i + 2}"].Formula = $"=ONCHO!S{i + 8}";
+                newOnchoSheet.Range[$"T{i + 2}"].Formula = $"=ONCHO!T{i + 8}";
+                newOnchoSheet.Range[$"U{i + 2}"].Formula = $"=ONCHO!U{i + 8}";
+                newOnchoSheet.Range[$"V{i + 2}"].Formula = $"=ONCHO!V{i + 8}";
+                newOnchoSheet.Range[$"W{i + 2}"].Formula = $"=ONCHO!W{i + 8}";
+                newOnchoSheet.Range[$"X{i + 2}"].Formula = $"=ONCHO!X{i + 8}";
+                newOnchoSheet.Range[$"Y{i + 2}"].Formula = $"=ONCHO!Y{i + 8}";
+                newOnchoSheet.Range[$"Z{i + 2}"].Formula = $"=ONCHO!Z{i + 8}";
+                newOnchoSheet.Range[$"AA{i + 2}"].Formula = $"=ONCHO!AA{i + 8}";
+                newOnchoSheet.Range[$"AB{i + 2}"].Formula = $"=ONCHO!AB{i + 8}";
+                newOnchoSheet.Range[$"AC{i + 2}"].Formula = $"=ONCHO!AC{i + 8}";
+                newOnchoSheet.Range[$"AD{i + 2}"].Formula = $"=ONCHO!AD{i + 8}";
+            }
         }
     }
 }

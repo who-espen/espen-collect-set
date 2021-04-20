@@ -103,8 +103,31 @@
 
             schSheet.Range["A6:AS6"].Copy();
             newSchSheet.Range["A1:AS1"].PasteSpecial(XlPasteType.xlPasteValues);
-            schSheet.Range[$"A8:AS{rowsData.Data.Rows.Count()+8}"].Copy();
-            newSchSheet.Range[$"A2:AS{rowsData.Data.Rows.Count()}"].PasteSpecial(XlPasteType.xlPasteValues);
+            //schSheet.Range[$"A8:AS{rowsData.Data.Rows.Count()+8}"].Copy();
+            //newSchSheet.Range[$"A2:AS{rowsData.Data.Rows.Count()}"].PasteSpecial(XlPasteType.xlPasteValues);
+
+            for (var i = 0; i < rowsData.Data.Rows.Count(); i++)
+            {
+                newSchSheet.Range[$"A{i + 2}"].Formula = $"=SCH!A{i + 8}";
+                newSchSheet.Range[$"B{i + 2}"].Formula = $"=SCH!B{i + 8}";
+                newSchSheet.Range[$"C{i + 2}"].Formula = $"=SCH!C{i + 8}";
+                newSchSheet.Range[$"D{i + 2}"].Formula = $"=SCH!D{i + 8}";
+                newSchSheet.Range[$"E{i + 2}"].Formula = $"=SCH!E{i + 8}";
+                newSchSheet.Range[$"F{i + 2}"].Formula = $"=SCH!F{i + 8}";
+                newSchSheet.Range[$"G{i + 2}"].Formula = $"=SCH!G{i + 8}";
+                newSchSheet.Range[$"H{i + 2}"].Formula = $"=SCH!H{i + 8}";
+                newSchSheet.Range[$"I{i + 2}"].Formula = $"=SCH!I{i + 8}";
+                newSchSheet.Range[$"J{i + 2}"].Formula = $"=SCH!J{i + 8}";
+                newSchSheet.Range[$"K{i + 2}"].Formula = $"=SCH!K{i + 8}";
+                newSchSheet.Range[$"L{i + 2}"].Formula = $"=SCH!L{i + 8}";
+                newSchSheet.Range[$"M{i + 2}"].Formula = $"=SCH!M{i + 8}";
+                newSchSheet.Range[$"N{i + 2}"].Formula = $"=SCH!N{i + 8}";
+                newSchSheet.Range[$"O{i + 2}"].Formula = $"=SCH!O{i + 8}";
+                newSchSheet.Range[$"P{i + 2}"].Formula = $"=SCH!P{i + 8}";
+                newSchSheet.Range[$"Q{i + 2}"].Formula = $"=SCH!Q{i + 8}";
+                newSchSheet.Range[$"R{i + 2}"].Formula = $"=SCH!R{i + 8}";
+                newSchSheet.Range[$"S{i + 2}"].Formula = $"=SCH!S{i + 8}";
+            }
         }
     }
 }

@@ -115,9 +115,9 @@
                 if(response.StatusCode == HttpStatusCode.OK || response.StatusCode == HttpStatusCode.Accepted
                      || response.StatusCode == HttpStatusCode.Created)
                 {
-                    var items = JsonConvert.DeserializeObject<List<CollectionItem>>(response.Content);
+                    var items = JsonConvert.DeserializeObject<CollectionItemParent>(response.Content);
 
-                    var results = items.Where(i => i.Model == "card" && i.Name.ToUpper().Contains("EPIRF"));
+                    var results = items.Data.Where(i => i.Model == "card" && i.Name.ToUpper().Contains("EPIRF"));
 
                     return await Task.FromResult(results);
                 }

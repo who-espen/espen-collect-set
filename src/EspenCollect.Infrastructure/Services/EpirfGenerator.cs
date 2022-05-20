@@ -55,27 +55,19 @@
 
                 if (EpirfCardsIds.LfIds.Any())
                 {
-                    var lfSheet = epirfWorkBook.Worksheets.get_Item("LF") as Excel.Worksheet;
-
-                    await _lfEpirfInit.DispatchToEpirfSheet(EpirfCardsIds.LfIds, lfSheet).ConfigureAwait(false);
+                    await _lfEpirfInit.DispatchToEpirfSheet(EpirfCardsIds.LfIds, epirfWorkBook).ConfigureAwait(false);
                 }
                 else if (EpirfCardsIds.OnchoIds.Any())
                 {
-                    var onchoSheet = epirfWorkBook.Worksheets.get_Item("ONCHO") as Excel.Worksheet;
-
-                    await _onchoEpirfGenerator.DispatchToEpirfSheet(EpirfCardsIds.OnchoIds, onchoSheet).ConfigureAwait(false);
+                    await _onchoEpirfGenerator.DispatchToEpirfSheet(EpirfCardsIds.OnchoIds, epirfWorkBook).ConfigureAwait(false);
                 }
                 else if (EpirfCardsIds.SthIds.Any())
                 {
-                    var sthSheet = epirfWorkBook.Worksheets.get_Item("STH") as Excel.Worksheet;
-
-                    await _sthEpirfInit.DispatchToEpirfSheet(EpirfCardsIds.SthIds, sthSheet).ConfigureAwait(false);
+                    await _sthEpirfInit.DispatchToEpirfSheet(EpirfCardsIds.SthIds, epirfWorkBook).ConfigureAwait(false);
                 }
                 else if (EpirfCardsIds.SchIds.Any())
                 {
-                    var sthSheet = epirfWorkBook.Worksheets.get_Item("SCH") as Excel.Worksheet;
-
-                    await _schEpirfInit.DispatchToEpirfSheet(EpirfCardsIds.SchIds, sthSheet).ConfigureAwait(false);
+                    await _schEpirfInit.DispatchToEpirfSheet(EpirfCardsIds.SchIds, epirfWorkBook).ConfigureAwait(false);
                 }
 
             }
@@ -89,5 +81,63 @@
             return await Task.FromResult(true);
         }
 
+        public async Task<bool> GenerateEpirfForEditAsync(IList<EpirfSpec> epirfSpecs, string path)
+        {
+            var filePath = Path.GetFullPath(@"Resources\WHO_EPIRF_PC.xlsm");
+            var excelApp = new Excel.Application
+            {
+                Visible = false
+            };
+
+            var epirfWorkBook = excelApp.Workbooks.Open(filePath, ReadOnly: false);
+
+            var EpirfCardsIds = new EpirfCardsIds();
+
+            foreach (var e in epirfSpecs)
+            {
+                if (e.Name.ToUpper().Contains("ONCHO"))
+                {
+                    EpirfCardsIds.OnchoIds.Add(e.Id.ToString());
+                }
+                else if (e.Name.ToUpper().Contains("LF"))
+                {
+                    EpirfCardsIds.LfIds.Add(e.Id.ToString());
+                }
+                else if (e.Name.ToUpper().Contains("STH"))
+                {
+                    EpirfCardsIds.SthIds.Add(e.Id.ToString());
+                }
+                else if (e.Name.ToUpper().Contains("SCH") || e.Name.ToUpper().Contains("SCHISTO"))
+                {
+                    EpirfCardsIds.SchIds.Add(e.Id.ToString());
+                }
+
+                if (EpirfCardsIds.LfIds.Any())
+                {
+                    await _lfEpirfInit.DispatchToEpirfSheetToEdit(EpirfCardsIds.LfIds, epirfWorkBook).ConfigureAwait(false);
+                }
+                else if (EpirfCardsIds.OnchoIds.Any())
+                {
+                    await _onchoEpirfGenerator.DispatchToEpirfSheetToEdit(EpirfCardsIds.OnchoIds, epirfWorkBook).ConfigureAwait(false);
+                }
+                else if (EpirfCardsIds.SthIds.Any())
+                {
+                    await _sthEpirfInit.DispatchToEpirfSheetToEdit(EpirfCardsIds.SthIds, epirfWorkBook).ConfigureAwait(false);
+                }
+                else if (EpirfCardsIds.SchIds.Any())
+                {
+                    await _schEpirfInit.DispatchToEpirfSheetToEdit(EpirfCardsIds.SchIds, epirfWorkBook).ConfigureAwait(false);
+                }
+
+            }
+
+
+            excelApp.Visible = true;
+            epirfWorkBook.SaveAs(path);
+            epirfWorkBook.Close(true);
+            excelApp.Quit();
+
+            return await Task.FromResult(true);
+        }
     }
 }

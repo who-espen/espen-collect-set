@@ -59,7 +59,7 @@
 
         internal static IList<LfEpirf> MetabaseCardToEpirfLfModel(MetabaseCardEpirfQuery metabaseCardEpirfQuery)
         {
-            var rows = metabaseCardEpirfQuery.Data.Rows;
+            var rows = metabaseCardEpirfQuery.Data.Rows; 
             var lfEpirfs = new List<LfEpirf>();
 
             if (rows.Any())

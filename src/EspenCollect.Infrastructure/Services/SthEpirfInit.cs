@@ -6,6 +6,7 @@
     using EspenCollect.Core;
     using EspenCollect.Helpers;
     using Microsoft.Office.Interop.Excel;
+    using Excel = Microsoft.Office.Interop.Excel;
 
     public class SthEpirfInit : ISthEpirfInit
     {
@@ -16,16 +17,11 @@
             _restApi = restApi;
         }
 
-        //public async Task DispatchToEpirfSheet(string id, Worksheet epirfSheet)
-        //{
-        //    var rowsData = await _restApi.GetEpirfCard(id).ConfigureAwait(false);
-
-        //    FillEpirfFile(epirfSheet, rowsData);
-        //}
-
-        public Task DispatchToEpirfSheet(List<string> ids, Worksheet epirfSheet)
+        public Task DispatchToEpirfSheet(List<string> ids, Workbook epirfWorkBook)
         {
             var metabaseCard = new MetabaseCardEpirfQuery();
+
+            var sthSheet = epirfWorkBook.Worksheets.get_Item("STH") as Excel.Worksheet;
 
             ids.ForEach(async id =>
             {
@@ -35,11 +31,30 @@
                 metabaseCard.Data.Rows.AddRange(rowsData.Data.Rows);
             });
 
-            FillEpirfFile(epirfSheet, metabaseCard);
+            FillEpirfFile(sthSheet, metabaseCard);
 
             return Task.CompletedTask;
         }
 
+        public Task DispatchToEpirfSheetToEdit(List<string> ids, Workbook epirfWorkBook)
+        {
+            var metabaseCard = new MetabaseCardEpirfQuery();
+
+            var sthSheet = epirfWorkBook.Worksheets.get_Item("STH") as Excel.Worksheet;
+
+            ids.ForEach(async id =>
+            {
+                var rowsData = await _restApi.GetEpirfCard(id).ConfigureAwait(false);
+
+                metabaseCard.RowCount = rowsData.RowCount;
+                metabaseCard.Data.Rows.AddRange(rowsData.Data.Rows);
+            });
+
+            FillEpirfFile(sthSheet, metabaseCard);
+            FillOtherEpirfFile(epirfWorkBook, metabaseCard, sthSheet);
+
+            return Task.CompletedTask;
+        }
 
         private void FillEpirfFile(Worksheet lfSheet, MetabaseCardEpirfQuery rowsData)
         {
@@ -85,6 +100,50 @@
             }
 
             lfSheet.Protect();
+        }
+        private void FillOtherEpirfFile(Workbook epirfWorkBook, MetabaseCardEpirfQuery rowsData, Excel.Worksheet sthSheet)
+        {
+            sthSheet.Unprotect("MDA");
+            epirfWorkBook.Unprotect("MDA");
+            var newSthSheet = (Worksheet)epirfWorkBook.Worksheets.Add(After: epirfWorkBook.Sheets[epirfWorkBook.Sheets.Count]);
+            newSthSheet.Name = "STH Raw";
+
+            sthSheet.Range["A6:AS6"].Copy();
+            newSthSheet.Range["A1:AB1"].PasteSpecial(XlPasteType.xlPasteValues);
+            //sthSheet.Range[$"A8:AB{rowsData.Data.Rows.Count()+8}"].Copy();
+            //newSthSheet.Range[$"A2:AB{rowsData.Data.Rows.Count()}"].PasteSpecial(XlPasteType.xlPasteValues);
+
+            for (var i = 0; i < rowsData.Data.Rows.Count(); i++)
+            {
+                newSthSheet.Range[$"A{i + 2}"].Formula = $"=STH!A{i + 8}";
+                newSthSheet.Range[$"B{i + 2}"].Formula = $"=STH!B{i + 8}";
+                newSthSheet.Range[$"C{i + 2}"].Formula = $"=STH!C{i + 8}";
+                newSthSheet.Range[$"D{i + 2}"].Formula = $"=STH!D{i + 8}";
+                newSthSheet.Range[$"E{i + 2}"].Formula = $"=STH!E{i + 8}";
+                newSthSheet.Range[$"F{i + 2}"].Formula = $"=STH!F{i + 8}";
+                newSthSheet.Range[$"G{i + 2}"].Formula = $"=STH!G{i + 8}";
+                newSthSheet.Range[$"H{i + 2}"].Formula = $"=STH!H{i + 8}";
+                newSthSheet.Range[$"I{i + 2}"].Formula = $"=STH!I{i + 8}";
+                newSthSheet.Range[$"J{i + 2}"].Formula = $"=STH!J{i + 8}";
+                newSthSheet.Range[$"K{i + 2}"].Formula = $"=STH!K{i + 8}";
+                newSthSheet.Range[$"L{i + 2}"].Formula = $"=STH!L{i + 8}";
+                newSthSheet.Range[$"M{i + 2}"].Formula = $"=STH!M{i + 8}";
+                newSthSheet.Range[$"N{i + 2}"].Formula = $"=STH!N{i + 8}";
+                newSthSheet.Range[$"O{i + 2}"].Formula = $"=STH!O{i + 8}";
+                newSthSheet.Range[$"P{i + 2}"].Formula = $"=STH!P{i + 8}";
+                newSthSheet.Range[$"Q{i + 2}"].Formula = $"=STH!Q{i + 8}";
+                newSthSheet.Range[$"R{i + 2}"].Formula = $"=STH!R{i + 8}";
+                newSthSheet.Range[$"S{i + 2}"].Formula = $"=STH!S{i + 8}";
+                newSthSheet.Range[$"T{i + 2}"].Formula = $"=STH!T{i + 8}";
+                newSthSheet.Range[$"U{i + 2}"].Formula = $"=STH!U{i + 8}";
+                newSthSheet.Range[$"V{i + 2}"].Formula = $"=STH!V{i + 8}";
+                newSthSheet.Range[$"W{i + 2}"].Formula = $"=STH!W{i + 8}";
+                newSthSheet.Range[$"X{i + 2}"].Formula = $"=STH!X{i + 8}";
+                newSthSheet.Range[$"Y{i + 2}"].Formula = $"=STH!Y{i + 8}";
+                newSthSheet.Range[$"Z{i + 2}"].Formula = $"=STH!Z{i + 8}";
+                newSthSheet.Range[$"AA{i + 2}"].Formula = $"=STH!AA{i + 8}";
+                newSthSheet.Range[$"AB{i + 2}"].Formula = $"=STH!AB{i + 8}";
+            }
         }
     }
 }
